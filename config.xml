@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="com.albertzhang.scorescope" version="1.9.1" xmlns="http://www.w3.org/ns/widgets">
+    <!-- Cross-platform tags -->
+    <name>ScoreScope</name>
+    <description>
+        A clean, efficient interface for the SkywardⒸ Student Information System.
+    </description>
+    <author email="albertzhang66@outlook.com" href="http://localhost/"/>
+    <content src="index.html"/>
+    <access origin="*"/>
+    <allow-intent href="mailto:*"/>
+
+    <!-- Cross-plaform preferences -->
+    <preference name="DisallowOverscroll" value="true"/>
+    <preference name="Orientation" value="portrait"/>
+    <preference name="AppendUserAgent" value="ScoreScope/1.9.1"/>
+    <!-- Splash screen preferences -->
+    <preference name="SplashScreenDelay" value="1000"/>
+    <preference name="FadeSplashScreenDuration" value="250"/>
+    <preference name="ShowSplashScreenSpinner" value="false"/>
+
+    <!-- Plugins -->
+    <plugin name="scorescope-secure-storage" spec="ssh://git@github.com/SharkChips/secure-storage.git"/>
+    <plugin name="cordova-plugin-splashscreen" spec="^3.2.2"/>
+    <!-- Android needs the whitelist plugin -->
+    <plugin name="cordova-plugin-whitelist" spec="^1.2.2"/>
+
+    <!-- Platform specific tags -->
+    <platform name="ios">
+        <!-- iOS specific preferences -->
+        <preference name="target-device" value="handset"/>
+        <preference name="KeychainAccessibility" value="Always"/>
+        <preference name="deployment-target" value="9.0"/>
+
+        <!-- ICONS -->
+        <icon src="res/icon/ios/icon-60@2x.png" width="120" height="120"/>
+        <icon src="res/icon/ios/icon-60@3x.png" width="180" height="180"/>
+        <icon src="res/icon/ios/icon-76.png" width="76" height="76"/>
+        <icon src="res/icon/ios/icon-76@2x.png" width="152" height="152"/>
+        <icon src="res/icon/ios/icon-small.png" width="29" height="29"/>
+        <icon src="res/icon/ios/icon-small@2x.png" width="58" height="58"/>
+        <icon src="res/icon/ios/icon-small@3x.png" width="87" height="87"/>
+        <icon src="res/icon/ios/icon-small-40.png" width="40" height="40"/>
+        <icon src="res/icon/ios/icon-small-40@2x.png" width="80" height="80"/>
+        <icon src="res/icon/ios/icon-small-40@3x.png" width="120" height="120"/>
+
+        <!-- SPLASH SCREENS -->
+        <splash src="res/splash/ios/Default~iphone.png" width="320" height="480"/>
+        <splash src="res/splash/ios/Default@2x~iphone.png" width="640" height="960"/>
+        <splash src="res/splash/ios/Default-Portrait~ipad.png" width="768" height="1024"/>
+        <splash src="res/splash/ios/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
+        <splash src="res/splash/ios/Default-Landscape~ipad.png" width="1024" height="768"/>
+        <splash src="res/splash/ios/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
+        <splash src="res/splash/ios/Default-568h@2x~iphone.png" width="640" height="1136"/>
+        <splash src="res/splash/ios/Default-667h.png" width="750" height="1334"/>
+        <splash src="res/splash/ios/Default-736h.png" width="1242" height="2208"/>
+        <splash src="res/splash/ios/Default-Landscape-736h.png" width="2208" height="1242"/>
+    </platform>
+
+    <platform name="android">
+        <!-- Android specific preferences -->
+        <preference name="android-minSdkVersion" value="21"/>
+        <preference name="android-targetSdkVersion" value="23"/>
+        <preference name="android-InAppBrowserStorageEnabled" value="false"/>
+
+        <!-- ICONS -->
+        <icon src="res/icon/android/ldpi.png" density="ldpi"/>
+        <icon src="res/icon/android/mdpi.png" density="mdpi"/>
+        <icon src="res/icon/android/hdpi.png" density="hdpi"/>
+        <icon src="res/icon/android/xhdpi.png" density="xhdpi"/>
+        <icon src="res/icon/android/xxhdpi.png" density="xxhdpi"/>
+        <icon src="res/icon/android/xxxhdpi.png" density="xxxhdpi"/>
+
+        <!-- SPLASH SCREENS -->
+        <splash src="res/splash/android/portrait-ldpi.png" density="port-ldpi"/>
+        <splash src="res/splash/android/portrait-mdpi.png" density="port-mdpi"/>
+        <splash src="res/splash/android/portrait-hdpi.png" density="port-hdpi"/>
+        <splash src="res/splash/android/portrait-xhdpi.png" density="port-xhdpi"/>
+        <splash src="res/splash/android/portrait-xxhdpi.png" density="port-xxhdpi"/>
+        <splash src="res/splash/android/portrait-xxxhdpi.png" density="port-xxxhdpi"/>
+        <splash src="res/splash/android/landscape-ldpi.png" density="land-ldpi"/>
+        <splash src="res/splash/android/landscape-mdpi.png" density="land-mdpi"/>
+        <splash src="res/splash/android/landscape-hdpi.png" density="land-hdpi"/>
+        <splash src="res/splash/android/landscape-xhdpi.png" density="land-xhdpi"/>
+        <splash src="res/splash/android/landscape-xxhdpi.png" density="land-xxhdpi"/>
+        <splash src="res/splash/android/landscape-xxxhdpi.png" density="land-xxxhdpi"/>
+    </platform>
+</widget>

@@ -1,0 +1,14 @@
+<!-- Inline style so it hides before CSS loads -->
+<div id="acctMgrErrMsgDiv" class="errorMsgDiv" style="display:none;">
+    <img class="errorIcon" src="lib/img/ErrorCircle.svg">
+    <div class="errorTitle">Oh NO!</div>
+    <div class="errorDetails">An error has occured!</div>
+    <ons-button class="errorRetryBtn">Try Again</ons-button>
+</div>
+
+<div id="loading" class="loadingCircle systemFont">
+    <ons-progress-circular indeterminate></ons-progress-circular>
+    <div>&nbsp;&nbsp;Loading...</div>
+</div>
+<ons-list class="systemFont" id="accountList"></ons-list>
+<ons-fab id="bottomLeftFab" position="bottom right">+</ons-fab>

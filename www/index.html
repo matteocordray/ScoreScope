@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="lib/onsenui/css/onsenui.min.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.min.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="lib/roboto/roboto.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="index.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="courses/course.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="accounts/accountManager.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="settings/settings.css" type="text/css" media="all"/>
+
+    <title>Grades</title>
+
+    <!-- Onsen JS -->
+    <script src="lib/onsenui/js/onsenui.min.js"></script>
+    <!-- jQuery Mobile -->
+    <script src="lib/jquery/jquery.min.js"></script>
+    <!-- Cordova -->
+    <script src="cordova.js"></script>
+    <script src="main.js"></script>
+    <script src="courses/course.js"></script>
+</head>
+<ons-page class="systemFont">
+    <!-- The top toolbar -->
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button id="iOSBackBtn">
+                <ons-icon icon="fa-chevron-left"></ons-icon>
+                &nbsp;Back
+            </ons-toolbar-button>
+        </div>
+        <div class="center systemFont" id="title">Gradebook</div>
+        <!-- The account switcher-->
+        <div class="right">
+            <ons-toolbar-button id="saveBtn" modifier="outline">
+                Save
+            </ons-toolbar-button>
+            <ons-toolbar-button id="acctBtn">
+                <ons-icon icon="fa-user"></ons-icon>
+            </ons-toolbar-button>
+            <ons-toolbar-button id="settingsBtn">
+                <ons-icon icon="fa-cog"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <!-- End Icons-->
+    </ons-toolbar>
+    <!-- End toolbar -->
+
+    <!-- Main Page -->
+    <ons-template id="mainPage">
+        <!-- Inline style so it hides before CSS loads -->
+        <div id="mainPageErrMsgDiv" class="errorMsgDiv" style="display:none;">
+            <img class="errorIcon" src="lib/img/ErrorCircle.svg">
+            <div class="errorTitle">Oh NO!</div>
+            <div class="errorDetails">An error has occured!</div>
+            <ons-button class="errorRetryBtn">Try Again</ons-button>
+        </div>
+        <div id="mainLoading" class="loadingCircle systemFont">
+            <ons-progress-circular indeterminate></ons-progress-circular>
+            <div>&nbsp;&nbsp;Loading...</div>
+        </div>
+        <div id="avgCircleArea" class="fade">
+            <div id="outerCircle">
+                <div id="innerCircle" class="systemFont"></div>
+            </div>
+            <div id="avgText" class="systemFont"></div>
+        </div>
+        <ons-list id="list" class="fade systemFont"></ons-list>
+    </ons-template>
+    <ons-navigator animation="slide" id="navi" page="mainPage"></ons-navigator>
+</ons-page>
+<ons-popover cancelable direction="down" id="pop" class="systemFont">
+    <ons-list id="menuList">
+    </ons-list>
+</ons-popover>
+</html>

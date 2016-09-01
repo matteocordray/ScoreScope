@@ -1,0 +1,90 @@
+#settingsTopDiv {
+    height: calc(100% - 200px); /* Compensate for small screens */
+    width: inherit;
+    text-align: center;
+    font-weight: 300;
+    margin: 10px;
+}
+
+#settingsTopImg {
+    width: inherit;
+    height: calc(100% - 140px);
+    margin: 10px;
+}
+
+#boldName {
+    font-size: 48px;
+
+    /*
+     * This sets letter-spacing to the width of the screen (100vw) minus the width of the letters (265px)
+     * over 9 (spaces between SCORESCOPE) minus 3vw (spaces on edge)
+     */
+    letter-spacing: calc(((100vw - 265px) / 9) - 3vw);
+    margin-bottom: -5px;
+}
+
+#version {
+    padding-bottom: 10px;
+}
+
+#companyHolder {
+    display: flex;
+}
+
+#feedback {
+    flex: 0 0 47.5%;
+    text-align: right;
+}
+
+#diamond {
+    flex: 0 0 5%;
+    padding: 0 5px;
+}
+
+#email {
+    flex: 1;
+    text-align: left;
+    color: #1f1f21;
+}
+
+#settingsList {
+    margin-top: 15px;
+}
+
+.iconRightSpace {
+    margin-right: 10px;
+}
+
+.legalHeading {
+    font-weight: 500;
+    font-size: large;
+    margin: 10px;
+}
+
+.legalese {
+    font-size: small;
+    font-family: monospace;
+    margin: 10px 20px;
+}
+
+ol.legalese {
+    padding-left: 20px;
+}
+
+.legalBold {
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+.noLink {
+    text-decoration: none;
+    color: #1f1f21;
+}
+
+#privacySwitchDiv {
+    margin: 20px;
+}
+
+#privacySwitch {
+    float: right;
+}
