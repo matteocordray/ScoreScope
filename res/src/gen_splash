@@ -1,0 +1,94 @@
+#!/bin/env node
+
+var fs = require("fs");
+var util = require("util");
+
+var cp = require("child_process");
+var exec = cp.exec;
+
+var args = process.argv;
+if (args.length < 3) {
+    console.error("ERR (FATAL): Not enough arguments. Need at least one platform");
+    process.exit(1);
+}
+
+if (!fs.existsSync("splash.svg")) {
+    console.error("ERR (FATAL): Cannot find splash.svg");
+    process.exit(1);
+}
+
+var platforms = args.slice(2);
+
+process.on("exit", function () {
+    console.log("Cleaning up...");
+
+    if (fs.existsSync("splash.png")) {
+        fs.unlinkSync("splash.png"); // Generic splash screen
+    }
+
+    platforms.forEach(function (platform, index) {
+        var platformSpecificPNG = "splash-" + platform + ".png";
+        if (fs.existsSync(platformSpecificPNG)) {
+            console.log("Deleting " + platformSpecificPNG + "...");
+            fs.unlinkSync(platformSpecificPNG);
+        }
+    });
+});
+
+exportPNGs(platforms);
+
+function exportPNGs(platforms) {
+    var started = 0;
+    var finished = 0;
+    var total = platforms.length + 1; // Length + 1 for generic screen
+
+    console.log(util.format("Exporting generic splash screen using Inkscape... (%d/%d)", ++started, total));
+    exec("inkscape -e splash.png -w 1024 -h 1024 splash.svg", function (error, stdout, stderr) {
+        if (error) {
+            console.error("ERR (FATAL): " + error);
+            process.exit(1);
+        }
+
+        if (++finished === total) {
+            splash_gen(platforms);
+        }
+    });
+
+    platforms.forEach(function (platform, index) {
+        if (fs.existsSync("splash-" + platform + ".svg")) {
+            console.log(util.format("Exporting custom splash screen for %s using Inkscape... (%d/%d)", platform, ++started, total));
+            exec(util.format("inkscape -e splash-%s.png -w 1024 -h 1024 splash-%s.svg", platform, platform), function (error, stdout, stderr) {
+                if (error) {
+                    console.error("ERR (FATAL): " + error);
+                    process.exit(1);
+                }
+
+                if (++finished === total) {
+                    splash_gen(platforms);
+                }
+            });
+        } else {
+            console.log(util.format("Using generic splash screen for %s... (%d/%d)"), platform, ++started, total);
+            if (++finished === total) {
+                splash_gen(platforms);
+            }
+        }
+    });
+}
+
+function splash_gen(args) {
+    console.log("Running splash-gen...");
+    exec("splash-gen " + __dirname + "/.. splash.png " + args.toString().replace(/,/g, " "), function (error, stdout, stderr) {
+        if (error) {
+            console.error("ERR (FATAL): " + error);
+            process.exit(1);
+        }
+
+        if (stderr) {
+            console.error(stderr);
+        }
+        if (stdout) {
+            console.log(stdout);
+        }
+    });
+}

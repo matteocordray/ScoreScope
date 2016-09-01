@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+
+    <!-- Stylesheets -->
+    <link href='lib/roboto/roboto.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="lib/onsenui/css/onsenui.min.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.min.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="index.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="courses/course.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="accounts/accountManager.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="settings/settings.css" type="text/css" media="all"/>
+
+    <title>Grades</title>
+
+    <!-- Onsen JS -->
+    <script src="lib/onsenui/js/onsenui.min.js"></script>
+    <!-- jQuery Mobile -->
+    <script src="lib/jquery/jquery.min.js"></script>
+    <!-- Cordova -->
+    <script src="cordova.js"></script>
+    <script src="main.js"></script>
+    <script src="courses/course.js"></script>
+</head>
+<body>
+<ons-splitter>
+    <ons-splitter-side id="menu" side="left" width="80%" collapse swipeable>
+
+        <!-- The hamburger menu -->
+        <ons-page>
+            <ons-list id="menuList"></ons-list>
+            <ons-list class="hamFooter">
+                <ons-list-item modifier="nodivider" tappable id="acctMgr">
+                    <ons-row vertical-align="center">
+                        <ons-col width="40px">
+                            <ons-icon icon="fa-user" size="20px"></ons-icon>
+                        </ons-col>
+                        <ons-col class="systemFont"><span style="font-size: large;">Manage Accounts</span></ons-col>
+                    </ons-row>
+                </ons-list-item>
+                <ons-list-item modifier="nodivider" tappable id="settingsBtn">
+                    <ons-row vertical-align="center">
+                        <ons-col width="40px">
+                            <ons-icon icon="fa-cog" size="20px"></ons-icon>
+                        </ons-col>
+                        <ons-col class="systemFont"><span style="font-size: large;">Settings</span></ons-col>
+                    </ons-row>
+                </ons-list-item>
+            </ons-list>
+        </ons-page>
+        <!-- End hamburger menu -->
+
+    </ons-splitter-side>
+    <ons-splitter-content id="maincontent">
+        <ons-page>
+            <!-- The top toolbar -->
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button id="leftBtn">
+                        <ons-icon icon="fa-bars"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center" id="title">Gradebook</div>
+                <div class="right">
+                    <ons-toolbar-button id="rightBtn">
+                        <ons-icon icon="fa-refresh"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <!-- End Icons-->
+            </ons-toolbar>
+            <!-- End toolbar -->
+
+            <!-- The content of the sliding thingy -->
+            <ons-template id="mainPage">
+                <!-- Inline style so it hides before CSS loads -->
+                <div id="mainPageErrMsgDiv" class="errorMsgDiv" style="display:none;">
+                    <img class="errorIcon" src="lib/img/ErrorCircle.svg"></img>
+                    <div class="errorTitle">Oh NO!</div>
+                    <div class="errorDetails">An error has occured!</div>
+                    <ons-button class="errorRetryBtn">Try Again</ons-button>
+                </div>
+                <div id="mainLoading" class="loadingCircle systemFont">
+                    <ons-progress-circular indeterminate></ons-progress-circular>
+                    <div>&nbsp;&nbsp;Loading...</div>
+                </div>
+                <div id="avgCircleArea" class="fade">
+                    <div id="outerCircle">
+                        <div id="innerCircle" class="systemFont"></div>
+                    </div>
+                    <div id="avgText" class="systemFont"></div>
+                </div>
+                <ons-list id="list" class="fade">
+                </ons-list>
+            </ons-template>
+            <ons-navigator animation="slide" id="navi" page="mainPage"></ons-navigator>
+            <!-- End sliding thingy -->
+
+        </ons-page>
+    </ons-splitter-content>
+</ons-splitter>
+</body>
+</html>

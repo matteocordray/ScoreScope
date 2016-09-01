@@ -1,0 +1,189 @@
+.list__item--material__center { /* Unused? Not sure... */
+    padding: 5px 0 !important;
+}
+
+#navi {
+    height: 92.5%;
+}
+
+.systemFont {
+    font-family: 'Roboto', 'Noto', sans-serif;
+}
+
+#bottomBar {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 7.5%;
+    text-align: center;
+    background-color: #3f51b5;
+    color: #ffffff;
+    font-weight: 400;
+    font-size: x-large;
+}
+
+#back {
+    height: 100%;
+    width: 49.5%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid;
+}
+
+#next {
+    height: 100%;
+    width: 49.5%;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sectionTitle {
+    margin: calc(15% - 40px) 15px;
+    font-size: xx-large;
+}
+
+#greetingCenter {
+    display: block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#greetingImage {
+    width: 100%;
+    height: 60%;
+    background-color: #3f51b5;
+}
+
+#greetingDes {
+    margin-top: 15%;
+}
+
+#search {
+    width: 75%;
+}
+
+#loading {
+    text-align: center;
+    position: relative;
+    top: 25px;
+    display: none;
+}
+
+#listDiv {
+    width: 75%;
+    margin: auto;
+}
+
+.district {
+    padding: 0;
+}
+
+.distCol {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    max-width: 75vw;
+}
+
+.distName {
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0 10px;
+}
+
+.distLoc {
+    font-weight: 300;
+    color: #9e9e9e;
+    font-size: smaller;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0 25px;
+}
+
+.selectedDistrict {
+    background-color: #d9d9d9;
+}
+
+#login {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+#tcCheckBox {
+    font-size: 4vw;
+}
+
+.logo {
+    margin-top: 5%;
+    height: 33.33vh;
+    max-width: 75vw;
+}
+
+#domain {
+    margin: 5%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.input {
+    text-align: center;
+    margin: 1.75% auto;
+}
+
+.icon--needsPadding {
+    margin-top: 7px;
+}
+
+.center {
+    text-align: center;
+}
+
+#tc {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 7%;
+}
+
+#firstRunErrDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#FRErrIcon {
+    height: 20vh;
+    width: 20vh;
+}
+
+#FRErrIconSvg {
+    height: 100%;
+    width: 100%;
+}
+
+#FRErrTitle {
+    font-size: 3.5vh;
+    font-weight: 700;
+    margin: 5px;
+}
+
+#FRErrDetails {
+    text-align: center;
+    margin: 5px 15vw;
+}
+
+.FRErrRetryBtn {
+    margin: 25px 5px;
+}
