@@ -32,10 +32,10 @@ $(document).ready(function () {
         // Initialize secure storage and get data
         ss = new cordova.plugins.SecureStorage(
             function () {
-                console.log("Secure storage init complete!");
+                console.info("Secure storage init complete!");
                 ss.get(function (metadata) {
                     accountMetadata = JSON.parse(metadata);
-                    console.log("Successfully retrieved metadata!")
+                    console.info("Successfully retrieved metadata!")
                 }, function (error) {
                     console.error("Error: " + error);
                     accountMetadata = {accounts: []};
@@ -402,7 +402,7 @@ function validateAndGo() {
             } else {
                 accountMetadata.accounts.push($.extend(true, {}, account));
                 ss.set(function (key) {
-                    console.log("Successfully saved " + key);
+                    console.info("Successfully saved " + key);
                 }, function (error) {
                     console.error("Error: " + error);
                     alertMsg("Failed to save account information. Please try again.", "Error");

@@ -25,7 +25,7 @@ function settingsGo(pageName) {
                 case 1: // NO
                     break;
                 default:
-                    console.error("Invalid response " + choice + " received, expected 0 or 1");
+                    console.warn("Invalid response " + choice + " received, expected 0 or 1");
                     alertMsg("It appears that you selected an invalid option. Please try again.", "Error");
                     break;
             }
@@ -42,7 +42,7 @@ function settingsGo(pageName) {
                 $("#title").text("Open Source Libraries");
                 break;
             default:
-                console.error("Unexpected page selected: " + pageName);
+                console.warn("Unexpected page selected: " + pageName);
                 break;
         }
         settingsNavi.pushPage("settings/" + pageName + ".html", {
@@ -63,7 +63,7 @@ function settingsGo(pageName) {
 function togglePrivacy() {
     settings.allowDiag = privacySwitch.checked;
     ss.set(function (key) { // On success
-        console.log("Successfully updated " + key);
+        console.info("Successfully updated " + key);
         // TODO: maybe send a report
     }, function (error) { // On error
         alertMsg("Failed to save settings. Please try again.", "Error");
@@ -77,14 +77,14 @@ function updatePrivacy() {
         privacySwitch.checked = settings.allowDiag;
     }, function (error) {
         console.error("Error retrieving settings from storage: " + error);
-        console.error("Assuming no settings stored! Resetting to defaults!");
+        console.warn("Assuming no settings stored! Resetting to defaults!");
 
         // This should be const but Safari doesn't support block-level const (I think)
         var defaultSettings = {
             allowDiag: true
         };
         ss.set(function (key) { // On success
-            console.log("Successfully reset " + key + " to defaults");
+            console.info("Successfully reset " + key + " to defaults");
             updatePrivacy(); // Try again after setting the defaults
         }, function (error) { // On error
             // Probably shouldn't bother notifying the user.
