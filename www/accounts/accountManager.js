@@ -3,7 +3,7 @@ function loadAccountManager() {
 
     ss.get(function (metadata) {
         accountMetadata = JSON.parse(metadata).accounts;
-        console.log("Successfully updated metadata!");
+        console.info("Successfully updated metadata!");
 
         $("#loading").hide();
 
@@ -120,7 +120,7 @@ function validateAndSave(id) {
                 acctMD.accounts = accountMetadata.slice();
                 acctMD.accounts[id] = account;
                 ss.set(function (key) {
-                    console.log("Successfully saved " + key);
+                    console.info("Successfully saved " + key);
                     loadAccountManager(); // Refresh account list
                     loadAcctList(id);
                     editorGoBack();
@@ -160,13 +160,13 @@ function removeAcct(id) {
     accountMetadata.splice(id, 1); // Remove element
     acctMD.accounts = accountMetadata.slice();
     ss.set(function (key) {
-        console.log("Successfully saved " + key);
+        console.info("Successfully saved " + key);
         if (accountMetadata.length == 0) { // If the user removed the last account
             loadAccountManager(); // Refresh account list
             editorGoBack();
 
             ss.remove(function (key) { // If there's no more accounts, then we must remove account metadata
-                console.log("Successfully removed " + key);
+                console.info("Successfully removed " + key);
             }, function (error) {
                 console.error("Error: " + error);
                 alertMsg("Failed to update account database. Please try again later.", "Error");

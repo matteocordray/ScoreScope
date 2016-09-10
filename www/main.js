@@ -33,17 +33,17 @@ $(document).ready(function () {
         //Initialize SecureStorage plugin and get metadata
         ss = new cordova.plugins.SecureStorage(
             function () { // If success
-                console.log("Secure storage init complete!");
+                console.info("Secure storage init complete!");
                 ss.get(function (metadata) { // If success
                     accountMetadata = JSON.parse(metadata).accounts;
-                    console.log("Successfully retrieved metadata!");
+                    console.info("Successfully retrieved metadata!");
 
                     loadAcctList();
 
                     document.addEventListener("resume", onResume, false);
                 }, function (error) { // If there's an error, fuck it and make user log in again
                     console.error(error);
-                    console.log("Assuming first run! Redirecting...");
+                    console.warn("Assuming first run! Redirecting...");
                     window.location.replace("accounts/firstRun.html");
                 }, "accountMetadata");
             },
@@ -80,7 +80,7 @@ function goBack() {
             $("#title").text("Settings");
             break;
         default:
-            console.error("Received incorrect navi topPage name!");
+            console.warn("Received incorrect navi topPage name!");
             break;
     }
     navi.popPage({
