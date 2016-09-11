@@ -72,25 +72,5 @@ function togglePrivacy() {
 }
 
 function updatePrivacy() {
-    ss.get(function (value) {
-        settings = JSON.parse(value);
-        privacySwitch.checked = settings.allowDiag;
-    }, function (error) {
-        console.error("Error retrieving settings from storage: " + error);
-        console.warn("Assuming no settings stored! Resetting to defaults!");
-
-        // This should be const but Safari doesn't support block-level const (I think)
-        var defaultSettings = {
-            allowDiag: true
-        };
-        ss.set(function (key) { // On success
-            console.info("Successfully reset " + key + " to defaults");
-            updatePrivacy(); // Try again after setting the defaults
-        }, function (error) { // On error
-            // Probably shouldn't bother notifying the user.
-            console.error("Failed to set default settings! Error: " + error);
-
-            // TODO: Send error log
-        }, "settings", JSON.stringify(defaultSettings));
-    }, "settings");
+    privacySwitch.checked = settings.allowDiag;
 }
