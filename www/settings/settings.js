@@ -47,7 +47,7 @@ function settingsGo(pageName) {
         }
         settingsNavi.pushPage("settings/" + pageName + ".html", {
             animation: "slide",
-            animationOptions: {duration: transitionTime}
+            animationOptions: {duration: TRANSITION_TIME}
         }).then(function () { // postPop
             switch (settingsNavi.topPage.name) {
                 case "settings/privacy.html":

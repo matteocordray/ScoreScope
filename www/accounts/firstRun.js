@@ -1,12 +1,13 @@
 var ss; // Secure storage plugin
 var movingLock = false; // Prevent spamming next/back buttons
-const pages = ["greetings", "district", "login"];
-const fadeTime = 100; // Time to fade in main page in milliseconds
-const errFadeTime = 150; // Time to fade in/out the error messages in milliseconds
-const transitionTime = 0.3; // Time to reset page in seconds
+
+const PAGES = ["greetings", "district", "login"];
+const FADE_TIME = 100; // Time to fade in main page in milliseconds
+const ERR_FADE_TIME = 150; // Time to fade in/out the error messages in milliseconds
+const TRANSITION_TIME = 0.3; // Time to reset page in seconds
 
 var searchTimer;
-const searchTypingTimeout = 1500; // Time in ms to wait after user finishes typing
+const SEARCH_TYPING_TIMEOUT = 1500; // Time in ms to wait after user finishes typing
 
 var accountMetadata;
 var account = {
@@ -69,8 +70,8 @@ function showFirstRunError(errorTitle, errorContent, errorIcon, retryCallback) {
         $("#FRErrIconSvg").attr("src", "../lib/img/" + errorIcon + ".svg");
     }
 
-    $("#loading").fadeOut(errFadeTime, function () {
-        $("#firstRunErrDiv").fadeIn(errFadeTime);
+    $("#loading").fadeOut(ERR_FADE_TIME, function () {
+        $("#firstRunErrDiv").fadeIn(ERR_FADE_TIME);
     });
 }
 
@@ -83,20 +84,20 @@ function backPage() {
         return;
     }
 
-    $("#next").fadeIn(fadeTime);
+    $("#next").fadeIn(FADE_TIME);
 
-    if (navi.topPage.name === pages[0]) { // If it's the first page, early exit
+    if (navi.topPage.name === PAGES[0]) { // If it's the first page, early exit
         return;
     }
 
-    if (navi.topPage.name === pages[1]) { // If it's the second page, hide the back button
-        $("#back").fadeOut(fadeTime);
+    if (navi.topPage.name === PAGES[1]) { // If it's the second page, hide the back button
+        $("#back").fadeOut(FADE_TIME);
     }
 
     movingLock = true;
     navi.popPage({
         animation: "slide",
-        animationOptions: {duration: transitionTime}
+        animationOptions: {duration: TRANSITION_TIME}
     }).then(function () {
         movingLock = false;
     });
@@ -107,30 +108,30 @@ function advancePage() {
         return;
     }
 
-    if (navi.topPage.name === pages[pages.length - 1] && tcCheckBox.checked) { // If last page
+    if (navi.topPage.name === PAGES[PAGES.length - 1] && tcCheckBox.checked) { // If last page
         validateAndGo();
         return;
     }
 
-    $("#next").fadeOut(fadeTime);
-    $("#firstRunErrDiv").fadeOut(errFadeTime);
+    $("#next").fadeOut(FADE_TIME);
+    $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME);
 
-    $("#back").fadeIn(fadeTime);
+    $("#back").fadeIn(FADE_TIME);
     movingLock = true;
-    navi.pushPage(pages[pages.indexOf(navi.topPage.name) + 1], {
+    navi.pushPage(PAGES[PAGES.indexOf(navi.topPage.name) + 1], {
         animation: "slide",
-        animationOptions: {duration: transitionTime}
+        animationOptions: {duration: TRANSITION_TIME}
     }).then(function () {
         movingLock = false;
 
         // If user is navigating to the district finder, activate keyUp handler
         if (navi.topPage.name == "district") {
             $('#search').keyup(function () {
-                $(".district, #firstRunErrDiv").fadeOut(errFadeTime, function () { // Extra long fadeOut because list.empty takes a while
+                $(".district, #firstRunErrDiv").fadeOut(ERR_FADE_TIME, function () { // Extra long fadeOut because list.empty takes a while
                     $("#list").empty();
                 });
 
-                $("#next").fadeOut(fadeTime);
+                $("#next").fadeOut(FADE_TIME);
 
                 clearTimeout(searchTimer);
 
@@ -139,15 +140,15 @@ function advancePage() {
                 }
 
                 if ($('#myInput').val) {
-                    $("#loading").fadeIn(fadeTime * 2); // Longer fadeTime because searching takes a while
-                    searchTimer = setTimeout(searchForDist, searchTypingTimeout);
+                    $("#loading").fadeIn(FADE_TIME * 2); // Longer FADE_TIME because searching takes a while
+                    searchTimer = setTimeout(searchForDist, SEARCH_TYPING_TIMEOUT);
                 }
             });
 
             $("#search").keypress(function (e) {
                 if (e.keyCode == 13) { // Detect "Enter" key press
                     clearTimeout(searchTimer);
-                    $("#loading").fadeIn(fadeTime);
+                    $("#loading").fadeIn(FADE_TIME);
                     searchForDist();
                 }
             });
@@ -157,9 +158,9 @@ function advancePage() {
             // Add the handler for the tcCheckBox to toggle the next button
             $("#tc").click(function () {
                 if (tcCheckBox.checked) {
-                    $("#next").fadeIn(fadeTime);
+                    $("#next").fadeIn(FADE_TIME);
                 } else {
-                    $("#next").fadeOut(fadeTime);
+                    $("#next").fadeOut(FADE_TIME);
                 }
             });
         }
@@ -209,11 +210,11 @@ function searchForDist() {
                         console.error("Network Error: ", textStatus, errorThrown);
                         if (xhr.readyState == 0) { // readyState = 0 means no internet connection
                             showFirstRunError("Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
-                                $("#firstRunErrDiv").fadeOut(errFadeTime, searchForDist);
+                                $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME, searchForDist);
                             });
                         } else {
                             showFirstRunError("Oh No!", "We couldn't connect to the server (HTTP " + jqXHR.status + "). Please try again later.", "ErrorTriangle", function () {
-                                $("#firstRunErrDiv").fadeOut(errFadeTime, searchForDist);
+                                $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME, searchForDist);
                             });
                         }
                     });
@@ -227,11 +228,11 @@ function searchForDist() {
             console.error("Network Error: ", textStatus, errorThrown);
             if (xhr.readyState == 0) { // readyState = 0 means no internet connection
                 showFirstRunError("Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
-                    $("#firstRunErrDiv").fadeOut(errFadeTime, searchForDist);
+                    $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME, searchForDist);
                 });
             } else {
                 showFirstRunError("Oh No!", "We couldn't connect to the server (HTTP " + jqXHR.status + "). Please try again later.", "ErrorTriangle", function () {
-                    $("#firstRunErrDiv").fadeOut(errFadeTime, searchForDist);
+                    $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME, searchForDist);
                 });
             }
         });
@@ -256,11 +257,11 @@ function searchForDist() {
             console.error("Network Error: ", textStatus, errorThrown);
             if (xhr.readyState == 0) { // readyState = 0 means no internet connection
                 showFirstRunError("Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
-                    $("#firstRunErrDiv").fadeOut(errFadeTime, searchForDist);
+                    $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME, searchForDist);
                 });
             } else {
                 showFirstRunError("Oh No!", "We couldn't connect to the server (HTTP " + jqXHR.status + "). Please try again later.", "ErrorTriangle", function () {
-                    $("#firstRunErrDiv").fadeOut(errFadeTime, searchForDist);
+                    $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME, searchForDist);
                 });
             }
         });
@@ -274,8 +275,8 @@ function searchForDist() {
                 var data = result.CompanyDistanceInfo;
             } else { // No results found
                 showFirstRunError("No Results Found", "We couldn't find any results matching your query.", "NotFound", null);
-                $("#loading").fadeOut(fadeTime * 2); // Twice as long because network IO
-                $("#next").fadeOut(fadeTime);
+                $("#loading").fadeOut(FADE_TIME * 2); // Twice as long because network IO
+                $("#next").fadeOut(FADE_TIME);
                 return;
             }
         } else { // Must be from name
@@ -284,12 +285,12 @@ function searchForDist() {
                 var data = result.CompanyNameInfo;
             } else { // No results found
                 showFirstRunError("No Results Found", "We couldn't find any results matching your query.", "NotFound", null);
-                $("#loading").fadeOut(fadeTime * 2);
-                $("#next").fadeOut(fadeTime);
+                $("#loading").fadeOut(FADE_TIME * 2);
+                $("#next").fadeOut(FADE_TIME);
                 return;
             }
         }
-        $("#loading").fadeOut(fadeTime * 2, function () {
+        $("#loading").fadeOut(FADE_TIME * 2, function () {
             var list = $("#list");
             if (!Array.isArray(data)) { // Workaround for if there is only one result
                 data = [data];
@@ -330,7 +331,7 @@ function selectDistrict(district, id) {
     account.districtName = district.name;
     $(".district").removeClass("selectedDistrict"); // Clears selected
     $(".district").eq(id).addClass("selectedDistrict"); // Selects district
-    $("#next").fadeIn(fadeTime);
+    $("#next").fadeIn(FADE_TIME);
 }
 
 function confirmAllowStuOverride(district, id) {

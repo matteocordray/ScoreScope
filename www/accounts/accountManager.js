@@ -8,7 +8,7 @@ function loadAccountManager() {
         $("#loading").hide();
 
         var acctList = $("#accountList");
-        acctList.fadeOut(fadeTime, function () {
+        acctList.fadeOut(FADE_TIME, function () {
             acctList.empty();
             $.each(accountMetadata, function (key, val) {
                 // TODO: get rid of this onclick
@@ -18,12 +18,12 @@ function loadAccountManager() {
                     '<ons-col class="listRight" width="15%" onclick="loadEditor(' + key + ')"><ons-icon icon="fa-pencil" size="30px"></ons-icon></ons-col>' +
                     '</ons-list-item>');
             });
-            acctList.fadeIn(fadeTime * 2);
+            acctList.fadeIn(FADE_TIME * 2);
         });
     }, function (error) {
         console.error("Error: " + error);
         displayErrorPage("#acctMgrErrMsgDiv", "Oh No!", "We couldn't load account information. Please try again later.", "ErrorCircle", function () {
-            $("#acctMgrErrMsgDiv").fadeOut(errFadeTime, loadAccountManager);
+            $("#acctMgrErrMsgDiv").fadeOut(ERR_FADE_TIME, loadAccountManager);
         });
     }, "accountMetadata");
 }
@@ -35,7 +35,7 @@ function loadEditor(id) {
     saveBtn.click(function () {
         validateAndSave(id);
     });
-    saveBtn.fadeIn(iOSBtnFadeTime);
+    saveBtn.fadeIn(IOS_BTN_FADE_TIME);
     var backBtn = $("#iOSBackBtn");
     backBtn.off("click.goBack");
     backBtn.on("click.editorGoBack", editorGoBack);
@@ -54,7 +54,7 @@ function loadEditor(id) {
         $("#bottomLeftRemoveFab").click(function () {
             removeAcct(id);
         });
-        $("#editList").fadeIn(fadeTime * 2);
+        $("#editList").fadeIn(FADE_TIME * 2);
     });
 }
 
@@ -144,7 +144,7 @@ function validateAndSave(id) {
 
 function editorGoBack() {
     $("#saveBtn").hide();
-    $("#acctBtn, #settingsBtn").fadeIn(iOSBtnFadeTime);
+    $("#acctBtn, #settingsBtn").fadeIn(IOS_BTN_FADE_TIME);
     var backBtn = $("#iOSBackBtn");
     backBtn.off("click.editorGoBack");
     navi.popPage();
