@@ -262,8 +262,15 @@ function loadAcctList(optionalAcctToLoad) {
     var menuList = $("#menuList");
     menuList.empty();
     menuList.append('<ons-list-header>Accounts</ons-list-header>');
+
     $.each(accountMetadata, function (key, val) { // Loads stuff in accounts list and populates hamburger menu
-        menuList.append('<ons-list-item tappable modifier="ripple longdivider" onclick="getAndParseAccount(' + key + ',loadAcct)">' + val.name + '</ons-list-item>');
+        var listItem = $('<ons-list-item tappable modifier="ripple longdivider">' + val.name + '</ons-list-item>');
+
+        menuList.append(listItem);
+
+        listItem.on("click", function () {
+            getAndParseAccount(key, loadAcct);
+        });
     });
 
     /* iOS only: Add the add accounts button */
@@ -492,25 +499,37 @@ function loadAcct(data) {
 
     $.each(data.courses, function (key, val) { // Loads stuff in course list
         if (val.grade < 0) { // If no grades in a course
-            $("#list").append('<ons-list-item tappable modifier="chevron longdivider" class="course systemFont" onclick="alertMsg(\'There are currently no assignments in this course\')">' +
+            // Make a courseItem, append it to the list, and attach a listener
+            var courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course systemFont">' +
                 '<ons-col class="courseCol">' + // Column
                 '<div class="courseName">' + val.name + '</div>' + // Course name/period
                 '<div class="courseGrade">There are no grades in this course</div>' + // No Grades Entered
                 '<div class="courseTeacher">' + val.teacher + '</div>' + // Teacher name
                 '</ons-col></ons-list-item>');
+
+            $("#list").append(courseItem);
+
+            courseItem.on("click", function () {
+                alertMsg("There are currently no assignments in this course.");
+            });
         } else {
             if (isNumber(val.grade)) { // If it's a number, add it to the average
                 total += +val.grade; // We can safely cast to int now
                 count++;
             }
 
-            $("#list").append('<ons-list-item tappable modifier="chevron longdivider" class="course systemFont" ' +
-                'onclick="getAndParseCourse(' + val.GBID + ',' + val.CourseID + ',&apos;' + val.extType + '&apos;,' + val.extNum + ',&apos;' + val.name + '&apos;,&apos;' + val.teacher + '&apos;,' + '&apos;' + val.grade + '&apos;, loadGrades)">' +
+            var courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course systemFont">' +
                 '<ons-col class="courseCol">' + // Column
                 '<div class="courseName">' + val.name + '</div>' + // Course name/period
                 '<div class="courseGrade">Grade: ' + val.grade + '</div>' + // Grade
                 '<div class="courseTeacher">' + val.teacher + '</div>' + // Teacher name
                 '</ons-col></ons-list-item>');
+
+            $("#list").append(courseItem);
+
+            courseItem.on("click", function () {
+                getAndParseCourse(val, loadGrades);
+            });
         }
     });
 

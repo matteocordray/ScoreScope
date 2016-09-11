@@ -11,6 +11,7 @@ function loadAccountManager() {
         acctList.fadeOut(fadeTime, function () {
             acctList.empty();
             $.each(accountMetadata, function (key, val) {
+                // TODO: get rid of this onclick
                 acctList.append('<ons-list-item tappable modifier="material ripple longdivider" class="card">' +
                     '<ons-col class="listLeft" width="85%">' + '<div class="friendlyName">' + val.name + '</div>' +
                     '<div class="username">' + val.login + '</div><div class="districtName">' + val.districtName + '</div></ons-col>' +
