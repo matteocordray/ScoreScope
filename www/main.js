@@ -483,16 +483,16 @@ function loadAcct(data) {
     courseList.append('<ons-list-header id="hamburgerHeader">' + data.name + '</ons-list-header>');
 
     $.each(data.courses, function (key, val) { // Loads stuff in course list
+        var courseItem;
+        
         if (val.grade < 0) { // If no grades in a course
             // Make a courseItem, append it to the list, and attach a listener
-            var courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course">' +
+            courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course">' +
                 '<ons-col class="courseCol">' + // Column
                 '<div class="courseName">' + val.name + '</div>' + // Course name/period
                 '<div class="courseGrade">There are no grades in this course</div>' + // No Grades Entered
                 '<div class="courseTeacher">' + val.teacher + '</div>' + // Teacher name
                 '</ons-col></ons-list-item>');
-
-            $("#list").append(courseItem);
 
             courseItem.on("click", function () {
                 alertMsg("There are currently no assignments in this course.");
@@ -503,19 +503,18 @@ function loadAcct(data) {
                 count++;
             }
 
-            var courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course">' +
+            courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course">' +
                 '<ons-col class="courseCol">' + // Column
                 '<div class="courseName">' + val.name + '</div>' + // Course name/period
                 '<div class="courseGrade">Grade: ' + val.grade + '</div>' + // Grade
                 '<div class="courseTeacher">' + val.teacher + '</div>' + // Teacher name
                 '</ons-col></ons-list-item>');
 
-            $("#list").append(courseItem);
-
             courseItem.on("click", function () {
                 getAndParseCourse(val, loadGrades);
             });
         }
+        courseList.append(courseItem);
     });
 
     var outerCircle = $("#outerCircle");
