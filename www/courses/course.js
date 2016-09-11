@@ -46,7 +46,7 @@ function getAndParseCourse(GBID, CourseID, extType, extTerm, courseName, courseT
         while (element.next().length > 0) { // While there's still more elements below
             var currentCategory;
 
-            if (element.attr("class").indexOf("categories") != -1) { // If the current element is a category
+            if (element.attr("class").indexOf("categories") > -1) { // If the current element is a category
                 currentCategoryIndex++;
 
                 // Push empty template onto categories list

@@ -315,7 +315,6 @@ function getAndParseAccount(id, callback, doNotResetPage) {
     }).done(function () {
         // Detect is credentials are invalid. Good credentials will cause the response to contain the username
         if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || skyportReq.responseText.toLowerCase().indexOf(acct.login) == -1) {
-            // TODO: properly handle this
             displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't authenticate with the server. Please verify your credentials and try again.", "ErrorCircle", function () {
                 $("#mainPageErrMsgDiv").fadeOut(errFadeTime, function () {
                     getAndParseAccount(id, callback, doNotResetPage);
@@ -350,7 +349,6 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                 name: acct.name,
                 courses: []
             };
-            // The following line doesn't work for some reason on MS Edge. TODO: Find a workaround for MS Edge
             var page = $(new DOMParser().parseFromString(gradebookReq.responseText, "text/html"));
             var box = page.find(".myBox")[0];
             if (!box) { // If there is an error or something and the box cannot be found
@@ -410,7 +408,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                         teacher: teacherField.substring(teacherField.indexOf(":") + 2, teacherField.indexOf("<br>")).trim(),
                         grade: courseGrade,
                         GBID: element.parent().parent().parent().parent().attr("onclick").split("\"")[1].trim(),
-                        CourseID: element.parent().parent().parent().parent().attr("onclick").split("\"")[3].trim(),
+                        courseID: element.parent().parent().parent().parent().attr("onclick").split("\"")[3].trim(),
                         extType: courseExtType,
                         extNum: courseExtNum
                     });
