@@ -1,7 +1,6 @@
 var basePIColors = ["#BA302D", "#039BE5", "#7CB342", "#AFBF1F", "#5E35B1", "#1AAB8B"];
 
-//noinspection ParameterNamingConventionJS
-function getAndParseCourse(GBID, CourseID, extType, extTerm, courseName, courseTeacher, courseGrade, callback, doNotPushPage) {
+function getAndParseCourse(data, callback, doNotPushPage) {
 
     // Hack to make course error retry button works. Provide any value for doNotPushPage and the page will not pop.
     if (typeof doNotPushPage === "undefined") {
@@ -15,18 +14,18 @@ function getAndParseCourse(GBID, CourseID, extType, extTerm, courseName, courseT
         dwd: currentDWD,
         wfaacl: currentWFAACL,
         currentStudent: currentStudentID,
-        currentExtType: extType,
-        currentExtNum: extTerm,
-        currentGBId: GBID,
-        currentCourseId: CourseID,
+        currentExtType: data.extType,
+        currentExtNum: data.extNum,
+        currentGBId: data.GBID,
+        currentCourseId: data.courseID,
         LinkData: "studentaccess.w"
     }).done(function () {
         var page = $(new DOMParser().parseFromString(assnReq.responseText, "text/html"));
 
         var course = {
-            name: courseName,
-            teacher: courseTeacher,
-            grade: courseGrade,
+            name: data.name,
+            teacher: data.teacher,
+            grade: data.grade,
             categories: []
         };
 
@@ -81,7 +80,7 @@ function getAndParseCourse(GBID, CourseID, extType, extTerm, courseName, courseT
                 $("#loading").fadeIn(fadeTime);
 
                 $("#courseErrMsgDiv").fadeOut(errFadeTime, function () {
-                    getAndParseCourse(GBID, CourseID, extType, extTerm, courseName, courseTeacher, courseGrade, callback, true);
+                    getAndParseCourse(data, callback, true);
                 });
             });
         } else {
@@ -89,7 +88,7 @@ function getAndParseCourse(GBID, CourseID, extType, extTerm, courseName, courseT
                 $("#loading").fadeIn(fadeTime);
 
                 $("#courseErrMsgDiv").fadeOut(errFadeTime, function () {
-                    getAndParseCourse(GBID, CourseID, extType, extTerm, courseName, courseTeacher, courseGrade, callback, true);
+                    getAndParseCourse(data, callback, true);
                 });
             });
         }

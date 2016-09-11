@@ -304,44 +304,52 @@ function searchForDist() {
             }
             $.each(data, function (key, val) {
                 if (val.allowStu === "true") {
-                    list.append('<ons-list-item tappable class="district" modifier="longdivider" ' +
-                        'onclick="selectDistrict(&quot;' + val.studentURL + '&quot;,&quot;' + val.name + '&quot;,&quot;' + key + '&quot;)">' +
+                    var districtItem = $('<ons-list-item tappable class="district" modifier="longdivider">' +
                         '<ons-col class="distCol">' + // Column
                         '<div class="distName">' + val.name + '</div>' + // District Name
                         '<div class="distLoc">' + val.city + ' ' + val.state + '</div>' + // City + State
-                        '</ons-col></ons-list-item>'
-                    );
+                        '</ons-col></ons-list-item>');
+
+                    list.append(districtItem);
+
+                    districtItem.on("click", function () {
+                        selectDistrict(val, key);
+                    });
                 } else {
-                    list.append('<ons-list-item tappable class="district" modifier="longdivider" ' +
-                        'onclick="confirmAllowStuOverride(&quot;' + val.studentURL + '&quot;,&quot;' + val.name + '&quot;,&quot;' + key + '&quot;)">' +
+                    var districtItem = $('<ons-list-item tappable class="district" modifier="longdivider">' +
                         '<ons-col class="distCol">' + // Column
                         '<div class="distName">' + val.name + '</div>' + // District Name
                         '<div class="distLoc">' + val.city + ' ' + val.state + '</div>' + // City + State
-                        '</ons-col></ons-list-item>'
-                    );
+                        '</ons-col></ons-list-item>');
+
+                    list.append(districtItem);
+
+                    districtItem.on("click", function () {
+                        confirmAllowStuOverride(val, key);
+                    });
                 }
             });
         });
     }
 }
 
-function selectDistrict(url, name, id) {
-    account.url = url.substr(0, url.lastIndexOf("/") + 1); // Strips ending "bar.w" file, changing "foo/bar.w" to "foo/"
-    account.districtName = name;
+function selectDistrict(district, id) {
+    account.url = district.studentURL.substr(0, district.studentURL.lastIndexOf("/") + 1); // Strips ending "bar.w" file, changing "foo/bar.w" to "foo/"
+    account.districtName = district.name;
     $(".district").removeClass("selectedDistrict"); // Clears selected
     $(".district").eq(id).addClass("selectedDistrict"); // Selects district
     $("#next").fadeIn(fadeTime);
 }
 
-function confirmAllowStuOverride(url, name, id) {
-    if (url.length > 0) {
+function confirmAllowStuOverride(district, id) {
+    if (district.studentURL.length > 0) {
         ons.notification.confirm({
             message: "Your district administrator has not enabled mobile access. Some parts of ScoreScope may not function correctly. Would you like to continue anyways?",
             buttonLabels: ["Yes", "No"],
             primaryButtonIndex: 0
         }).then(function (response) {
             if (response === 0) {
-                selectDistrict(url, name, id);
+                selectDistrict(district, id);
             }
         });
     } else {
