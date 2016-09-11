@@ -62,13 +62,7 @@ function settingsGo(pageName) {
 
 function togglePrivacy() {
     settings.allowDiag = privacySwitch.checked;
-    ss.set(function (key) { // On success
-        console.info("Successfully updated " + key);
-        // TODO: maybe send a report
-    }, function (error) { // On error
-        alertMsg("Failed to save settings. Please try again.", "Error");
-        console.error("Failed to save settings. Error: " + error);
-    }, "settings", JSON.stringify(settings));
+    saveSettings();
 }
 
 function updatePrivacy() {
