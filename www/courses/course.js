@@ -1,13 +1,13 @@
 var basePIColors = ["#BA302D", "#039BE5", "#7CB342", "#AFBF1F", "#5E35B1", "#1AAB8B"];
 
 function getAndParseCourse(data, callback, doNotPushPage) {
-    $("#iOSBackBtn").fadeIn(iOSBtnFadeTime); // iOS only: fade in back button
+    $("#iOSBackBtn").fadeIn(IOS_BTN_FADE_TIME); // iOS only: fade in back button
 
     // Hack to make course error retry button works. Provide any value for doNotPushPage and the page will not pop.
     if (typeof doNotPushPage === "undefined") {
         navi.pushPage("courses/course.html", {
             animation: "slide",
-            animationOptions: {duration: transitionTime}
+            animationOptions: {duration: TRANSITION_TIME}
         });
     }
 
@@ -78,17 +78,17 @@ function getAndParseCourse(data, callback, doNotPushPage) {
     }).fail(function (xhr) { // Failure of request for assignments
         if (xhr.readyState == 0) { // This means no internet (or timed out)
             displayErrorPage("#courseErrMsgDiv", "Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
-                $("#loading").fadeIn(fadeTime);
+                $("#loading").fadeIn(FADE_TIME);
 
-                $("#courseErrMsgDiv").fadeOut(errFadeTime, function () {
+                $("#courseErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                     getAndParseCourse(data, callback, true);
                 });
             });
         } else {
             displayErrorPage("#courseErrMsgDiv", "Oh No!", "We couldn't retrieve assignment data (HTTP " + xhr.status + "). Please check your internet connection and try again.", "ErrorTriangle", function () {
-                $("#loading").fadeIn(fadeTime);
+                $("#loading").fadeIn(FADE_TIME);
 
-                $("#courseErrMsgDiv").fadeOut(errFadeTime, function () {
+                $("#courseErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                     getAndParseCourse(data, callback, true);
                 });
             });
@@ -108,7 +108,7 @@ function loadGrades(course) {
     var scale = 1.0; // Scale to account for empty categories
     var piColors = [];
 
-    loading.fadeOut(fadeTime * 2, function () { // Get rid of loading screen. Extra long fade time.
+    loading.fadeOut(FADE_TIME * 2, function () { // Get rid of loading screen. Extra long fade time.
         loading.remove();
 
         // The following lines appends the course and instructor names. Asmt stands for assignment

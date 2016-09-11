@@ -4,11 +4,11 @@ var ss; // Secure storage plugin
 var currentDWD, currentWFAACL, currentStudentID, currentAcctURL; //workaround; we should get rid of this eventually
 var currentAcctData;
 
-const timeout = 30000; // Default timeout in milliseconds
-const transitionTime = 0.3; // Time to reset page in seconds
-const fadeTime = 100; // Time to fade in main page in milliseconds
-const errFadeTime = 150; // Time to fade in/out the error messages in milliseconds
-const iOSBtnFadeTime = 100; // Time to fade iOS back button in milliseconds
+const TIMEOUT = 30000; // Default timeout in milliseconds
+const TRANSITION_TIME = 0.35; // Time to reset page in seconds
+const FADE_TIME = 50; // Time to fade in main page in milliseconds
+const ERR_FADE_TIME = 150; // Time to fade in/out the error messages in milliseconds
+const IOS_BTN_FADE_TIME = 100; // Time to fade iOS back button in milliseconds
 
 // The Main Thing
 ons.forcePlatformStyling("ios"); // Force iOS design, even on non-iOS platforms
@@ -17,7 +17,7 @@ $(document).ready(function () {
         // Nasty and unrecommended hack to set a timeout.
         // TODO: fix this shit
         $.ajaxSetup({
-            timeout: timeout
+            timeout: TIMEOUT
         });
 
         $("#iOSBackBtn").on("click.goBack", goBack);
@@ -71,7 +71,7 @@ function goBack() {
     if (typeof settingsNavi !== "undefined" && settingsNavi.topPage.name !== "mainSettings") {
         settingsNavi.popPage({
             animation: "slide",
-            animationOptions: {duration: transitionTime}
+            animationOptions: {duration: TRANSITION_TIME}
         });
         $("#title").text("Settings");
         return;
@@ -79,8 +79,8 @@ function goBack() {
 
     switch (navi.pages[navi.pages.length - 2].name.toLowerCase()) {
         case "mainpage":
-            $('#iOSBackBtn').fadeOut(iOSBtnFadeTime); // iOS only back button handler
-            $(".right").fadeIn(fadeTime);
+            $('#iOSBackBtn').fadeOut(IOS_BTN_FADE_TIME); // iOS only back button handler
+            $(".right").fadeIn(FADE_TIME);
             $("#title").text("Gradebook");
             break;
         case "accounts/accountManager.html":
@@ -95,7 +95,7 @@ function goBack() {
     }
     navi.popPage({
         animation: "slide",
-        animationOptions: {duration: transitionTime} // Longer because stuff needs to load
+        animationOptions: {duration: TRANSITION_TIME} // Longer because stuff needs to load
     });
 }
 
@@ -114,7 +114,7 @@ function onResume() { // Treat resuming like a fresh open
 
     navi.resetToPage("mainPage", {
         animation: "lift",
-        animationOptions: {duration: transitionTime}
+        animationOptions: {duration: TRANSITION_TIME}
     }).then(function () {
         loadAcctList();
     });
@@ -135,7 +135,7 @@ function resetSettings() {
 }
 
 function goToSettings() {
-    $("#iOSBackBtn").fadeIn(iOSBtnFadeTime); // iOS only: fade in back button (and don't close the menu because there is none)
+    $("#iOSBackBtn").fadeIn(IOS_BTN_FADE_TIME); // iOS only: fade in back button (and don't close the menu because there is none)
 
     if (navi.topPage.name == "settings/settings.html") {
         if (settingsNavi.topPage.name !== "mainSettings") {
@@ -144,15 +144,15 @@ function goToSettings() {
                 $("#title").text("Settings");
             });
         } else { // If already on settings page, flash
-            $(settingsNavi).fadeOut(fadeTime);
-            $(settingsNavi).fadeIn(fadeTime);
+            $(settingsNavi).fadeOut(FADE_TIME);
+            $(settingsNavi).fadeIn(FADE_TIME);
         }
         return;
     }
 
     navi.resetToPage("settings/settings.html", {
         animation: "slide",
-        animationOptions: {duration: transitionTime}
+        animationOptions: {duration: TRANSITION_TIME}
     }).then(function () { // Must use .then() because settings dom is not loaded until animation completes
         navi.insertPage(0, "mainPage").then(function () {
             loadAcct(currentAcctData); // Ensure that user can always back out
@@ -166,7 +166,7 @@ function openAcctPopover() { // iOS only popover button handler
 }
 
 function goToAcctMgr() {
-    $("#iOSBackBtn").fadeIn(iOSBtnFadeTime); // iOS only: fade in back button, hide popover, and don't close the menu because there is none
+    $("#iOSBackBtn").fadeIn(IOS_BTN_FADE_TIME); // iOS only: fade in back button, hide popover, and don't close the menu because there is none
     pop.hide();
 
     if (navi.topPage.name == "accounts/accountManager.html") {
@@ -177,7 +177,7 @@ function goToAcctMgr() {
 
     navi.resetToPage("accounts/accountManager.html", {
         animation: "slide",
-        animationOptions: {duration: transitionTime}
+        animationOptions: {duration: TRANSITION_TIME}
     }).then(function () {
         loadAccountManager();
 
@@ -215,8 +215,8 @@ function displayErrorPage(selector, errorTitle, errorContent, errorIconType, ret
     }
 
     // Use when selector so that callback gets called once even if there are multiple loadingCircles
-    $.when($(".loadingCircle").fadeOut(errFadeTime)).then(function () {
-        $(selector + ".errorMsgDiv").fadeIn(errFadeTime);
+    $.when($(".loadingCircle").fadeOut(ERR_FADE_TIME)).then(function () {
+        $(selector + ".errorMsgDiv").fadeIn(ERR_FADE_TIME);
     });
 }
 
@@ -311,7 +311,7 @@ function loadAcctList(optionalAcctToLoad) {
 }
 
 function getAndParseAccount(id, callback, doNotResetPage) {
-    $("#mainPageErrMsgDiv").fadeOut(errFadeTime);
+    $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME);
 
     var resetPage = !doNotResetPage;
 
@@ -325,15 +325,18 @@ function getAndParseAccount(id, callback, doNotResetPage) {
     /* iOS only: hide popover and back button, then pop page (this is ok since on iOS the account switcher is only shown
      *  on the grades and courses pages) */
     pop.hide();
+
     if (navi.pages.length >= 2 && navi.pages[navi.pages.length - 2].name === "mainPage") { // If going back to mainpage, remove back button
-        $("#iOSBackBtn").fadeOut(iOSBtnFadeTime);
+        $("#iOSBackBtn").fadeOut(IOS_BTN_FADE_TIME);
         $("#title").text("Gradebook"); // Change title text
     }
+
     $(".fade").hide(); // Hide stuff that needs to fade in
+
     if (navi.topPage.name !== "mainPage" && resetPage) { // If currently on course view, pop!
         navi.popPage({
             animation: "slide",
-            animationOptions: {duration: transitionTime}
+            animationOptions: {duration: TRANSITION_TIME}
         }).then(function () {
             finishedAnimation = true;
             if (finishedRetrieving) { // If the app has retrieved the data before the page resets, load data after reset
@@ -348,7 +351,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
     }
     /* End iOS only code */
 
-    $("#mainLoading").fadeIn(fadeTime);
+    $("#mainLoading").fadeIn(FADE_TIME);
 
     var acct = accountMetadata[id];
 
@@ -362,7 +365,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
         // Detect is credentials are invalid. Good credentials will cause the response to contain the username
         if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || skyportReq.responseText.toLowerCase().indexOf(acct.login) == -1) {
             displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't authenticate with the server. Please verify your credentials and try again.", "ErrorCircle", function () {
-                $("#mainPageErrMsgDiv").fadeOut(errFadeTime, function () {
+                $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                     getAndParseAccount(id, callback, doNotResetPage);
                 });
             });
@@ -406,13 +409,13 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                 if (possibleErrorLocation.length > 0) { // Check if there's an error message here
                     // If the possible location exists, take the first one and return the error
                     displayErrorPage("#mainPageErrMsgDiv", "Oh No!", possibleErrorLocation.text().trim(), "ErrorCircle", function () {
-                        $("#mainPageErrMsgDiv").fadeOut(errFadeTime, function () {
+                        $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                             getAndParseAccount(idX, callbackX, true); // Never reset the page regardless of original parameter
                         });
                     });
                 } else {
                     displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "An unexpected error has occurred. Please try again later", "ErrorCircle", function () {
-                        $("#mainPageErrMsgDiv").fadeOut(errFadeTime, function () {
+                        $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                             getAndParseAccount(idX, callbackX, true); // Never reset the page regardless of original parameter
                         });
                     });
@@ -471,13 +474,13 @@ function getAndParseAccount(id, callback, doNotResetPage) {
             // Some more callback hell
             if (xhr.readyState == 0) { // readyState = 0 means no internet connection
                 displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
-                    $("#mainPageErrMsgDiv").fadeOut(errFadeTime, function () {
+                    $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                         getAndParseAccount(id, callback, doNotResetPage);
                     });
                 });
             } else {
                 displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't retrieve your account information (HTTP " + xhr.status + "). Please try again later.", "ErrorTriangle", function () {
-                    $("#mainPageErrMsgDiv").fadeOut(errFadeTime, function () {
+                    $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                         getAndParseAccount(id, callback, doNotResetPage);
                     });
                 });
@@ -486,13 +489,13 @@ function getAndParseAccount(id, callback, doNotResetPage) {
     }).fail(function (xhr) { // Failure of first request
         if (xhr.readyState == 0) { // readyState = 0 means no internet connection
             displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
-                $("#mainPageErrMsgDiv").fadeOut(errFadeTime, function () {
+                $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                     getAndParseAccount(id, callback, doNotResetPage);
                 });
             });
         } else {
             displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't send your credentials (HTTP " + xhr.status + "). Please try again later.", "ErrorTriangle", function () {
-                $("#mainPageErrMsgDiv").fadeOut(errFadeTime, function () {
+                $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                     getAndParseAccount(id, callback, doNotResetPage);
                 });
             });
@@ -504,7 +507,7 @@ function loadAcct(data) {
     if (!data) {
         $(".fade").hide();
         displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't load this account. This might be caused by your internet connection.", "ErrorCircle", function () {
-            $("#mainPageErrMsgDiv").fadeOut(errFadeTime, function () {
+            $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                 loadAcct(currentAcctData);
             });
         });
@@ -514,7 +517,7 @@ function loadAcct(data) {
     var total = 0; // Total grade across all courses
     var count = 0; // Number of courses
 
-    $("#mainLoading, #mainPageErrMsgDiv").fadeOut(fadeTime);
+    $("#mainLoading, #mainPageErrMsgDiv").fadeOut(FADE_TIME);
 
     var courseList = $("#list");
     courseList.empty(); //Empties the list so we can add stuff
