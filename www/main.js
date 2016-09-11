@@ -42,7 +42,7 @@ $(document).ready(function () {
 
                     document.addEventListener("resume", onResume, false);
                 }, function (error) { // If there's an error, fuck it and make user log in again
-                    console.error(error);
+                    console.warn(error);
                     console.warn("Assuming first run! Redirecting...");
                     window.location.replace("accounts/firstRun.html");
                 }, "accountMetadata");
