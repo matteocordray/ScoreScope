@@ -42,10 +42,10 @@ $(document).ready(function () {
         // Initialize SecureStorage plugin and get metadata
         ss = new cordova.plugins.SecureStorage(
             function () { // If success
-                console.log("Secure storage init complete!");
+                console.info("Secure storage init complete!");
                 ss.get(function (metadata) { // If success
                     accountMetadata = JSON.parse(metadata).accounts;
-                    console.log("Successfully retrieved metadata!");
+                    console.info("Successfully retrieved metadata!");
 
                     loadAcctList();
 
@@ -53,7 +53,7 @@ $(document).ready(function () {
                     document.addEventListener("backbutton", updateTitle, false);
                 }, function (error) { // If there's an error, fuck it and make user log in again
                     console.warn(error);
-                    console.log("Assuming first run! Redirecting...");
+                    console.warn("Assuming first run! Redirecting...");
                     window.location.replace("accounts/firstRun.html");
                 }, "accountMetadata");
             },
@@ -484,7 +484,7 @@ function loadAcct(data) {
 
     $.each(data.courses, function (key, val) { // Loads stuff in course list
         var courseItem;
-        
+
         if (val.grade < 0) { // If no grades in a course
             // Make a courseItem, append it to the list, and attach a listener
             courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course">' +
