@@ -56,6 +56,16 @@ $(document).ready(function () {
                     console.warn("Assuming first run! Redirecting...");
                     window.location.replace("accounts/firstRun.html");
                 }, "accountMetadata");
+
+                // Retrieve settings as well
+                ss.get(function (settingsJSON) { // If success
+                    settings = JSON.parse(settingsJSON);
+                    console.info("Successfully retrieved settings!");
+                }, function (error) { // If there's an error, set settings to defaults
+                    console.warn(error);
+                    console.warn("Could not retrieve settings...resetting to defaults");
+                    resetSettings();
+                }, "settings");
             },
             function (error) {
                 console.error("Error: " + error);
@@ -119,6 +129,20 @@ function updateTitle() { // Updates Title. Is run after navi pops the page
     } else if (nextInStack === "mainpage") {
         title.text("Gradebook");
     }
+}
+
+function resetSettings() {
+    var defaultSettings = {
+        allowDiag: true
+    };
+
+    ss.set(function (key) { // On success
+        console.info("Successfully reset settings to defaults");
+    }, function (error) { // On error
+        // Probably shouldn't bother notifying the user.
+        console.warn("Failed to set default settings! Error: " + error);
+        // TODO: Send error log
+    }, "settings", JSON.stringify(defaultSettings));
 }
 
 function goToSettings() {
