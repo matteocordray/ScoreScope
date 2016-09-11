@@ -78,7 +78,7 @@ $(document).ready(function () {
                 }, function (error) { // If there's an error, set settings to defaults
                     console.warn(error);
                     console.warn("Could not retrieve settings...resetting to defaults");
-                    resetSettings();
+                    saveSettings(DEFAULT_SETTINGS);
                 }, "settings");
             },
             function (error) {
@@ -144,14 +144,13 @@ function onResume() { // Treat resuming like a fresh open
     });
 }
 
-function resetSettings() {
+function saveSettings(optionalSettings) {
     ss.set(function (key) { // On success
-        console.info("Successfully reset settings to defaults");
+        console.info("Successfully updated " + key);
     }, function (error) { // On error
-        // Probably shouldn't bother notifying the user.
-        console.warn("Failed to set default settings! Error: " + error);
-        // TODO: Send error log
-    }, "settings", JSON.stringify(DEFAULT_SETTINGS));
+        alertMsg("Failed to save settings. Please try again.", "Error");
+        console.error("Failed to save settings. Error: " + error);
+    }, "settings", JSON.stringify(typeof optionalSettings === "undefined" ? settings : optionalSettings));
 }
 
 function goToSettings() {
