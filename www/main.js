@@ -64,7 +64,8 @@ $(document).ready(function () {
                     if (typeof settings.version === "undefined" || settings.version < VERSION) { // On upgrade
                         console.info("Settings are out of date! Upgrading to " + VERSION);
 
-                        $.extend(DEFAULT_SETTINGS, settings); // Merge settings with default settings, with settings having priority
+                        // Merge settings with default settings, with settings having priority
+                        settings = $.extend(DEFAULT_SETTINGS, settings);
 
                         ss.set(function (key) { // On success
                             console.info("Successfully upgraded settings to " + VERSION);
