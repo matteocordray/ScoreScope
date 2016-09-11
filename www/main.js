@@ -8,6 +8,15 @@ const TIMEOUT = 30000; // Default timeout in milliseconds
 const TRANSITION_TIME = 0.35; // Time to reset page in seconds
 const FADE_TIME = 50; // Time to fade in main page in milliseconds
 const ERR_FADE_TIME = 150; // Time to fade in/out the error messages in milliseconds
+const VERSION = "1.9.1";
+const DEFAULT_SETTINGS = {
+    allowDiag: true,
+    allowPush: true,
+    pushInterval: 3600, // Default push interval is 1 hour
+    version: VERSION
+};
+
+/* iOS Only */
 const IOS_BTN_FADE_TIME = 100; // Time to fade iOS back button in milliseconds
 
 // The Main Thing
@@ -51,6 +60,20 @@ $(document).ready(function () {
                 ss.get(function (settingsJSON) { // If success
                     settings = JSON.parse(settingsJSON);
                     console.info("Successfully retrieved settings!");
+
+                    if (typeof settings.version === "undefined" || settings.version < VERSION) { // On upgrade
+                        console.info("Settings are out of date! Upgrading to " + VERSION);
+
+                        $.extend(DEFAULT_SETTINGS, settings); // Merge settings with default settings, with settings having priority
+
+                        ss.set(function (key) { // On success
+                            console.info("Successfully upgraded settings to " + VERSION);
+                        }, function (error) { // On error
+                            // Probably shouldn't bother notifying the user.
+                            console.warn("Failed to upgrade settings! Error: " + error);
+                            // TODO: Send error log
+                        }, "settings", JSON.stringify(settings));
+                    }
                 }, function (error) { // If there's an error, set settings to defaults
                     console.warn(error);
                     console.warn("Could not retrieve settings...resetting to defaults");
@@ -121,17 +144,13 @@ function onResume() { // Treat resuming like a fresh open
 }
 
 function resetSettings() {
-    var defaultSettings = {
-        allowDiag: true
-    };
-
     ss.set(function (key) { // On success
         console.info("Successfully reset settings to defaults");
     }, function (error) { // On error
         // Probably shouldn't bother notifying the user.
         console.warn("Failed to set default settings! Error: " + error);
         // TODO: Send error log
-    }, "settings", JSON.stringify(defaultSettings));
+    }, "settings", JSON.stringify(DEFAULT_SETTINGS));
 }
 
 function goToSettings() {
