@@ -240,7 +240,8 @@ function displayErrorPage(selector, errorTitle, errorContent, errorIconType, ret
 }
 
 function isNumber(number) {
-    return !isNaN(parseFloat(number)) && isFinite(number);
+    return typeof number !== "undefined" && !isNaN(parseFloat(number)) && isFinite(number);
+}
 }
 
 /**
