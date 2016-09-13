@@ -242,6 +242,9 @@ function displayErrorPage(selector, errorTitle, errorContent, errorIconType, ret
 function isNumber(number) {
     return typeof number !== "undefined" && !isNaN(parseFloat(number)) && isFinite(number);
 }
+
+function ensureRange(value, min, max) {
+    return Math.min(Math.max(value, min), max);
 }
 
 /**
@@ -396,6 +399,8 @@ function getAndParseAccount(id, callback, doNotResetPage) {
              */
             dataOut = {
                 name: acct.name,
+                goal: acct.goal,
+                failing: acct.failing,
                 courses: []
             };
             var page = $(new DOMParser().parseFromString(gradebookReq.responseText, "text/html"));
@@ -565,8 +570,13 @@ function loadAcct(data) {
     outerCircle.css("width", outerDia);
     outerCircle.css("border-radius", outerDia / 2);
 
-    // 60 is represented as pure red. 2.5 comes from 100 / (average - 60)
-    outerCircle.css("background", colorFromGrade((Math.round(total / count) - 60) * 2.5));
+    // Failing is represented as pure red, while Goal is pure green
+    var goal = isNumber(data.goal) ? data.goal : 100;
+    var failing = isNumber(data.failing) ? data.failing : 60;
+    // First, compute the average. Ensure colorAverage is between failing and goal.
+    var colorAverage = ensureRange(Math.round(total / count), failing, goal);
+    // Then, stretch the numbers from failing-goal to 0-100 by subtracting failing (new scale: 0-(goal-failing)) and multiplying by 100 / goal-failing (new scale: 0-100
+    outerCircle.css("background", colorFromGrade((colorAverage - failing) * (100 / (goal - failing))));
 
     var innerCircle = $("#innerCircle");
     innerCircle.empty();
