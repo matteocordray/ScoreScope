@@ -63,11 +63,16 @@
             <ons-progress-circular indeterminate></ons-progress-circular>
             <div>&nbsp;&nbsp;Loading...</div>
         </div>
-        <div id="avgCircleArea" class="fade">
+        <div id="avgCircleArea" class="fade systemFont">
             <div id="outerCircle">
-                <div id="innerCircle" class="systemFont"></div>
+                <div id="innerCircle"></div>
             </div>
-            <div id="avgText" class="systemFont"></div>
+            <div id="avgText"></div>
+            <div id="goal" style="display: none;" class="fade"> <!-- Initially hide, but fade in -->
+                <ons-icon class="goalIcon" icon="fa-trophy"></ons-icon>
+                Goal: Not Set
+                <ons-icon class="goalIcon" icon="fa-pencil"></ons-icon>
+            </div>
         </div>
         <ons-list id="list" class="fade systemFont"></ons-list>
     </ons-template>
