@@ -51,25 +51,16 @@ $(document).ready(function () {
 
                     document.addEventListener("resume", onResume, false);
 
-                    AppRate.preferences = {
-                        displayAppName: "ScoreScope",
-                        storeAppURL: {
-                            ios: "com.albertzhang.scorescope",
-                            android: "market://details?id=com.albertzhang.scorescope",
-                            windows: "ms-windows-store://pdp/?ProductId=9NBLGGH515N6"
-                        },
-                        customLocale: {
-                            title: "ScoreScope",
-                            message: "Would you mind taking a moment to rate and review %@? Thank you for your support!",
-                            cancelButtonLabel: "No Thanks",
-                            laterButtonLabel: "Remind Me Later",
-                            rateButtonLabel: "Yes, Rate %@"
-                        }
+                    AppRate.preferences.displayAppName = "ScoreScope";
+                    AppRate.preferences.useLanguage = 'en';
+                    AppRate.preferences.storeAppURL = {
+                        ios: "com.albertzhang.scorescope",
+                        android: "market://details?id=com.albertzhang.scorescope",
+                        windows: "ms-windows-store://pdp/?ProductId=9NBLGGH515N6"
                     };
-
                     AppRate.promptForRating(false); // need false parameter to respect user decline
                 }, function (error) { // If there's an error, fuck it and make user log in again
-                    console.warn(error);
+                    console.error(error);
                     console.warn("Assuming first run! Redirecting...");
                     window.location.replace("accounts/firstRun.html");
                 }, "accountMetadata");
