@@ -177,6 +177,31 @@ function advancePage() {
 function searchForDist() {
     var searchTerm = $("#search").val().trim();
 
+    if (searchTerm.toLowerCase() == "appreview124") {
+        var data = {
+            name: "Test District",
+            studentURL: "http://162.243.217.157:8085/testing/seplog01.w",
+            city: "Anycity",
+            state: "Anystate"
+        };
+
+        $("#loading").fadeOut(FADE_TIME, function () {
+            var testDistrict = $('<ons-list-item tappable class="district" modifier="longdivider">' +
+                '<ons-col class="distCol">' + // Column
+                '<div class="distName">' + data.name + '</div>' + // District Name
+                '<div class="distLoc">' + data.city + ' ' + data.state + '</div>' + // City + State
+                '</ons-col></ons-list-item>'
+            );
+
+            $("#list").append(testDistrict);
+
+            testDistrict.on("click", function () {
+                selectDistrict(data, 0);
+            });
+        });
+        return;
+    }
+
     if (isNumber(searchTerm) && searchTerm.length == 5) { // If it's a postal code
         $.soap({
             url: "http://rms.skyward.com/rmswebservices/Company/GPSfromZip.asmx",
