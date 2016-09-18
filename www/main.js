@@ -3,6 +3,7 @@ var settings;
 var ss; // Secure storage plugin
 var currentDWD, currentWFAACL, currentStudentID, currentAcctURL; //workaround; we should get rid of this eventually
 var currentAcctData;
+var currentAcctID;
 
 const TIMEOUT = 30000; // Default timeout in milliseconds
 const TRANSITION_TIME = 0.35; // Time to reset page in seconds
@@ -149,7 +150,7 @@ function onResume() { // Treat resuming like a fresh open
         animation: "lift",
         animationOptions: {duration: TRANSITION_TIME}
     }).then(function () {
-        loadAcctList();
+        loadAcctList(currentAcctID);
     });
 }
 
@@ -343,6 +344,8 @@ function loadAcctList(optionalAcctToLoad) {
 }
 
 function getAndParseAccount(id, callback, doNotResetPage) {
+    currentAcctID = id;
+
     $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME);
 
     var resetPage = !doNotResetPage;
