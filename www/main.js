@@ -146,6 +146,9 @@ function onResume() { // Treat resuming like a fresh open
     backBtn.on("click.goBack", goBack);
     backBtn.hide();
 
+    $("#goalDialog").hide(); // hide without animation
+
+    $("#title").text("Gradebook");
     navi.resetToPage("mainPage", {
         animation: "lift",
         animationOptions: {duration: TRANSITION_TIME}
@@ -161,6 +164,22 @@ function saveSettings(optionalSettings) {
         alertMsg("Failed to save settings. Please try again.", "Error");
         console.error("Failed to save settings. Error: " + error);
     }, "settings", JSON.stringify(typeof optionalSettings === "undefined" ? settings : optionalSettings));
+}
+
+function saveAcctMetadata(optionalMetadata, callback) {
+    var accountMD = {
+        accounts: optionalMetadata ? optionalMetadata : accountMetadata
+    };
+
+    ss.set(function (key) { // On success
+        console.info("Successfully updated " + key);
+    }, function (error) { // On error
+        alertMsg("Failed to save account metadata. Please try again.", "Error");
+        console.error("Failed to save account metadata. Error: " + error);
+    }, "accountMetadata", JSON.stringify(accountMD));
+    if (callback) {
+        callback();
+    }
 }
 
 function goToSettings() {
@@ -228,6 +247,51 @@ function alertMsg(text, title, callback) {
     });
 }
 
+function promptForGoal() {
+    var goalInput, failingInput;
+
+    if (ons.platform._renderPlatform === "ios") { // iOS has different element ids
+        goalInput = $("#goalInputIOS")[0];
+        failingInput = $("#failingInputIOS")[0];
+    } else {
+        goalInput = $("#goalInput")[0];
+        failingInput = $("#failingInput")[0];
+    }
+
+    $("#goalCancelBtn").one("click", function () {
+        $("#goal").off("click").one("click", promptForGoal);
+        goalDialog.hide();
+    });
+
+    $("#goalOKBtn").one("click", function () {
+        if (isNumber(goalVal) && isNumber(failingVal)) {
+            // Protect against weird user input
+            var goalVal = Math.ceil(goalInput.value);
+            var failingVal = Math.ceil(failingInput.value);
+
+            if (goalVal < failingVal) {
+                var tmp = goalVal;
+                goalVal = failingVal;
+                failingVal = tmp;
+            }
+            if (goalVal === failingVal) {
+                failingVal--;
+            }
+
+            accountMetadata[currentAcctID].goal = goalVal;
+            accountMetadata[currentAcctID].failing = failingVal;
+        } else {
+            accountMetadata[currentAcctID].goal = returnUndefined();
+            accountMetadata[currentAcctID].failing = returnUndefined();
+        }
+
+        goalDialog.hide();
+        saveAcctMetadata(null, onRefreshClick);
+    });
+
+    goalDialog.show();
+}
+
 function displayErrorPage(selector, errorTitle, errorContent, errorIconType, retryCallback) {
     $(selector + " > .errorTitle").text(errorTitle);
     $(selector + " > .errorDetails").text(errorContent);
@@ -255,6 +319,10 @@ function isNumber(number) {
 
 function ensureRange(value, min, max) {
     return Math.min(Math.max(value, min), max);
+}
+
+function returnUndefined() {
+    return;
 }
 
 /**
@@ -550,6 +618,10 @@ function loadAcct(data) {
         });
         return;
     }
+
+    var goalText = $("#goalText");
+    goalText.text("Goal: " + (isNumber(data.goal) ? data.goal : "Not Set"));
+    $("#goal").off("click").one("click", promptForGoal);
 
     var total = 0; // Total grade across all courses
     var count = 0; // Number of courses
