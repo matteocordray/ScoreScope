@@ -263,7 +263,7 @@ function promptForGoal() {
     });
 
     $("#goalOKBtn").one("click", function () {
-        if (isNumber(goalVal) && isNumber(failingVal)) {
+        if (isNumber(goalInput.value) && isNumber(failingInput.value)) {
             // Protect against weird user input
             var goalVal = Math.ceil(goalInput.value);
             var failingVal = Math.ceil(failingInput.value);
