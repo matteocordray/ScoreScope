@@ -70,7 +70,7 @@
             <div id="avgText"></div>
             <div id="goal" style="display: none;" class="fade"> <!-- Initially hide, but fade in -->
                 <ons-icon class="goalIcon" icon="fa-trophy"></ons-icon>
-                Goal: Not Set
+                <div id="goalText">Goal: Not Set</div>
                 <ons-icon class="goalIcon" icon="fa-pencil"></ons-icon>
             </div>
         </div>
@@ -82,4 +82,22 @@
     <ons-list id="menuList">
     </ons-list>
 </ons-popover>
+<ons-alert-dialog id="goalDialog">
+    <div class="alert-dialog-title">Set a Goal</div>
+    <div class="alert-dialog-content">
+        <div class="alertItem">Set a goal to track your progress.</div>
+        <ons-if platform="ios">
+            <ons-input input-id="goalInputIOS" type="number" placeholder="Goal"></ons-input>
+            <ons-input input-id="failingInputIOS" type="number" placeholder="Failing Grade"></ons-input>
+        </ons-if>
+        <ons-if platform="android windows other">
+            <ons-input input-id="goalInput" class="alertItem" type="number" placeholder="Goal"></ons-input>
+            <ons-input input-id="failingInput" class="alertItem" type="number" placeholder="Failing Grade"></ons-input>
+        </ons-if>
+    </div>
+    <div class="alert-dialog-footer">
+        <button id="goalOKBtn" class="alert-dialog-button">OK</button>
+        <button id="goalCancelBtn" class="alert-dialog-button">Cancel</button>
+    </div>
+</ons-alert-dialog>
 </html>

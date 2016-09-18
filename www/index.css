@@ -114,6 +114,19 @@
     margin: 25px 5px;
 }
 
+#goal {
+    font-size: smaller;
+    text-align: center;
+}
+
+#goalText {
+    display: inline;
+}
+
 .goalIcon {
     margin: 2.5px;
+}
+
+.alertItem {
+    margin: 10px 0;
 }
