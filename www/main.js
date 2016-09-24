@@ -6,9 +6,9 @@ var currentAcctData;
 var currentAcctID;
 
 const TIMEOUT = 30000; // Default timeout in milliseconds
-const TRANSITION_TIME = 0.35; // Time to reset page in seconds
-const FADE_TIME = 50; // Time to fade in main page in milliseconds
-const ERR_FADE_TIME = 150; // Time to fade in/out the error messages in milliseconds
+const TRANSITION_TIME = 0.4; // Time to reset page in seconds
+const FADE_TIME = 75; // Time to fade in main page in milliseconds
+const ERR_FADE_TIME = 175; // Time to fade in/out the error messages in milliseconds
 const VERSION = "1.9.1";
 const DEFAULT_SETTINGS = {
     allowDiag: true,
