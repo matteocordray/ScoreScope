@@ -17,6 +17,13 @@ var account = {
 //The main deal
 ons.forcePlatformStyling("ios"); // Forces iOS design on all platforms
 $(document).ready(function () {
+
+    if (cordova.platformId === "windows") { // Override onerror to avoid crash on console.error()
+        window.onerror = function () {
+            return true;
+        }
+    }
+
     ons.ready(function () {
         $("#back").click(backPage);
         $("#next").click(advancePage);

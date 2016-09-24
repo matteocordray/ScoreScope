@@ -86,4 +86,23 @@
         <splash src="res/splash/android/landscape-xxhdpi.png" density="land-xxhdpi"/>
         <splash src="res/splash/android/landscape-xxxhdpi.png" density="land-xxxhdpi"/>
     </platform>
+
+    <platform name="windows">
+        <!-- Windows specific preferences -->
+        <preference name="windows-target-version" value="10.0"/>
+        <preference name="WindowsStoreIdentityName" value="com.albertzhang.scorescope"/>
+        <preference name="WindowsStorePublisherName" value="Albert Z."/>
+        <preference name="BackgroundColor" value="transparent"/>
+
+        <!-- ICONS -->
+        <icon src="res/icon/windows/StoreLogo.png" target="StoreLogo"/>
+        <icon src="res/icon/windows/Square44x44Logo.png" target="Square44x44Logo"/>
+        <icon src="res/icon/windows/Square71x71Logo.png" target="Square71x71Logo"/>
+        <icon src="res/icon/windows/Square150x150Logo.png" target="Square150x150Logo"/>
+        <icon src="res/icon/windows/Square310x310Logo.png" target="Square310x310Logo"/>
+        <icon src="res/icon/windows/Wide310x150Logo.png" target="Wide310x150Logo"/>
+
+        <!-- SPLASH SCREENS -->
+        <splash src="res/screen/windows/SplashScreen.png" target="SplashScreen"/>
+    </platform>
 </widget>

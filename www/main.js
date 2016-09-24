@@ -23,6 +23,13 @@ const IOS_BTN_FADE_TIME = 100; // Time to fade iOS back button in milliseconds
 // The Main Thing
 ons.forcePlatformStyling("ios"); // Force iOS design, even on non-iOS platforms
 $(document).ready(function () {
+
+    if (cordova.platformId === "windows") { // Override onerror to avoid crash on console.error()
+        window.onerror = function () {
+            return true;
+        }
+    }
+
     ons.ready(function () {
         // Nasty and unrecommended hack to set a timeout.
         // TODO: fix this shit
