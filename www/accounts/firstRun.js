@@ -16,6 +16,13 @@ var account = {
 //The main deal
 ons.forcePlatformStyling("android"); // Forces material design, even on non-android platforms
 $(document).ready(function () {
+
+    if (cordova.platformId === "windows") { // Override onerror to avoid crash on console.error()
+        window.onerror = function () {
+            return true;
+        }
+    }
+
     ons.ready(function () {
         $("#back").click(backPage);
         document.addEventListener("backbutton", function () { // terrible hack for upstream bug :`(
