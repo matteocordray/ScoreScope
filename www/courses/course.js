@@ -29,7 +29,20 @@ function getAndParseCourse(data, callback, doNotPushPage) {
             categories: []
         };
 
-        var element = $(page.find(".categories")[0]);
+        var categories = page.find(".categories");
+
+        if (categories.length > 0) {
+            var element = $(categories[0]);
+        } else {
+            displayErrorPage("#courseErrMsgDiv", "Oh No!", "The server sent a malformed response.", "ErrorCircle", function () {
+                $("#loading").fadeIn(FADE_TIME);
+
+                $("#courseErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
+                    getAndParseCourse(data, callback, true);
+                });
+            });
+            return;
+        }
 
         // Index of current category in the categories array of course.
         // Starts at -1 because it is incremented at the beginning of every category, so the first one will start at 0
