@@ -26,6 +26,7 @@ function getAndParseCourse(data, callback, doNotPushPage) {
             name: data.name,
             teacher: data.teacher,
             grade: data.grade,
+            latestTerm: data.friendlyGPName,
             categories: []
         };
 
@@ -124,9 +125,10 @@ function loadGrades(course) {
         loading.remove();
 
         // The following lines appends the course and instructor names. Asmt stands for assignment
-        asmtList.append('<div class="asmtHeader">' +
-            '<div class="asmtHeader" id="asmtCourseName">' + course.name + '</div>' +
-            '<div class="asmtHeader" id="asmtCourseTeacher">' + course.teacher + '</div></div>'
+        asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
+            '<div id="asmtCourseName">' + course.name + '</div>' +
+            '<div id="asmtCourseTeacher">' + course.teacher + '</div>' + /*end asmtHeaderLeft*/'</div>' +
+            '<div id="asmtHeaderRight">' + course.latestTerm + '<ons-icon icon="fa-chevron-down" id="dropDownIcon"></ons-icon></div>' + /*end asmtHeader*/'</div>'
         );
 
         asmtList.append('<div id="piDiv"><ons-row><ons-col width="' + $(window).width() * 0.55 + 'px" vertical-align="center">' +

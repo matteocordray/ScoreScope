@@ -525,12 +525,14 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                     // The following code gets the latest grade (whether it be exam, grading period, etc.)
                     var courseRow = rows[i].children;
                     var courseGrade = -1;
-                    var courseExtType, courseExtNum;
+                    var courseExtType, courseExtNum, courseExtFriendlyNum;
                     for (var index = courseRow.length - 2; index >= 1; index--) { // For each grading period (stops at 1 because first column is name of course
                         var col = $(courseRow[index]);
                         if (col.text().trim().length > 0 && $(courseRow[index - 1]).text().trim().length > 0) {
                             courseGrade = col.text().trim();
-                            var id = $(rows[0].children[index]).attr("id");
+                            var label = $(rows[0].children[index]);
+                            courseExtFriendlyNum = label.text();
+                            var id = label.attr("id");
                             var termLoc = /\d/.exec(id).index; // Location of extNum number
                             courseExtType = id.substr(0, termLoc);
                             courseExtNum = id.substr(termLoc, /\D/.exec(id.substr(termLoc)).index);
@@ -549,7 +551,8 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                         GBID: element.parent().parent().parent().parent().attr("onclick").split("\"")[1].trim(),
                         courseID: element.parent().parent().parent().parent().attr("onclick").split("\"")[3].trim(),
                         extType: courseExtType,
-                        extNum: courseExtNum
+                        extNum: courseExtNum,
+                        friendlyGPName: courseExtType + " " + courseExtFriendlyNum
                     });
                 }
                 i++;
