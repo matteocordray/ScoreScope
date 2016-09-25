@@ -36,7 +36,6 @@ $(document).ready(function () {
 
         $("#rightBtn").click(onRefreshClick); // Default behavior for rightBtn is refresh
         $("#leftBtn").click(function () { // Default behavior for leftBtn is toggle hamburger
-            //noinspection JSUnresolvedVariable
             menu.toggle();
         });
 
