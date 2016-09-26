@@ -103,6 +103,6 @@
         <icon src="res/icon/windows/Wide310x150Logo.png" target="Wide310x150Logo"/>
 
         <!-- SPLASH SCREENS -->
-        <splash src="res/screen/windows/SplashScreen.png" target="SplashScreen"/>
+        <splash src="res/splash/windows/SplashScreen.png" target="SplashScreen"/>
     </platform>
 </widget>
