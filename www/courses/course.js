@@ -27,6 +27,10 @@ function getAndParseCourse(data, callback, doNotPushPage) {
             teacher: data.teacher,
             grade: data.grade,
             latestTerm: data.friendlyGPName,
+            latestExtType: data.extType,
+            latestExtNum: data.extNum,
+            GBID: data.GBID,
+            courseID: data.courseID,
             categories: []
         };
 
@@ -128,8 +132,11 @@ function loadGrades(course) {
         asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
             '<div id="asmtCourseName">' + course.name + '</div>' +
             '<div id="asmtCourseTeacher">' + course.teacher + '</div>' + /*end asmtHeaderLeft*/'</div>' +
-            '<div id="asmtHeaderRight">' + course.latestTerm + '<ons-icon icon="fa-chevron-down" id="dropDownIcon"></ons-icon></div>' + /*end asmtHeader*/'</div>'
+            '<select id="asmtHeaderRight">' + '<option selected value="' + course.latestExtType + '%' + course.latestExtNum + '">' + course.latestTerm + '</option>' +
+            '</select>' + /*end asmtHeader*/'</div>'
         );
+
+        $("#asmtHeaderRight").on("change", selectGradingPeriod);
 
         asmtList.append('<div id="piDiv"><ons-row><ons-col width="' + $(window).width() * 0.55 + 'px" vertical-align="center">' +
             '<canvas id="piChart" height="' + $(window).width() * 0.55 + 'px" width="' + $(window).width() * 0.55 + '"></canvas></ons-col>' +
@@ -183,6 +190,12 @@ function loadGrades(course) {
         });
         drawPIChart(piChart, scaledPIData, piColors);
 
+        loadGradingPeriods({
+            GBID: course.GBID,
+            courseID: course.courseID,
+            latestTerm: course.latestTerm
+        });
+
         asmtList.hide();
         asmtList.fadeIn(500); // Extra long fade time
     });
@@ -209,4 +222,47 @@ function drawPIChart(canvas, data, colors) {
 function getPIColor(index) {
     // TODO: Maybe handle generating colors if there are way to many categories
     return basePIColors[index % basePIColors.length];
+}
+
+function loadGradingPeriods(data) {
+    // Request a list of grading periods for this course
+    var gpReq = $.post(currentAcctURL + "gradebook002.w", {
+        dwd: currentDWD,
+        wfaacl: currentWFAACL,
+        currentStudent: currentStudentID,
+        currentGBId: data.GBID,
+        currentCourseId: data.courseID
+    }).done(function () {
+        var page = $(new DOMParser().parseFromString(gpReq.responseText, "text/html"));
+        var box = page.find(".myBox")[0];
+
+        window.b = box;
+
+        if (!box) { // If no box, give up
+            return;
+        }
+
+        // Go through each grading period
+        $.each(box.firstChild.children, function (key, val) {
+            var selector = $("#asmtHeaderRight"); // The select box
+
+            // Grading period's second innermost div
+            var possibleGP = val.firstChild.firstChild.firstChild.firstChild.firstChild.firstChild.firstChild.firstChild.firstChild;
+
+            // Either "no grades posted" or "grade: xxx"
+            if (possibleGP.children[2].innerHTML.toLowerCase().indexOf("no grades posted") === -1) {
+                var base = data.latestTerm.substr(0, data.latestTerm.lastIndexOf(" ")); // base is like "TERM", "YEAR", etc.
+                var ending = possibleGP.children[0].innerHTML; // ending is like "1st", "2nd", etc.
+                if (base + " " + ending !== data.latestTerm) { // If we are not adding an existing selector
+                    //Need to set value of option to type%num, then do select grading period
+                    selector.append("<option value=''>" + base + " " + ending + "</option>");
+                }
+            }
+        });
+    });
+}
+
+function selectGradingPeriod() {
+    var selectedVal = $("#asmtHeaderRight")[0].value;
+
 }
