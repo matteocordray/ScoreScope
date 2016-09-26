@@ -40,3 +40,6 @@ modules.xml
 /res/splash
 /res/src/icon*.png
 /res/src/splash*.png
+
+# Node stuff
+npm-debug.log
