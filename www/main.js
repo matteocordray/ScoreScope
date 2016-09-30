@@ -574,7 +574,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                         courseID: element.parent().parent().parent().parent().attr("onclick").split("\"")[3].trim(),
                         extType: courseExtType,
                         extNum: courseExtNum,
-                        friendlyGPName: courseExtType + " " + courseExtFriendlyNum
+                        termName: courseExtType + " " + courseExtFriendlyNum
                     });
                 }
                 i++;

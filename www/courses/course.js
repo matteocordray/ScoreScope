@@ -23,23 +23,17 @@ function getAndParseCourse(data, callback, doNotPushPage) {
     }).done(function () {
         var page = $(new DOMParser().parseFromString(assnReq.responseText, "text/html"));
 
-        var course = {
-            name: data.name,
-            teacher: data.teacher,
-            grade: data.grade,
-            latestTerm: data.friendlyGPName,
-            latestExtType: data.extType,
-            latestExtNum: data.extNum,
-            GBID: data.GBID,
-            courseID: data.courseID,
-            categories: []
-        };
+        // Initialize courses
+        var course = data;
+        course.categories = [];
 
         var categories = page.find(".categories");
 
         if (categories.length > 0) {
             var element = $(categories[0]);
         } else {
+            $("#assignmentList").empty();
+
             displayErrorPage("#courseErrMsgDiv", "Oh No!", "The server sent a malformed response.", "ErrorCircle", function () {
                 $("#loading").fadeIn(FADE_TIME);
 
@@ -118,6 +112,9 @@ function loadGrades(course) {
 
     var loading = $("#loading");
     var asmtList = $("#assignmentList");
+    asmtList.empty();
+    asmtList.show(); // To prevent empty piChart
+
     var piLeg;
     var piChart;
 
@@ -127,17 +124,19 @@ function loadGrades(course) {
     var piColors = [];
 
     loading.fadeOut(FADE_TIME * 2, function () { // Get rid of loading screen. Extra long fade time.
-        loading.remove();
+        //loading.remove(); May be needed?
 
         // The following lines appends the course and instructor names. Asmt stands for assignment
         asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
             '<div id="asmtCourseName">' + course.name + '</div>' +
             '<div id="asmtCourseTeacher">' + course.teacher + '</div>' + /*end asmtHeaderLeft*/'</div>' +
-            '<select id="asmtHeaderRight">' + '<option selected value="' + course.latestExtType + '%' + course.latestExtNum + '">' + course.latestTerm + '</option>' +
+            '<select id="asmtHeaderRight">' + '<option selected extType="' + course.extType + '" extTerm="' + course.extNum + '" termName="' + course.termName + '" value="0">' + course.termName + '</option>' +
             '</select>' + /*end asmtHeader*/'</div>'
         );
 
-        $("#asmtHeaderRight").on("change", selectGradingPeriod);
+        $("#asmtHeaderRight").on("change", function () {
+            selectGradingPeriod(course);
+        });
 
         asmtList.append('<div id="piDiv"><ons-row><ons-col width="' + $(window).width() * 0.55 + 'px" vertical-align="center">' +
             '<canvas id="piChart" height="' + $(window).width() * 0.55 + 'px" width="' + $(window).width() * 0.55 + '"></canvas></ons-col>' +
@@ -193,7 +192,7 @@ function loadGrades(course) {
         loadGradingPeriods({
             GBID: course.GBID,
             courseID: course.courseID,
-            latestTerm: course.latestTerm
+            termName: course.termName
         });
 
         asmtList.hide();
@@ -236,33 +235,61 @@ function loadGradingPeriods(data) {
         var page = $(new DOMParser().parseFromString(gpReq.responseText, "text/html"));
         var box = page.find(".myBox")[0];
 
-        window.b = box;
-
         if (!box) { // If no box, give up
             return;
         }
 
+        // Empty list
+        var selector = $("#asmtHeaderRight"); // The select box
+        selector.empty();
+
         // Go through each grading period
+        var index = 0;
         $.each(box.firstChild.children, function (key, val) {
-            var selector = $("#asmtHeaderRight"); // The select box
-
             // Grading period's second innermost div
-            var possibleGP = val.firstChild.firstChild.firstChild.firstChild.firstChild.firstChild.firstChild.firstChild.firstChild;
+            var termDetails = val.firstChild.firstChild.firstChild.firstChild.firstChild; // td tag with termName 01
+            var possibleGP = termDetails.firstChild.firstChild.firstChild.firstChild; // keep going till a span tag with name of gp
 
-            // Either "no grades posted" or "grade: xxx"
+            // This will be either "no grades posted" or "grade: xxx"
             if (possibleGP.children[2].innerHTML.toLowerCase().indexOf("no grades posted") === -1) {
-                var base = data.latestTerm.substr(0, data.latestTerm.lastIndexOf(" ")); // base is like "TERM", "YEAR", etc.
+                var base = data.termName.substr(0, data.termName.lastIndexOf(" ")); // base is like "TERM", "YEAR", etc.
                 var ending = possibleGP.children[0].innerHTML; // ending is like "1st", "2nd", etc.
-                if (base + " " + ending !== data.latestTerm) { // If we are not adding an existing selector
-                    //Need to set value of option to type%num, then do select grading period
-                    selector.append("<option value=''>" + base + " " + ending + "</option>");
+                var termName = base + " " + ending;
+
+                //Need to set data values, then do select grading period
+                var termString = $(termDetails).attr("onclick").split("\"");
+                var extType = termString[1];
+                var extNum = termString[3];
+
+                var option = $('<option extType="' + extType + '" extNum="' + extNum + '" termName="' + termName + '" value="' + index + '">' + termName + '</option>');
+                selector.append(option);
+
+                if (termName === data.termName) {
+                    option.attr("selected", "");
                 }
+
+                index++;
             }
         });
     });
 }
 
-function selectGradingPeriod() {
-    var selectedVal = $("#asmtHeaderRight")[0].value;
+function selectGradingPeriod(course) {
+    var selected = $("#asmtHeaderRight").children().eq($("#asmtHeaderRight")[0].value);
+    var selectedExtType = selected.attr("extType");
+    var selectedExtNum = selected.attr("extNum");
+    var selectedTerm = selected.attr("termName");
 
+    $("#assignmentList").fadeOut(FADE_TIME, function () {
+        getAndParseCourse({
+            GBID: course.GBID,
+            courseID: course.courseID,
+            extType: selectedExtType,
+            extNum: selectedExtNum,
+            termName: selectedTerm,
+            grade: course.grade,
+            name: course.name,
+            teacher: course.teacher
+        }, loadGrades, true);
+    });
 }
