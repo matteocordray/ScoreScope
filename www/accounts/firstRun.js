@@ -7,6 +7,7 @@ const TRANSITION_TIME = 0.4; // Time to reset page in seconds
 
 var searchTimer;
 const SEARCH_TYPING_TIMEOUT = 1500; // Time in ms to wait after user finishes typing
+const KEY_CODE_ENTER = 13;
 
 var accountMetadata;
 var account = {
@@ -160,7 +161,7 @@ function advancePage() {
             });
 
             $("#search").keypress(function (e) {
-                if (e.keyCode == 13) { // Detect "Enter" key press
+                if (e.keyCode === KEY_CODE_ENTER) {
                     clearTimeout(searchTimer);
                     $("#loading").fadeIn(FADE_TIME);
                     searchForDist();

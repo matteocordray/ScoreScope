@@ -78,10 +78,6 @@
     border-radius: 15px;
 }
 
-#dropDownIcon {
-    margin-left: 5px;
-}
-
 #legend {
     width: calc(100% - 30px);
     margin: 0 15px 5px 15px;
