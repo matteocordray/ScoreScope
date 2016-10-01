@@ -21,19 +21,20 @@ const DEFAULT_SETTINGS = {
 ons.forcePlatformStyling("android"); // Forces material design, even on non-android platforms
 $(document).ready(function () {
 
-    if (cordova.platformId === "windows") { // Override onerror to avoid crash on console.error()
+    // Override onerror to avoid crash on console.error()
+    if (cordova.platformId === "windows") {
         window.onerror = function () {
             return true;
         }
     }
 
-    ons.ready(function () {
-        // Nasty and unrecommended hack to set a timeout.
-        // TODO: fix this shit
-        $.ajaxSetup({
-            timeout: TIMEOUT
-        });
+    // Nasty and unrecommended hack to set a timeout.
+    // TODO: fix this shit
+    $.ajaxSetup({
+        timeout: TIMEOUT
+    });
 
+    ons.ready(function () {
         $("#rightBtn").click(onRefreshClick); // Default behavior for rightBtn is refresh
         $("#leftBtn").click(function () { // Default behavior for leftBtn is toggle hamburger
             menu.toggle();
@@ -95,7 +96,7 @@ $(document).ready(function () {
                     settings = $.extend(DEFAULT_SETTINGS, settings);
 
                     ss.set(function (key) { // On success
-                        console.info("Successfully upgraded settings to " + VERSION);
+                        console.info("Successfully upgraded " + key + " to " + VERSION);
                     }, function (error) { // On error
                         // Probably shouldn't bother notifying the user.
                         console.warn("Failed to upgrade settings! Error: " + error);
