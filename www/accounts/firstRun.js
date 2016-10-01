@@ -8,6 +8,7 @@ const ERR_FADE_TIME = 175; // Time to fade in/out the error messages in millisec
 
 var searchTimer;
 const SEARCH_TYPING_TIMEOUT = 1500; // Time in ms to wait after user finishes typing
+const KEY_CODE_ENTER = 13;
 
 var accountMetadata;
 var account = {
@@ -153,7 +154,7 @@ function advancePage() {
             });
 
             $("#search").keypress(function (e) {
-                if (e.keyCode == 13) { // Detect "Enter" key press
+                if (e.keyCode === KEY_CODE_ENTER) {
                     clearTimeout(searchTimer);
                     $("#loading").fadeIn(FADE_TIME);
                     searchForDist();

@@ -60,12 +60,6 @@
     height: 100%;
 }
 
-#greetingImage {
-    width: 100%;
-    height: 60%;
-    background-color: #009688;
-}
-
 #greetingDes {
     margin-top: 15%;
 }
@@ -189,6 +183,6 @@
     margin: 5px 15vw;
 }
 
-.FRErrRetryBtn {
+#FRErrRetryBtn {
     margin: 25px 5px;
 }
