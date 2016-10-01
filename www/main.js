@@ -24,20 +24,22 @@ const IOS_BTN_FADE_TIME = 100; // Time to fade iOS back button in milliseconds
 ons.forcePlatformStyling("ios"); // Force iOS design, even on non-iOS platforms
 $(document).ready(function () {
 
-    if (cordova.platformId === "windows") { // Override onerror to avoid crash on console.error()
+    // Override onerror to avoid crash on console.error()
+    if (cordova.platformId === "windows") {
         window.onerror = function () {
             return true;
         }
     }
 
-    ons.ready(function () {
-        // Nasty and unrecommended hack to set a timeout.
-        // TODO: fix this shit
-        $.ajaxSetup({
-            timeout: TIMEOUT
-        });
+    // Nasty and unrecommended hack to set a timeout.
+    // TODO: fix this shit
+    $.ajaxSetup({
+        timeout: TIMEOUT
+    });
 
+    ons.ready(function () {
         $("#iOSBackBtn").on("click.goBack", goBack);
+
         $("#settingsBtn").one("click", function () {
             $.getScript("settings/settings.js", function () {
                 $("#settingsBtn").click(goToSettings);
@@ -88,7 +90,7 @@ $(document).ready(function () {
                     settings = $.extend(DEFAULT_SETTINGS, settings);
 
                     ss.set(function (key) { // On success
-                        console.info("Successfully upgraded settings to " + VERSION);
+                        console.info("Successfully upgraded " + key + " to " + VERSION);
                     }, function (error) { // On error
                         // Probably shouldn't bother notifying the user.
                         console.warn("Failed to upgrade settings! Error: " + error);
