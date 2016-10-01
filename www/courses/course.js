@@ -87,7 +87,7 @@ function getAndParseCourse(data, callback, doNotPushPage) {
         }
         callback(course);
     }).fail(function (xhr) { // Failure of request for assignments
-        if (xhr.readyState == 0) { // This means no internet (or timed out)
+        if (xhr.readyState === 0) { // This means no internet (or timed out)
             displayErrorPage("#courseErrMsgDiv", "Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
                 $("#loading").fadeIn(FADE_TIME);
 

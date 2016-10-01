@@ -33,7 +33,7 @@ $(document).ready(function () {
         $("#next").click(advancePage);
 
         // Android only: Workaround viewport height changing when keyboard present
-        if (cordova.platformId.toLowerCase() == "android") {
+        if (cordova.platformId.toLowerCase() === "android") {
             $("head").prepend('<meta name="viewport" content="width=device-width,height=' + window.innerHeight + ', initial-scale=1.0">');
         }
 
@@ -140,7 +140,7 @@ function advancePage() {
         movingLock = false;
 
         // If user is navigating to the district finder, activate keyUp handler
-        if (navi.topPage.name == "district") {
+        if (navi.topPage.name === "district") {
             $('#search').keyup(function () {
                 $(".district, #firstRunErrDiv").fadeOut(ERR_FADE_TIME, function () { // Extra long fadeOut because list.empty takes a while
                     $("#list").empty();
@@ -167,7 +167,7 @@ function advancePage() {
                     searchForDist();
                 }
             });
-        } else if (navi.topPage.name == "login") {
+        } else if (navi.topPage.name === "login") {
             $("#domain").text(account.districtName);
 
             // Add the handler for the tcCheckBox to toggle the next button
@@ -185,7 +185,7 @@ function advancePage() {
 function searchForDist() {
     var searchTerm = $("#search").val().trim();
 
-    if (searchTerm.toLowerCase() == "appreview124") {
+    if (searchTerm.toLowerCase() === "appreview124") {
         var data = {
             name: "Test District",
             studentURL: "http://162.243.217.157:8085/testing/seplog01.w",
@@ -210,7 +210,7 @@ function searchForDist() {
         return;
     }
 
-    if (isNumber(searchTerm) && searchTerm.length == 5) { // If it's a postal code
+    if (isNumber(searchTerm) && searchTerm.length === 5) { // If it's a postal code
         $.soap({
             url: "http://rms.skyward.com/rmswebservices/Company/GPSfromZip.asmx",
             method: "GetGPSfromZip",
@@ -223,7 +223,7 @@ function searchForDist() {
             success: function (soapResponse) { // If server sends a successful response
                 // Should return GPS coordinates
                 var response = soapResponse.toJSON()["#document"]["soap:Envelope"]["soap:Body"].GetGPSfromZipResponse.GetGPSfromZipResult;
-                if (response == "") {
+                if (response === "") {
                     showFirstRunError("Whoops!", "It seems like that zip code is invalid. Please try another.", "NotFound", null);
                     return;
                 } else {
@@ -248,7 +248,7 @@ function searchForDist() {
                         }
                     }).fail(function (jqXHR, textStatus, errorThrown) { // If the ajax request fails
                         console.error("Network Error: ", textStatus, errorThrown);
-                        if (xhr.readyState == 0) { // readyState = 0 means no internet connection
+                        if (xhr.readyState === 0) { // readyState = 0 means no internet connection
                             showFirstRunError("Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
                                 $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME, searchForDist);
                             });
@@ -266,7 +266,7 @@ function searchForDist() {
             }
         }).fail(function (jqXHR, textStatus, errorThrown) { // If the ajax request fails
             console.error("Network Error: ", textStatus, errorThrown);
-            if (xhr.readyState == 0) { // readyState = 0 means no internet connection
+            if (xhr.readyState === 0) { // readyState = 0 means no internet connection
                 showFirstRunError("Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
                     $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME, searchForDist);
                 });
@@ -295,7 +295,7 @@ function searchForDist() {
             }
         }).fail(function (jqXHR, textStatus, errorThrown) { // If the ajax request fails
             console.error("Network Error: ", textStatus, errorThrown);
-            if (xhr.readyState == 0) { // readyState = 0 means no internet connection
+            if (xhr.readyState === 0) { // readyState = 0 means no internet connection
                 showFirstRunError("Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
                     $("#firstRunErrDiv").fadeOut(ERR_FADE_TIME, searchForDist);
                 });
@@ -395,7 +395,7 @@ function validateAndGo() {
     account.password = $("#pw").val().trim();
     account.name = $("#name").val().trim();
 
-    if (account.name.length == 0) {
+    if (account.name.length === 0) {
         alertMsg("Please enter a name for this account.");
         return;
     }
@@ -409,7 +409,7 @@ function validateAndGo() {
             continue;
         }
 
-        if (accountMetadata.accounts[i].login == account.login.toLowerCase() && accountMetadata.accounts[i].url == account.url) {
+        if (accountMetadata.accounts[i].login === account.login.toLowerCase() && accountMetadata.accounts[i].url === account.url) {
             shownConfirm = true;
             ons.notification.confirm({
                 message: "You have already linked this Skyward® account to ScoreScope. Do you want to continue anyways?",
@@ -436,7 +436,7 @@ function validateAndGo() {
             password: account.password
         }).done(function () {
             // Detect is credentials are invalid. Good credentials will cause the response to contain the username
-            if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || skyportReq.responseText.toLowerCase().indexOf(account.login) == -1) {
+            if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || skyportReq.responseText.toLowerCase().indexOf(account.login) === -1) {
                 alertMsg("We couldn't validate your credentials. Please verify that your username and password are correct.", "Error");
                 $("#pw").val("");
                 return;
@@ -452,7 +452,7 @@ function validateAndGo() {
                 window.location.replace("../index.html");
             }
         }).fail(function (xhr) {
-            if (xhr.readyState == 0) {
+            if (xhr.readyState === 0) {
                 alertMsg("Please check your internet connection and try again.", "Error");
             } else {
                 alertMsg("We couldn't validate your account information. This may be a temporary server-side issue. Please try again later.", "Error");

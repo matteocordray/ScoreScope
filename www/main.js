@@ -199,7 +199,7 @@ function saveAcctMetadata(optionalMetadata, callback) {
 function goToSettings() {
     menu.close();
 
-    if (navi.topPage.name == "settings/settings.html") {
+    if (navi.topPage.name === "settings/settings.html") {
         if (settingsNavi.topPage.name !== "settings/settings.html") {
             // If navi is at settings but settingsNavi is in a subpage, then pop to settings and update the title
             settingsNavi.popPage().then(function () {
@@ -223,7 +223,7 @@ function goToSettings() {
 function goToAcctMgr() {
     menu.close();
 
-    if (navi.topPage.name == "accounts/accountManager.html" || navi.topPage.name == "accounts/accountEditor.html") {
+    if (navi.topPage.name === "accounts/accountManager.html" || navi.topPage.name === "accounts/accountEditor.html") {
         loadAccountManager();
         return;
     }
@@ -451,7 +451,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
         password: acct.password
     }).done(function () {
         // Detect is credentials are invalid. Good credentials will cause the response to contain the username
-        if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || skyportReq.responseText.toLowerCase().indexOf(acct.login) == -1) {
+        if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || skyportReq.responseText.toLowerCase().indexOf(acct.login) === -1) {
             displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't authenticate with the server. Please verify your credentials and try again.", "ErrorCircle", function () {
                 $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                     getAndParseAccount(id, callback, doNotResetPage);
@@ -565,7 +565,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
             }
         }).fail(function (xhr) { // Failure of second request
             // Some more callback hell
-            if (xhr.readyState == 0) { // readyState = 0 means no internet connection
+            if (xhr.readyState === 0) { // readyState = 0 means no internet connection
                 displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
                     $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                         getAndParseAccount(id, callback, doNotResetPage);
@@ -580,7 +580,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
             }
         });
     }).fail(function (xhr) { // Failure of first request
-        if (xhr.readyState == 0) { // readyState = 0 means no internet connection
+        if (xhr.readyState === 0) { // readyState = 0 means no internet connection
             displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "We couldn't establish a connection. Please check your internet connection and try again.", "ErrorTriangle", function () {
                 $("#mainPageErrMsgDiv").fadeOut(ERR_FADE_TIME, function () {
                     getAndParseAccount(id, callback, doNotResetPage);

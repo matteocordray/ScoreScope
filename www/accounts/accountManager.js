@@ -72,25 +72,25 @@ function validateAndSave(id) {
     account.districtName = $("#editDistName").val().trim();
     account.url = $("#editURL").val().trim();
 
-    if (account.name.length == 0) {
+    if (account.name.length === 0) {
         alertMsg("Please enter a name for this account.");
         return;
     }
-    if (account.districtName.length == 0) {
+    if (account.districtName.length === 0) {
         alertMsg("Please enter a name for this account's district.");
         return;
     }
-    if (account.url.charAt(account.url.length - 1) != '/') {
+    if (account.url.charAt(account.url.length - 1) !== '/') {
         account.url += '/';
     }
 
     // Ensure user does not change account to an existing account
     var shownConfirm = false;
     for (var i = 0; i < accountMetadata.length; i++) {
-        if (shownConfirm || i == id) {
+        if (shownConfirm || i === id) {
             continue;
         }
-        if (accountMetadata[i].login == account.login.toLowerCase() && accountMetadata[i].url == account.url) {
+        if (accountMetadata[i].login === account.login.toLowerCase() && accountMetadata[i].url === account.url) {
             shownConfirm = true;
             ons.notification.confirm({
                 message: "You have already linked this Skyward® account to ScoreScope. Do you want to continue anyways?",
@@ -117,7 +117,7 @@ function validateAndSave(id) {
             password: account.password
         }).done(function () {
             // Detect is credentials are invalid. Good credentials will cause the response to contain the username
-            if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || skyportReq.responseText.toLowerCase().indexOf(account.login) == -1) {
+            if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || skyportReq.responseText.toLowerCase().indexOf(account.login) === -1) {
                 alertMsg("Invalid credentials :(", "Error");
                 $("#pw").val("");
                 return;
@@ -138,7 +138,7 @@ function validateAndSave(id) {
             }
         }).fail(function (xhr) {
             console.error(xhr.statusCode());
-            if (xhr.readyState == 0) {
+            if (xhr.readyState === 0) {
                 alertMsg("Please check your internet connection and try again.", "Error");
             } else {
                 alertMsg("Please check your specified District URL and try again.", "Error");
