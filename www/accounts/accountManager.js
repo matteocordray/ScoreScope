@@ -66,6 +66,11 @@ function validateAndSave(id) {
     account.districtName = $("#editDistName").val().trim();
     account.url = $("#editURL").val().trim();
 
+    // For parent accounts, we need to preserve studentId override
+    if (accountMetadata[id].overrides) {
+        account.overrides = accountMetadata[id].overrides;
+    }
+
     if (account.name.length === 0) {
         alertMsg("Please enter a name for this account.");
         return;
