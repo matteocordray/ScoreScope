@@ -417,7 +417,9 @@ function validateAndGo() {
                 primaryButtonIndex: 0
             }).then(function (choice) {
                 if (choice === 0) {
-                    verifyCredentials();
+                    verifyCredentials(function () {
+                        window.location.replace("../index.html");
+                    });
                 } else {
                     return;
                 }
@@ -425,18 +427,33 @@ function validateAndGo() {
         }
     }
     if (!shownConfirm) {
-        verifyCredentials();
+        verifyCredentials(function () {
+            window.location.replace("../index.html");
+        });
     }
 
-    function verifyCredentials() {
+    function verifyCredentials(callback) {
         var skyportReq = $.post(account.url + "skyporthttp.w", {
             requestAction: "eel",
             codeType: "tryLogin",
             login: account.login,
             password: account.password
         }).done(function () {
-            // Detect is credentials are invalid. Good credentials will cause the response to contain the username
-            if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || skyportReq.responseText.toLowerCase().indexOf(account.login) === -1) {
+            var split = skyportReq.responseText.split("^");
+
+            /*
+             If it's a parent account, split[6] will be 1. Student accounts have split[6] as 2.
+             Alternatively, if account.overrides is set, then assume it's a child account
+             */
+            if (isNumber(split[6]) && +split[6] === 1 && typeof account.overrides === "undefined") {
+                findStudentsFromParent({
+                    dwd: split[0].substr(4),
+                    wfaacl: split[3]
+                });
+                return;
+
+                // Detect is credentials are invalid. Good credentials will cause the response to contain the username
+            } else if (skyportReq.responseText.toLowerCase().indexOf("invalid login or password") > -1 || split[5].toLowerCase().indexOf(account.login) === -1) {
                 alertMsg("We couldn't validate your credentials. Please verify that your username and password are correct.", "Error");
                 $("#pw").val("");
                 return;
@@ -449,8 +466,55 @@ function validateAndGo() {
                     alertMsg("Failed to save account information. Please try again.", "Error");
                     return;
                 }, "accountMetadata", JSON.stringify(accountMetadata));
-                window.location.replace("../index.html");
+                if (typeof callback === "function") {
+                    callback();
+                }
             }
+        }).fail(function (xhr) {
+            if (xhr.readyState === 0) {
+                alertMsg("Please check your internet connection and try again.", "Error");
+            } else {
+                alertMsg("We couldn't validate your account information. This may be a temporary server-side issue. Please try again later.", "Error");
+            }
+        });
+    }
+
+    function findStudentsFromParent(parentAcct) {
+        var familyReq = $.post(account.url + "familyaccess.w", parentAcct).done(function () {
+            var page = $(new DOMParser().parseFromString(familyReq.responseText, "text/html"));
+
+            var box = page.find(".myBox");
+
+            if (box.length < 1) {
+                alertMsg("Unfortunately, the server sent a malformed response. Please try again.", "Error");
+            }
+
+            function verifyStudent(i) {
+                var link = box.find("#link" + i)[0];
+
+                if (!link) {
+                    window.location.replace("../index.html");
+                    return;
+                }
+
+                account.overrides = {
+                    studentID: $(link.firstChild.firstChild.firstChild.firstChild).attr("onclick").split("\"")[3]
+                };
+
+                // Technically this could be an issue if somebody names their account "X Child #)
+                if (account.name.indexOf(" Child #") > 0) {
+                    account.name = account.name.substr(0, account.name.length - 1) + (+account.name.charAt(account.name.length - 1) + 1)
+                } else {
+                    account.name += " Child #" + i;
+                }
+
+                verifyCredentials(function () {
+                    verifyStudent(i + 1);
+                });
+            }
+
+            verifyStudent(1);
+
         }).fail(function (xhr) {
             if (xhr.readyState === 0) {
                 alertMsg("Please check your internet connection and try again.", "Error");
