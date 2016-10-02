@@ -1,30 +1,10 @@
 /*==========================
 jquery.soap.js - https://github.com/doedje/jquery.soap
-version: 1.6.8
+version: 1.6.9
 
 jQuery plugin for communicating with a web service using SOAP.
 
 One function to send a SOAPEnvelope that takes a complex object as a data
-
-License GNU/GPLv3
------------------
-
-Copyright (C) 2009-2015 - Remy Blom, the Netherlands
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-When GPL is not an option for you, contact me for information about the commercial license.
 
 Information
 -----------
@@ -33,18 +13,19 @@ For information about how to use jQuery.soap, authors, changelog, the latest ver
 Visit: https://github.com/doedje/jquery.soap
 
 Documentation about THIS version is found here:
-https://github.com/doedje/jquery.soap/blob/1.6.8/README.md
+https://github.com/doedje/jquery.soap/blob/1.6.9/README.md
 
 ======================*/
 
 (function(factory) {
 	if(typeof module === 'object' && typeof module.exports === 'object') {
 	  module.exports = factory(require('jquery'));
-	} else {
+	} else if (jQuery) {
 	  factory(jQuery);
+	} else {
+		console.error('no jQuery found!')
 	}
-})(function(jQuery) {
-	var $ = jQuery;
+})(function($) {
 	var enableLogging;
 	var globalConfig = { // this setup once, defaults go here
 		appendMethodToURL: true,
@@ -279,6 +260,14 @@ https://github.com/doedje/jquery.soap/blob/1.6.8/README.md
 				processData: false,
 				data: this.toString(),
 				contentType: contentType + "; charset=UTF-8",
+				xhrFields: {
+					// Add xhrFields, and set xhrFields.withCredentials = true by default, otherwise,
+					// it can't send a cross-domain request successfully in Chrome without this settings.
+					// You can use it to set withCredentials to true for cross-domain requests if needed.
+					// More about it is in jQuery official website. (http://api.jquery.com/jquery.ajax/).
+					// I hope it's useful and tested in Chrome & IE 11+ & IE Edge, Thanks.
+					withCredentials: true
+				},
 				// second attempt to get some progres info (but still a no go)
 				// I still keep this in tho, we might see it working one day when browsers mature...
 				/*
