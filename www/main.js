@@ -114,7 +114,7 @@ $(document).ready(function () {
             displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "Failed to initialize secure storage. Please try again later.", "ErrorTriangle", null);
         }, "scorescope"); // Key for storage
 
-        notifications = cordova.plugins.noftification.local; // Assign notification plugin
+        notifications = cordova.plugins.notification.local; // Assign notification plugin
         notifications.on("trigger", notificationTrigger);
     });
 });
