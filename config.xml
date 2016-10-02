@@ -23,6 +23,7 @@
     <plugin name="scorescope-secure-storage" spec="ssh://git@github.com/SharkChips/secure-storage.git"/>
     <plugin name="cordova-plugin-splashscreen" spec="^3.2.2"/>
     <plugin name="scorescope-apprate" spec="ssh://git@github.com/SharkChips/apprate-plugin.git"/>
+    <plugin name="de.appplant.cordova.plugin.local-notification" spec="^0.8.4"/>
     <!-- Android needs the whitelist plugin -->
     <plugin name="cordova-plugin-whitelist" spec="^1.2.2"/>
 
