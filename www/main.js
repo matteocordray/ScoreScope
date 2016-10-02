@@ -1,6 +1,7 @@
 var accountMetadata;
 var settings;
 var ss; // Secure storage plugin
+var notifications;
 var currentDWD, currentWFAACL, currentStudentID, currentAcctURL; //workaround; we should get rid of this eventually
 var currentAcctData;
 var currentAcctID;
@@ -12,7 +13,7 @@ const ERR_FADE_TIME = 175; // Time to fade in/out the error messages in millisec
 const VERSION = "1.9.1";
 const DEFAULT_SETTINGS = {
     allowDiag: true,
-    allowPush: true,
+    allowPush: null,
     pushInterval: 3600, // Default push interval is 1 hour
     version: VERSION
 };
@@ -112,6 +113,9 @@ $(document).ready(function () {
             console.error("Error: " + error);
             displayErrorPage("#mainPageErrMsgDiv", "Oh No!", "Failed to initialize secure storage. Please try again later.", "ErrorTriangle", null);
         }, "scorescope"); // Key for storage
+
+        notifications = cordova.plugins.noftification.local; // Assign notification plugin
+        notifications.on("trigger", notificationTrigger);
     });
 });
 
@@ -564,6 +568,11 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                 i++;
             }
             finishedRetrieving = true;
+
+            if (settings.allowPush) {
+                updateBGTask(dataOut, acct, idX);
+            }
+
             if (finishedAnimation) {
                 currentAcctData = dataOut;
                 callback(dataOut);

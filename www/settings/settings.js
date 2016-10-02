@@ -10,8 +10,10 @@ function settingsGo(pageName) {
                     ss.remove(function () {
                         ss.remove(function () {
                             alertMsg("To use ScoreScope, you must have at least one account.", "", function () {
-                                window.location.replace("accounts/firstRun.html");
-                                return;
+                                cancelAllNotifications(function () {
+                                    window.location.replace("accounts/firstRun.html");
+                                    return;
+                                });
                             });
                         }, function (error) {
                             console.error("Error: " + error);

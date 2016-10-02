@@ -181,6 +181,7 @@ function onFabClick() {
 }
 
 function removeAcct(id) {
+    cancelNotifications(id);
     var acctMD = {accounts: []};
     accountMetadata.splice(id, 1); // Remove element
     acctMD.accounts = accountMetadata.slice();
