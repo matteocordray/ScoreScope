@@ -491,6 +491,11 @@ function getAndParseAccount(id, callback, doNotResetPage) {
         currentStudentID = split[4];
         currentAcctURL = acct.url;
 
+        // Parent accounts override the studentID
+        if (acct.overrides) {
+            currentStudentID = acct.overrides.studentID;
+        }
+
         // HACK to lower the scope of the parameters so we can use them in displayErrorPage() below
         var idX = id;
         var callbackX = callback;
