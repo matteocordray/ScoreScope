@@ -195,7 +195,7 @@ function loadGrades(course) {
         });
 
         asmtList.hide();
-        asmtList.fadeIn(500); // Extra long fade time
+        asmtList.fadeIn(400); // Extra long fade time
     });
 }
 
