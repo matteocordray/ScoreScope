@@ -154,8 +154,8 @@ function onResume() { // Treat resuming like a fresh open
 
     $("#saveBtn").hide();
     var backBtn = $("#iOSBackBtn");
-    backBtn.off("click.editorGoBack");
-    backBtn.on("click.goBack", goBack);
+    backBtn.off("click.editorGoBack click.goBack").on("click.goBack", goBack); // Reset click listeners
+
     backBtn.hide();
 
     $("#goalDialog").hide(); // hide without animation
