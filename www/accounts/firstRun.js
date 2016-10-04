@@ -1,9 +1,10 @@
 var ss; // Secure storage plugin
 var movingLock = false; // Prevent spamming next/back buttons
 const PAGES = ["greetings", "district", "login"];
-const FADE_TIME = 75; // Time to fade in main page in milliseconds
-const ERR_FADE_TIME = 175; // Time to fade in/out the error messages in milliseconds
-const TRANSITION_TIME = 0.4; // Time to reset page in seconds
+
+const TRANSITION_TIME = 0.325; // Time to reset page in seconds
+const FADE_TIME = 150; // Time to fade in main page in milliseconds
+const ERR_FADE_TIME = 200; // Time to fade in/out the error messages in milliseconds
 
 var searchTimer;
 const SEARCH_TYPING_TIMEOUT = 1500; // Time in ms to wait after user finishes typing
