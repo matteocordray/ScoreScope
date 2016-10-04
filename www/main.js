@@ -87,7 +87,10 @@ $(document).ready(function () {
                     console.info("Settings are out of date! Upgrading to " + VERSION);
 
                     // Merge settings with default settings, with settings having priority
-                    settings = $.extend(DEFAULT_SETTINGS, settings);
+                    settings = $.extend({}, DEFAULT_SETTINGS, settings);
+                    /* However, this will not update the version string (b/c they are different and settings has
+                       priority), so we must set it manually */
+                    settings.version = DEFAULT_SETTINGS.version;
 
                     ss.set(function (key) { // On success
                         console.info("Successfully upgraded " + key + " to " + VERSION);
