@@ -75,7 +75,6 @@ function getAndParseCourse(data, callback, doNotPushPage) {
                 currentCategory.average = element.children().eq(2).text().trim().length > 0 ? +element.children().eq(2).text().trim() : "&nbsp;&nbsp;";
                 currentCategory.items = [];
             } else { // Must be item
-                // Hope that there's always a category before an assignment.... TODO: Fix this
                 //noinspection JSUnusedAssignment
                 currentCategory.items.push({
                     date: element.children().eq(0).text().trim(), // Date assignment entered
