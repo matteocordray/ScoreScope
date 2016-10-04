@@ -6,9 +6,9 @@ var currentAcctData;
 var currentAcctID;
 
 const TIMEOUT = 30000; // Default timeout in milliseconds
-const TRANSITION_TIME = 0.4; // Time to reset page in seconds
-const FADE_TIME = 75; // Time to fade in main page in milliseconds
-const ERR_FADE_TIME = 175; // Time to fade in/out the error messages in milliseconds
+const TRANSITION_TIME = 0.325; // Time to reset page in seconds
+const FADE_TIME = 150; // Time to fade in main page in milliseconds
+const ERR_FADE_TIME = 200; // Time to fade in/out the error messages in milliseconds
 const VERSION = "1.9.1";
 const DEFAULT_SETTINGS = {
     allowDiag: true,
@@ -18,7 +18,7 @@ const DEFAULT_SETTINGS = {
 };
 
 /* iOS Only */
-const IOS_BTN_FADE_TIME = 100; // Time to fade iOS back button in milliseconds
+const IOS_BTN_FADE_TIME = 200; // Time to fade iOS back button in milliseconds
 
 // The Main Thing
 ons.forcePlatformStyling("ios"); // Force iOS design, even on non-iOS platforms
