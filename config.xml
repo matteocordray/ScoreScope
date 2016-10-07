@@ -9,8 +9,8 @@
     <content src="index.html"/>
     <access origin="*"/>
     <allow-intent href="mailto:*"/>
-    <!-- Apprate plugin requires market:* and ms-windows-store:* intents -->
-    <!-- Note that iOS does not use intents -->
+    <!-- Apprate plugin requires app store intents -->
+    <allow-intent href="itms-apps::*"/>
     <allow-intent href="market:*"/>
     <allow-intent href="ms-windows-store:*"/>
 
