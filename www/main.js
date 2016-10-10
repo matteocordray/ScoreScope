@@ -540,7 +540,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                         if (col.text().trim().length > 0 && $(courseRow[index - 1]).text().trim().length > 0) {
                             courseGrade = col.text().trim();
                             var label = $(rows[0].children[index]);
-                            courseExtFriendlyNum = label.text();
+                            courseExtFriendlyNum = label.text().trim();
                             var id = label.attr("id");
                             var termLoc = /\d/.exec(id).index; // Location of extNum number
                             courseExtType = id.substr(0, termLoc);
