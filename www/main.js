@@ -81,6 +81,7 @@ $(document).ready(function () {
                     window.location.replace("accounts/firstRun.html");
                 }, function (error) { // On failure
                     console.error(error);
+                    window.location.replace("accounts/firstRun.html");
                 }, "accountMetadata");
             }, "accountMetadata");
 
