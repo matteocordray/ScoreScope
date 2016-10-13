@@ -5,10 +5,14 @@
     <description>
         A clean, intuitive interface for the SkywardⒸ Student Information System.
     </description>
-    <author email="albertzhang66@outlook.com" href="http://localhost/"/>
+    <author email="albertzhang66@outlook.com" href="https://scorescope.github.io/"/>
     <content src="index.html"/>
     <access origin="*"/>
     <allow-intent href="mailto:*"/>
+    <!-- Apprate plugin requires app store intents -->
+    <allow-intent href="itms-apps:*"/>
+    <allow-intent href="market:*"/>
+    <allow-intent href="ms-windows-store:*"/>
 
     <!-- Cross-plaform preferences -->
     <preference name="DisallowOverscroll" value="true"/>
