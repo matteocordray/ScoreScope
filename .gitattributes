@@ -1,0 +1,25 @@
+# Auto detect text files and perform LF normalization
+* text auto
+*.png binary eof=crlf
+*.woff binary eof=crlf
+*.woff2 binary eof=crlf
+*.ttf binary eof=crlf
+*.eot binary eof=crlf
+*.otf binary eof=crlf
+*.svg binary eof=crlf
+
+*.js text eof=lf
+*.html text eof=lf
+*.css text eof=lf
+
+# Standard to msysgit
+*.doc	 diff=astextplain
+*.DOC	 diff=astextplain
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.dot  diff=astextplain
+*.DOT  diff=astextplain
+*.pdf  diff=astextplain
+*.PDF	 diff=astextplain
+*.rtf	 diff=astextplain
+*.RTF	 diff=astextplain
