@@ -128,11 +128,17 @@ function loadGrades(course) {
         asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
             '<div id="asmtCourseName">' + course.name + '</div>' +
             '<div id="asmtCourseTeacher">' + course.teacher + '</div>' + /*end asmtHeaderLeft*/'</div>' +
-            '<select id="asmtHeaderRight">' + '<option selected extType="' + course.extType + '" extTerm="' + course.extNum + '" termName="' + course.termName + '" value="0">' + course.termName + '</option>' +
+            '<select id="GPSelector">' + '<option selected extType="' + course.extType + '" extTerm="' + course.extNum + '" termName="' + course.termName + '" value="0">' + course.termName + '</option>' +
             '</select>' + /*end asmtHeader*/'</div>'
         );
 
-        $("#asmtHeaderRight").on("change", function () {
+        var GPSelector = $("#GPSelector");
+
+        if (cordova.platformId === "ios") {
+            GPSelector.addClass("iOS");
+        }
+
+        GPSelector.on("change", function () {
             selectGradingPeriod(course);
         });
 
@@ -239,7 +245,7 @@ function loadGradingPeriods(data) {
         }
 
         // Empty list
-        var selector = $("#asmtHeaderRight"); // The select box
+        var selector = $("#GPSelector"); // The select box
         selector.empty();
 
         // Go through each grading period
@@ -274,7 +280,7 @@ function loadGradingPeriods(data) {
 }
 
 function selectGradingPeriod(course) {
-    var selected = $("#asmtHeaderRight").children().eq($("#asmtHeaderRight")[0].value);
+    var selected = $("#GPSelector").children().eq($("#GPSelector")[0].value);
     var selectedExtType = selected.attr("extType");
     var selectedExtNum = selected.attr("extNum");
     var selectedTerm = selected.attr("termName");
