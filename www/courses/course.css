@@ -68,8 +68,7 @@
     width: 65%;
 }
 
-#asmtHeaderRight {
-    -webkit-appearance: none; /* Hide native Safari select; TODO: Consider switching to caret */
+#GPSelector {
     display: inline-block;
     float: right;
     margin: 2.5px 5px;
@@ -77,6 +76,10 @@
     color: #4e81ba;
     border: 1px solid #4e81ba;
     border-radius: 15px;
+}
+
+#GPSelector.iOS {
+    -webkit-appearance: none; /* Hide native Safari select; TODO: Consider switching to caret */
 }
 
 #legend {
