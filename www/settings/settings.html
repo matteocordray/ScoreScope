@@ -1,32 +1,29 @@
-<ons-navigator animation="slide" id="settingsNavi" page="mainSettings"></ons-navigator>
-<ons-template id="mainSettings">
-    <div id="settingsTopDiv">
-        <img id="settingsTopImg" src="lib/img/TransparentIcon.svg">
-        <div id="boldName">SCORESCOPE</div>
-        <div id="version">v1.9.7-git</div>
-        <div id="attribution">Made by Albert Zhang</div>
-        <div id="companyHolder">
-            <div id="feedback">Got feedback?</div>
-            <div id="diamond">◈</div>
-            <a id="email" href="mailto:albertzhang66+scorescope@outlook.com" target="_system">Send an email!</a>
-        </div>
+<div id="settingsTopDiv">
+    <img id="settingsTopImg" src="lib/img/TransparentIcon.svg">
+    <div id="boldName">SCORESCOPE</div>
+    <div id="version">v1.9.7-git</div>
+    <div id="attribution">Made by Albert Zhang</div>
+    <div id="companyHolder">
+        <div id="feedback">Got feedback?</div>
+        <div id="diamond">◈</div>
+        <a id="email" href="mailto:albertzhang66+scorescope@outlook.com" target="_system">Send an email!</a>
     </div>
-    <ons-list id="settingsList">
-        <ons-list-item tappable modifier="longdivider chevron" onclick="settingsGo('privacy');">
-            <ons-icon icon="fa-database" class="iconRightSpace"></ons-icon>
-            Privacy Policy
-        </ons-list-item>
-        <ons-list-item tappable modifier="longdivider chevron" onclick="settingsGo('tac');">
-            <ons-icon icon="fa-gavel" class="iconRightSpace"></ons-icon>
-            Terms & Conditions
-        </ons-list-item>
-        <ons-list-item tappable modifier="longdivider chevron" onclick="settingsGo('oss');">
-            <ons-icon icon="fa-file" class="iconRightSpace"></ons-icon>
-            Open Source Libraries
-        </ons-list-item>
-        <ons-list-item tappable modifier="longdivider chevron" onclick="settingsGo('delete');">
-            <ons-icon icon="fa-minus-circle" class="iconRightSpace"></ons-icon>
-            Reset App
-        </ons-list-item>
-    </ons-list>
-</ons-template>
+</div>
+<ons-list id="settingsList">
+    <ons-list-item tappable modifier="longdivider chevron" onclick="settingsGo('privacy');">
+        <ons-icon icon="fa-database" class="iconRightSpace"></ons-icon>
+        Privacy Policy
+    </ons-list-item>
+    <ons-list-item tappable modifier="longdivider chevron" onclick="settingsGo('tac');">
+        <ons-icon icon="fa-gavel" class="iconRightSpace"></ons-icon>
+        Terms & Conditions
+    </ons-list-item>
+    <ons-list-item tappable modifier="longdivider chevron" onclick="settingsGo('oss');">
+        <ons-icon icon="fa-file" class="iconRightSpace"></ons-icon>
+        Open Source Libraries
+    </ons-list-item>
+    <ons-list-item tappable modifier="longdivider chevron" onclick="settingsGo('delete');">
+        <ons-icon icon="fa-minus-circle" class="iconRightSpace"></ons-icon>
+        Reset App
+    </ons-list-item>
+</ons-list>
