@@ -125,20 +125,23 @@ function loadGrades(course) {
         //loading.remove(); May be needed?
 
         // The following lines appends the course and instructor names. Asmt stands for assignment
-        asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
-            '<div id="asmtCourseName">' + course.name + '</div>' +
-            '<div id="asmtCourseTeacher">' + course.teacher + '</div>' + /*end asmtHeaderLeft*/'</div>' +
-            '<select id="GPSelector">' + '<option selected extType="' + course.extType + '" extTerm="' + course.extNum + '" termName="' + course.termName + '" value="0">' + course.termName + '</option>' +
-            '</select>' + /*end asmtHeader*/'</div>'
-        );
-
-        var GPSelector = $("#GPSelector");
-
         if (cordova.platformId === "ios") {
-            GPSelector.addClass("iOS");
+            asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
+                '<div id="asmtCourseName">' + course.name + '</div>' +
+                '<div id="asmtCourseTeacher">' + course.teacher + '</div>' + /*end asmtHeaderLeft*/'</div>' +
+                '<select id="GPSelector" class="iOS">' + '<option selected extType="' + course.extType + '" extTerm="' + course.extNum + '" termName="' + course.termName + '" value="0">' + course.termName + '</option>' +
+                '</select>' + /*end asmtHeader*/'</div>'
+            );
+        } else {
+            asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
+                '<div id="asmtCourseName">' + course.name + '</div>' +
+                '<div id="asmtCourseTeacher">' + course.teacher + '</div>' + /*end asmtHeaderLeft*/'</div>' +
+                '<select id="GPSelector">' + '<option selected extType="' + course.extType + '" extTerm="' + course.extNum + '" termName="' + course.termName + '" value="0">' + course.termName + '</option>' +
+                '</select>' + /*end asmtHeader*/'</div>'
+            );
         }
 
-        GPSelector.on("change", function () {
+        $("#GPSelector").on("change", function () {
             selectGradingPeriod(course);
         });
 
