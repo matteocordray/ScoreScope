@@ -96,8 +96,8 @@ $(document).ready(function () {
 
                     // Merge settings with default settings, with settings having priority
                     settings = $.extend({}, DEFAULT_SETTINGS, settings);
-                    /* However, this will not update the version string (b/c they are different and settings has
-                       priority), so we must set it manually */
+
+                    // However, override version number to latest
                     settings.version = DEFAULT_SETTINGS.version;
 
                     ss.set(function (key) { // On success
