@@ -199,15 +199,12 @@ function saveAcctMetadata(optionalMetadata, callback) {
 function goToSettings() {
     $("#iOSBackBtn").fadeIn(IOS_BTN_FADE_TIME); // iOS only: fade in back button (and don't close the menu because there is none)
 
-    if (navi.topPage.name === "settings/settings.html") {
-        if (settingsNavi.topPage.name !== "mainSettings") {
-            // If navi is at settings but settingsNavi is in a subpage, then pop to settings and update the title
-            settingsNavi.popPage().then(function () {
-                $("#title").text("Settings");
-            });
+    if (navi.topPage.name.substr(0, "settings/".length) === "settings/") { // If navi is on one of the settings pages...
+        if (navi.topPage.name !== "settings/settings.html") { // ...but not on the main settings page...
+            navi.popPage().then(updateTitle); // ...then pop the page and update the title
         } else { // If already on settings page, flash
-            $(settingsNavi).fadeOut(FADE_TIME);
-            $(settingsNavi).fadeIn(FADE_TIME);
+            $("#navi").fadeOut(FADE_TIME);
+            $("#navi").fadeIn(FADE_TIME);
         }
         return;
     }
