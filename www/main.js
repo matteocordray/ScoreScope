@@ -170,10 +170,15 @@ function updateTitle() { // Updates Title. Is run after navi pops the page
     var nextInStack = navi.pages[navi.pages.length - 2].name.toLowerCase(); // Eg. mainpage, accounts/accountmanager.html, etc.
     var title = $("#title");
 
-    if (typeof settingsNavi !== "undefined" && settingsNavi.topPage.name !== "mainSettings") {
-        title.text("Settings");
-    } else if (nextInStack === "mainpage") {
-        title.text("Gradebook");
+    switch (nextInStack) {
+        case "mainpage":
+            title.text("Gradebook");
+            break;
+        case "settings/settings.html":
+            title.text("Settings");
+            break;
+        default:
+            break;
     }
 }
 
@@ -205,10 +210,9 @@ function saveAcctMetadata(optionalMetadata, callback) {
 function goToSettings() {
     menu.close();
 
-    if (navi.topPage.name === "settings/settings.html") {
-        if (settingsNavi.topPage.name !== "settings/settings.html") {
-            // If navi is at settings but settingsNavi is in a subpage, then pop to settings and update the title
-            settingsNavi.popPage().then(function () {
+    if (navi.topPage.name.substr(0, "settings/".length) === "settings/") { // If navi is on one of the settings pages...
+        if (navi.topPage.name !== "settings/settings.html") { // ...but not on the main settings page...
+            navi.popPage().then(function () { // ...then pop the page and update the title
                 updateTitle();
             });
         }

@@ -45,11 +45,11 @@ function settingsGo(pageName) {
                 console.warn("Unexpected page selected: " + pageName);
                 break;
         }
-        settingsNavi.pushPage("settings/" + pageName + ".html", {
+        navi.pushPage("settings/" + pageName + ".html", {
             animation: "slide",
             animationOptions: {duration: TRANSITION_TIME}
         }).then(function () { // postPop
-            switch (settingsNavi.topPage.name) {
+            switch (navi.topPage.name) {
                 case "settings/privacy.html":
                     updatePrivacy();
                     break;
