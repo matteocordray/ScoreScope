@@ -1,16 +1,21 @@
 # Auto detect text files and perform LF normalization
-* text auto
-*.png binary eof=crlf
-*.woff binary eof=crlf
-*.woff2 binary eof=crlf
-*.ttf binary eof=crlf
-*.eot binary eof=crlf
-*.otf binary eof=crlf
-*.svg binary eof=crlf
+* text=auto
 
-*.js text eof=lf
-*.html text eof=lf
-*.css text eof=lf
+# Explicitly declare text files you want to always be normalized and converted
+*.html text
+*.css text
+*.js text
+*.xml text
+*.md text
+
+# Exceptions
+*.eot binary
+*.otf binary
+*.png binary
+*.svg binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
 
 # Standard to msysgit
 *.doc	 diff=astextplain
