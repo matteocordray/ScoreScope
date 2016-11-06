@@ -22,8 +22,14 @@
     font-family: 'Roboto', 'Noto', sans-serif;
 }
 
-#hamburgerHeader {
+#courseListHeader {
     padding-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.acctFunctionIcons {
+    margin-left: auto;
 }
 
 .courseCol {
@@ -116,4 +122,27 @@
 
 .alertItem {
     margin: 10px 0;
+}
+
+#webviewDiv {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+#backupWebview {
+    width: 90%;
+    height: 90%;
+    margin-left: 5%;
+    margin-top: 5%;
+    background-color: white;
+}
+
+#closeFrame {
+    color: red;
+    position: absolute;
+    right: 5%;
+    top: 5%;
 }

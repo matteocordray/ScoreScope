@@ -125,5 +125,19 @@
         <button id="goalCancelBtn" class="alert-dialog-button">Cancel</button>
     </div>
 </ons-alert-dialog>
+
+<form action="" method="post" target="backupWebview" id="postToWebview">
+    <input type="hidden" name="dwd">
+    <input type="hidden" name="wfaacl">
+    <input type="hidden" name="currentStudent">
+    <!-- Who the fuck uses Unicode U+0015 NEGATIVE ACKNOWLEDGE ??? -->
+    <input type="hidden" name="LinkData" value="Access&#x15;studentaccess.w">
+    <input type="hidden" name="IsMobile" value="true">
+</form>
+<div id="webviewDiv">
+    <iframe id="backupWebview" name="backupWebview"></iframe>
+    <ons-icon icon="fa-times-circle" size="24px" id="closeFrame"></ons-icon>
+</div>
+
 </body>
 </html>

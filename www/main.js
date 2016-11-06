@@ -150,6 +150,9 @@ function onResume() { // Treat resuming like a fresh open
         document.addEventListener("backbutton", updateTitle, false);
     } // End goBack()
 
+    $("#webviewDiv").hide().append("<iframe id='backupWebview' name='backupWebview'></iframe>");
+    $("#backupWebview").remove();
+
     $("#goalDialog").hide(); // hide without animation
 
     $("#title").text("Gradebook");
@@ -634,7 +637,9 @@ function loadAcct(data) {
     var courseList = $("#list");
     courseList.empty(); //Empties the list so we can add stuff
 
-    courseList.append('<ons-list-header id="hamburgerHeader">' + data.name + '</ons-list-header>');
+    courseList.append('<ons-list-header id="courseListHeader">' + data.name +
+        '<ons-icon icon="fa-external-link" size="16px" class="acctFunctionIcons" onclick="loadBackupWebview()"></ons-icon>' +
+        '</ons-list-header>');
 
     $.each(data.courses, function (key, val) { // Loads stuff in course list
         var courseItem;
@@ -710,6 +715,23 @@ function loadAcct(data) {
     $("#avgText").text("Average across all courses");
 
     $(".fade").fadeIn(1000); // Longer than normal because it displays the screen
+}
+
+function loadBackupWebview() {
+    var form = $("#postToWebview");
+    form.attr("action", accountMetadata[currentAcctID].url + "studentinfo002.w");
+    $("#postToWebview > input[name=dwd]").attr("value", currentDWD);
+    $("#postToWebview > input[name=wfaacl]").attr("value", currentWFAACL);
+    $("#postToWebview > input[name=currentStudent]").attr("value", currentStudentID);
+    form.submit();
+
+    var webDiv = $("#webviewDiv");
+    webDiv.fadeIn(FADE_TIME);
+    $("#closeFrame").one("click", function () {
+        webDiv.fadeOut(FADE_TIME);
+        $("#backupWebview").remove();
+        webDiv.append("<iframe id='backupWebview' name='backupWebview'></iframe>");
+    });
 }
 
 // function loadGrades() moved to course.js
