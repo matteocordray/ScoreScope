@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget id="com.albertzhang.scorescope" version="1.9.1" xmlns="http://www.w3.org/ns/widgets">
+<widget id="com.albertzhang.scorescope" version="1.9.7" xmlns="http://www.w3.org/ns/widgets">
     <!-- Cross-platform tags -->
     <name>ScoreScope</name>
     <description>
@@ -17,7 +17,7 @@
     <!-- Cross-plaform preferences -->
     <preference name="DisallowOverscroll" value="true"/>
     <preference name="Orientation" value="portrait"/>
-    <preference name="AppendUserAgent" value="ScoreScope/1.9.1"/>
+    <preference name="AppendUserAgent" value="ScoreScope/1.9.7"/>
     <!-- Splash screen preferences -->
     <preference name="SplashScreenDelay" value="1000"/>
     <preference name="FadeSplashScreenDuration" value="250"/>
