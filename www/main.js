@@ -212,9 +212,7 @@ function goToSettings() {
 
     if (navi.topPage.name.substr(0, "settings/".length) === "settings/") { // If navi is on one of the settings pages...
         if (navi.topPage.name !== "settings/settings.html") { // ...but not on the main settings page...
-            navi.popPage().then(function () { // ...then pop the page and update the title
-                updateTitle();
-            });
+            navi.popPage().then(updateTitle); // ...then pop the page and update the title
         }
         return;
     }
