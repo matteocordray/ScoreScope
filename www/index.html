@@ -111,14 +111,8 @@
     <div class="alert-dialog-title">Set a Goal</div>
     <div class="alert-dialog-content">
         <div class="alertItem">Set a goal to track your progress.</div>
-        <ons-if platform="ios">
-            <ons-input input-id="goalInputIOS" type="number" placeholder="Goal"></ons-input>
-            <ons-input input-id="failingInputIOS" type="number" placeholder="Failing Grade"></ons-input>
-        </ons-if>
-        <ons-if platform="android windows other">
-            <ons-input input-id="goalInput" class="alertItem" type="number" placeholder="Goal"></ons-input>
-            <ons-input input-id="failingInput" class="alertItem" type="number" placeholder="Failing Grade"></ons-input>
-        </ons-if>
+        <ons-input input-id="goalInput" class="alertItem" type="number" placeholder="Goal"></ons-input>
+        <ons-input input-id="failingInput" class="alertItem" type="number" placeholder="Failing Grade"></ons-input>
     </div>
     <div class="alert-dialog-footer">
         <button id="goalOKBtn" class="alert-dialog-button">OK</button>
