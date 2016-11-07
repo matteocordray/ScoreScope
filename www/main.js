@@ -142,8 +142,8 @@ function onResume() { // Treat resuming like a fresh open
             menu.toggle();
         });
 
-        document.removeEventListener('backbutton', goBack, false);
-        document.removeEventListener('backbutton', updateTitle, false); // Remove and re-add updateTitle listener to simulate reload
+        document.removeEventListener("backbutton", goBack, false);
+        document.removeEventListener("backbutton", updateTitle, false); // Remove and re-add updateTitle listener to simulate reload
 
         navi._backButtonHandler.enable();
         ons.enableDeviceBackButtonHandler();
