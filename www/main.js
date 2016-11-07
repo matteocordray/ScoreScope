@@ -49,7 +49,9 @@ $(document).ready(function () {
         });
 
         $("#acctBtn").on("click", openAcctPopover);
-        
+
+        $("#innerCircle").on("click", flipCircle);
+
         // Initialize SecureStorage plugin and get metadata
         ss = new cordova.plugins.SecureStorage(function () { // Upon successful initialization of SS plugin
             console.info("Secure storage init complete!");
@@ -248,6 +250,10 @@ function goToAcctMgr() {
     $("#title").text("Accounts");
 }
 
+function flipCircle() {
+
+}
+
 /* Some helper methods and stuff that makes life easier */
 
 // Basically a wrapper over ons.notification.alert()
@@ -316,6 +322,10 @@ function displayErrorPage(selector, errorTitle, errorContent, errorIconType, ret
     $.when($(".loadingCircle").fadeOut(ERR_FADE_TIME)).then(function () {
         $(selector + ".errorMsgDiv").fadeIn(ERR_FADE_TIME);
     });
+}
+
+function convertToGPA(grade) {
+    return 4.0;
 }
 
 function isNumber(number) {
