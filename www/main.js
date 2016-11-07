@@ -260,15 +260,8 @@ function alertMsg(text, title, callback) {
 }
 
 function promptForGoal() {
-    var goalInput, failingInput;
-
-    if (ons.platform._renderPlatform === "ios") { // iOS has different element ids
-        goalInput = $("#goalInputIOS")[0];
-        failingInput = $("#failingInputIOS")[0];
-    } else {
-        goalInput = $("#goalInput")[0];
-        failingInput = $("#failingInput")[0];
-    }
+    var goalInput = $("#goalInput")[0];
+    var failingInput = $("#failingInput")[0];
 
     $("#goalCancelBtn").one("click", function () {
         $("#goal").off("click").one("click", promptForGoal);
