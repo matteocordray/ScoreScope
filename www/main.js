@@ -38,6 +38,7 @@ $(document).ready(function () {
     });
 
     ons.ready(function () {
+        // Begin by adding some click handlers
         $("#iOSBackBtn").on("click.goBack", goBack);
 
         $("#settingsBtn").one("click", function () {
@@ -48,11 +49,11 @@ $(document).ready(function () {
         });
 
         $("#acctBtn").on("click", openAcctPopover);
-
-        //Initialize SecureStorage plugin and get metadata
-        ss = new cordova.plugins.SecureStorage(function () { // If success
+        
+        // Initialize SecureStorage plugin and get metadata
+        ss = new cordova.plugins.SecureStorage(function () { // Upon successful initialization of SS plugin
             console.info("Secure storage init complete!");
-            ss.get(function (metadata) { // If success
+            ss.get(function (metadata) { // Upon successful retrieval of metadata
                 accountMetadata = JSON.parse(metadata).accounts;
                 console.info("Successfully retrieved metadata!");
 
@@ -60,8 +61,9 @@ $(document).ready(function () {
 
                 document.addEventListener("resume", onResume, false);
 
+                // Now that everything is loaded, we can ask the user for a review
                 AppRate.preferences.displayAppName = "ScoreScope";
-                AppRate.preferences.useLanguage = 'en';
+                AppRate.preferences.useLanguage = "en";
                 AppRate.preferences.storeAppURL = {
                     ios: "1144199223",
                     android: "market://details?id=com.albertzhang.scorescope",
@@ -72,7 +74,9 @@ $(document).ready(function () {
             }, function (error) { // If there's an error, fuck it and make user log in again
                 console.error(error);
                 console.warn("Error in initialization process...making user log in again!");
-                ss.remove(function () { // On success
+
+                // Try to remove the metadata
+                ss.remove(function () { // On successful removal of metadata
                     window.location.replace("accounts/firstRun.html");
                 }, function (error) { // On failure
                     console.error(error);
@@ -80,12 +84,15 @@ $(document).ready(function () {
                 }, "accountMetadata");
             }, "accountMetadata");
 
-            // Retrieve settings as well
-            ss.get(function (settingsJSON) { // If success
+            /*
+             Ok. So we've successfully initialized the SS plugin. While we load the account via loadAcctData(), we
+             simultaneously retrieve settings as well. Hopefully, we finish before we need any settings values.
+             */
+            ss.get(function (settingsJSON) { // Upon successful retrieval of settings
                 settings = JSON.parse(settingsJSON);
                 console.info("Successfully retrieved settings!");
 
-                if (typeof settings.version === "undefined" || settings.version < VERSION) { // On upgrade
+                if (typeof settings.version === "undefined" || settings.version < VERSION) { // On upgrade to newer version
                     console.info("Settings are out of date! Upgrading to " + VERSION);
 
                     // Merge settings with default settings, with settings having priority
@@ -102,12 +109,12 @@ $(document).ready(function () {
                         // TODO: Send error log
                     }, "settings", JSON.stringify(settings));
                 }
-            }, function (error) { // If there's an error, set settings to defaults
+            }, function (error) { // If there's an error in retrieving settings, set settings to defaults
                 console.warn(error);
                 console.warn("Could not retrieve settings...resetting to defaults");
                 saveSettings(DEFAULT_SETTINGS);
             }, "settings");
-        }, function (error) {
+        }, function (error) { // Upon failure in initializing secure storage
             console.error("Error: " + error);
             displayErrorPage("mainPageErrMsgDiv", "Oh No!", "Failed to initialize secure storage. Please try again later.", "ErrorTriangle", null);
         }, "scorescope");// Key for storage.
