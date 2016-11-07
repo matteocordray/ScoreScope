@@ -42,12 +42,12 @@ $(document).ready(function () {
 
         $("#settingsBtn").one("click", function () {
             $.getScript("settings/settings.js", function () {
-                $("#settingsBtn").click(goToSettings);
+                $("#settingsBtn").on("click", goToSettings);
                 goToSettings();
             });
         });
 
-        $("#acctBtn").click(openAcctPopover);
+        $("#acctBtn").on("click", openAcctPopover);
 
         //Initialize SecureStorage plugin and get metadata
         ss = new cordova.plugins.SecureStorage(function () { // If success
@@ -90,8 +90,8 @@ $(document).ready(function () {
 
                     // Merge settings with default settings, with settings having priority
                     settings = $.extend({}, DEFAULT_SETTINGS, settings);
-                    /* However, this will not update the version string (b/c they are different and settings has
-                       priority), so we must set it manually */
+
+                    // However, override version number to latest
                     settings.version = DEFAULT_SETTINGS.version;
 
                     ss.set(function (key) { // On success
@@ -413,7 +413,7 @@ function loadAcctList(optionalAcctToLoad) {
     $("#menuList").append('<ons-list-item tappable id="acctMgr"><ons-icon icon="fa-user" size="18px"></ons-icon>&nbsp;&nbsp;Manage Accounts</ons-list-item>');
     $("#acctMgr").one("click", function () {
         $.getScript("accounts/accountManager.js", function () {
-            $("#acctMgr").click(goToAcctMgr);
+            $("#acctMgr").on("click", goToAcctMgr);
             goToAcctMgr();
         });
     });
