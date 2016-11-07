@@ -329,27 +329,18 @@ function searchForDist() {
                 data = [data];
             }
             $.each(data, function (key, val) {
+                var districtItem = $('<ons-list-item tappable class="district" modifier="material longdivider">' +
+                    '<ons-col class="distCol">' + // Column
+                    '<div class="distName">' + val.name + '</div>' + // District Name
+                    '<div class="distLoc">' + val.city + ' ' + val.state + '</div>' + // City + State
+                    '</ons-col></ons-list-item>');
+
+                list.append(districtItem);
                 if (val.allowStu === "true") {
-                    var districtItem = $('<ons-list-item tappable class="district systemFont" modifier="material longdivider">' +
-                        '<ons-col class="distCol">' + // Column
-                        '<div class="distName">' + val.name + '</div>' + // District Name
-                        '<div class="distLoc">' + val.city + ' ' + val.state + '</div>' + // City + State
-                        '</ons-col></ons-list-item>');
-
-                    list.append(districtItem);
-
                     districtItem.on("click", function () {
                         selectDistrict(val, key);
                     });
                 } else {
-                    var districtItem = $('<ons-list-item tappable class="district systemFont" modifier="material longdivider">' +
-                        '<ons-col class="distCol">' + // Column
-                        '<div class="distName">' + val.name + '</div>' + // District Name
-                        '<div class="distLoc">' + val.city + ' ' + val.state + '</div>' + // City + State
-                        '</ons-col></ons-list-item>');
-
-                    list.append(districtItem);
-
                     districtItem.on("click", function () {
                         confirmAllowStuOverride(val, key);
                     });
