@@ -42,14 +42,14 @@ $(document).ready(function () {
 
         $("#settingsBtn").one("click", function () {
             $.getScript("settings/settings.js", function () {
-                $("#settingsBtn").click(goToSettings);
+                $("#settingsBtn").on("click", goToSettings);
                 goToSettings();
             });
         });
 
         $("#acctMgr").one("click", function () {
             $.getScript("accounts/accountManager.js", function () {
-                $("#acctMgr").click(goToAcctMgr);
+                $("#acctMgr").on("click", goToAcctMgr);
                 goToAcctMgr();
             });
         });
@@ -134,11 +134,11 @@ function onResume() { // Treat resuming like a fresh open
 
         rightBtn.off("click"); // Remove click listener
         rightBtn.children().eq(0).attr("class", "ons-icon fa fa-refresh"); // Must use children[0] because Onsen UI makes a child icon element
-        rightBtn.click(onRefreshClick);
+        rightBtn.on("click", onRefreshClick);
 
         leftBtn.off("click");
         leftBtn.children().eq(0).attr("class", "ons-icon fa fa-bars");
-        leftBtn.click(function () {
+        leftBtn.on("click", function () {
             menu.toggle();
         });
 
