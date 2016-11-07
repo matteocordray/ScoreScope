@@ -6,7 +6,7 @@
     height: 92.5%;
 }
 
-.systemFont {
+:not(.fa) {
     font-family: 'Roboto', 'Noto', sans-serif;
 }
 

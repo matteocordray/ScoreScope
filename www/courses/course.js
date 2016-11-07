@@ -147,7 +147,7 @@ function loadGrades(course) {
 
         asmtList.append('<div id="piDiv"><ons-row><ons-col width="' + $(window).width() * 0.55 + 'px" vertical-align="center">' +
             '<canvas id="piChart" height="' + $(window).width() * 0.55 + 'px" width="' + $(window).width() * 0.55 + '"></canvas></ons-col>' +
-            '<ons-col vertical-align="center"><div id="piLegend" class="systemFont"></div></ons-col></ons-row></div>'
+            '<ons-col vertical-align="center"><div id="piLegend"></div></ons-col></ons-row></div>'
         ); // Appends canvas to draw pi chart
 
         piLeg = $("#piLegend");

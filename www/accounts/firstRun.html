@@ -26,14 +26,14 @@
 </head>
 <body>
 <ons-navigator id="navi" page="greetings" animation="slide"></ons-navigator>
-<div id="bottomBar" class="systemFont">
+<div id="bottomBar">
     <div id="back" style="display: none;">Back</div>
     <div id="next">Next</div>
 </div>
 
 <!-- First welcome page -->
 <ons-template id="greetings">
-    <div id="greetingCenter" class="systemFont">
+    <div id="greetingCenter">
         <img class="logo" src="../lib/img/TransparentIcon.svg">
         <div class="sectionTitle">Welcome to ScoreScope</div>
         <div id="greetingDes">A clean, intuitive interface for the SkywardⒸ Student Information System.</div>
@@ -46,13 +46,12 @@
         <img class="logo" src="../lib/img/School.svg">
     </div>
 
-    <span class="systemFont">
     <div class="center sectionTitle">Find your district</div>
     <div class="input">
         <ons-icon icon="fa-searchForDist" class="icon--needsPadding" flip="horizontal"></ons-icon>
         <input class="text-input--material input" placeholder="Search by District Name or Zip Code" id="search">
     </div>
-    <div class="center systemFont" id="listDiv">
+    <div class="center" id="listDiv">
         <ons-list id="list">
         </ons-list>
     </div>
@@ -66,14 +65,12 @@
     </div>
     <div id="loading">
         <ons-progress-circular indeterminate></ons-progress-circular>
-    <div>&nbsp;&nbsp;Loading...</div>
-</div>
-    </span>
+        <div>&nbsp;&nbsp;Loading...</div>
+    </div>
 </ons-template>
 
 <!-- Login page -->
 <ons-template id="login">
-    <span class="systemFont">
     <div class="center">
         <img class="logo" src="../lib/img/GraduationCap.svg">
     </div>
@@ -95,7 +92,6 @@
     <div class="input" id="tc">
         <ons-input type="checkbox" id="tcCheckBox"> I agree to the SkywardⒸ Terms of Use</ons-input>
     </div>
-    </span>
 </ons-template>
 </body>
 </html>
