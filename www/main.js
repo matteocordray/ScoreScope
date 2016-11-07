@@ -101,13 +101,7 @@ $(document).ready(function () {
                     // However, override version number to latest
                     settings.version = DEFAULT_SETTINGS.version;
 
-                    ss.set(function (key) { // On success
-                        console.info("Successfully upgraded " + key + " to " + VERSION);
-                    }, function (error) { // On error
-                        // Probably shouldn't bother notifying the user.
-                        console.warn("Failed to upgrade settings! Error: " + error);
-                        // TODO: Send error log
-                    }, "settings", JSON.stringify(settings));
+                    saveSettings(); // Finally, save settings in secure storage
                 }
             }, function (error) { // If there's an error in retrieving settings, set settings to defaults
                 console.warn(error);
