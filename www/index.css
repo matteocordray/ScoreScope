@@ -22,8 +22,8 @@
     top: 75px;
 }
 
-.systemFont {
-    font-family: 'Roboto', 'Noto', sans-serif !important;
+:not(.fa) {
+    font-family: 'Roboto', 'Noto', sans-serif;
 }
 
 #hamburgerHeader {

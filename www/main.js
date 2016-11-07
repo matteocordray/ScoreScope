@@ -657,7 +657,7 @@ function loadAcct(data) {
 
         if (val.grade < 0) { // If no grades in a course
             // Make a courseItem, append it to the list, and attach a listener
-            courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course systemFont">' +
+            courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course">' +
                 '<ons-col class="courseCol">' + // Column
                 '<div class="courseName">' + val.name + '</div>' + // Course name/period
                 '<div class="courseGrade">There are no grades in this course</div>' + // No Grades Entered
@@ -673,7 +673,7 @@ function loadAcct(data) {
                 count++;
             }
 
-            courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course systemFont">' +
+            courseItem = $('<ons-list-item tappable modifier="chevron longdivider" class="course">' +
                 '<ons-col class="courseCol">' + // Column
                 '<div class="courseName">' + val.name + '</div>' + // Course name/period
                 '<div class="courseGrade">Grade: ' + val.grade + '</div>' + // Grade

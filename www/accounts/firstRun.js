@@ -336,6 +336,7 @@ function searchForDist() {
                     '</ons-col></ons-list-item>');
 
                 list.append(districtItem);
+                
                 if (val.allowStu === "true") {
                     districtItem.on("click", function () {
                         selectDistrict(val, key);

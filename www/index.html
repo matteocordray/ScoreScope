@@ -24,7 +24,7 @@
     <script src="main.js"></script>
     <script src="courses/course.js"></script>
 </head>
-<ons-page class="systemFont">
+<ons-page>
     <!-- The top toolbar -->
     <ons-toolbar>
         <div class="left">
@@ -33,7 +33,7 @@
                 &nbsp;Back
             </ons-toolbar-button>
         </div>
-        <div class="center systemFont" id="title">Gradebook</div>
+        <div class="center" id="title">Gradebook</div>
         <!-- The account switcher-->
         <div class="right">
             <ons-toolbar-button id="saveBtn" modifier="outline">
@@ -59,11 +59,11 @@
             <div class="errorDetails">An error has occurred!</div>
             <ons-button class="errorRetryBtn">Try Again</ons-button>
         </div>
-        <div id="mainLoading" class="loadingCircle systemFont">
+        <div id="mainLoading" class="loadingCircle">
             <ons-progress-circular indeterminate></ons-progress-circular>
             <div>&nbsp;&nbsp;Loading...</div>
         </div>
-        <div id="avgCircleArea" class="fade systemFont">
+        <div id="avgCircleArea" class="fade">
             <div id="outerCircle">
                 <div id="innerCircle"></div>
             </div>
@@ -74,11 +74,11 @@
                 <ons-icon class="goalIcon" icon="fa-pencil"></ons-icon>
             </div>
         </div>
-        <ons-list id="list" class="fade systemFont"></ons-list>
+        <ons-list id="list" class="fade"></ons-list>
     </ons-template>
     <ons-navigator animation="slide" id="navi" page="mainPage"></ons-navigator>
 </ons-page>
-<ons-popover cancelable direction="down" id="pop" class="systemFont">
+<ons-popover cancelable direction="down" id="pop">
     <ons-list id="menuList">
     </ons-list>
 </ons-popover>

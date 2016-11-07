@@ -12,8 +12,8 @@
     height: 92.5%;
 }
 
-.systemFont {
-    font-family: 'Roboto', 'Noto', sans-serif !important;
+:not(.fa) {
+    font-family: 'Roboto', 'Noto', sans-serif;
 }
 
 #bottomBar {
