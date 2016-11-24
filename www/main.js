@@ -36,7 +36,7 @@ $(document).ready(function () {
 
     ons.ready(function () {
         // Begin by adding some click handlers
-        $("#rightBtn").on("click", onRefreshClick); // Default behavior for rightBtn is refresh
+        $("#rightBtn").on("click", onResume); // Default behavior for rightBtn is refresh
         $("#leftBtn").on("click", function () { // Default behavior for leftBtn is toggle hamburger
             menu.toggle();
         });
@@ -124,10 +124,6 @@ $(document).ready(function () {
 });
 
 /* Various listeners and stuff go here */
-function onRefreshClick() { // TODO: Properly implement resume
-    onResume();
-}
-
 function onResume() { // Treat resuming like a fresh open
     /* Basically a copy of the goBack() function without the popPage
      * It basically resets buttons and event listeners */
@@ -137,7 +133,7 @@ function onResume() { // Treat resuming like a fresh open
 
         rightBtn.off("click"); // Remove click listener
         rightBtn.children().eq(0).attr("class", "ons-icon fa fa-refresh"); // Must use children[0] because Onsen UI makes a child icon element
-        rightBtn.on("click", onRefreshClick);
+        rightBtn.on("click", onResume);
 
         leftBtn.off("click");
         leftBtn.children().eq(0).attr("class", "ons-icon fa fa-bars");
@@ -299,7 +295,7 @@ function promptForGoal() {
         }
 
         goalDialog.hide();
-        saveAcctMetadata(null, onRefreshClick);
+        saveAcctMetadata(null, onResume);
     });
 
     goalDialog.show();

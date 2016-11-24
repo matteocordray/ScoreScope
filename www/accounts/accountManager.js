@@ -158,7 +158,7 @@ function goBack() {
 
     rightBtn.off("click");
     rightBtn.children().eq(0).attr("class", "ons-icon fa fa-refresh"); // Must use children[0] because onsen ui makes a child icon element
-    rightBtn.click(onRefreshClick);
+    rightBtn.click(onResume);
 
     leftBtn.off("click");
     leftBtn.children().eq(0).attr("class", "ons-icon fa fa-bars");
