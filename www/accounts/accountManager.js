@@ -36,9 +36,7 @@ function loadEditor(id) {
         validateAndSave(id);
     });
     saveBtn.fadeIn(IOS_BTN_FADE_TIME);
-    var backBtn = $("#iOSBackBtn");
-    backBtn.off("click.goBack");
-    backBtn.on("click.editorGoBack", editorGoBack);
+    $("#iOSBackBtn").off("click.goBack").on("click.editorGoBack", editorGoBack);
 
     var editingAcct = accountMetadata[id];
     navi.pushPage("accounts/accountEditor.html", {
@@ -150,10 +148,8 @@ function validateAndSave(id) {
 function editorGoBack() {
     $("#saveBtn").hide();
     $("#acctBtn, #settingsBtn").fadeIn(IOS_BTN_FADE_TIME);
-    var backBtn = $("#iOSBackBtn");
-    backBtn.off("click.editorGoBack");
+    $("#iOSBackBtn").off("click.editorGoBack").on("click.goBack", goBack);
     navi.popPage();
-    backBtn.on("click.goBack", goBack);
 }
 
 // TODO: Eventually, we might want a better transition
