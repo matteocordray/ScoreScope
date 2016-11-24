@@ -131,13 +131,11 @@ function onResume() { // Treat resuming like a fresh open
         var rightBtn = $("#rightBtn");
         var leftBtn = $("#leftBtn");
 
-        rightBtn.off("click"); // Remove click listener
         rightBtn.children().eq(0).attr("class", "ons-icon fa fa-refresh"); // Must use children[0] because Onsen UI makes a child icon element
-        rightBtn.on("click", onResume);
+        rightBtn.off("click").on("click", onResume); // Replace click listener
 
-        leftBtn.off("click");
         leftBtn.children().eq(0).attr("class", "ons-icon fa fa-bars");
-        leftBtn.on("click", function () {
+        leftBtn.off("click").on("click", function () {
             menu.toggle();
         });
 
