@@ -150,10 +150,6 @@ function goBack() {
     });
 }
 
-function onRefreshClick() { // Unused right now
-    onResume();
-}
-
 function onResume() { // Treat resuming like a fresh open
     $("#title").text("Gradebook");
 
@@ -297,7 +293,7 @@ function promptForGoal() {
         }
 
         goalDialog.hide();
-        saveAcctMetadata(null, onRefreshClick);
+        saveAcctMetadata(null, onResume);
     });
 
     goalDialog.show();
