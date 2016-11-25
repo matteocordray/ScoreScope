@@ -1,6 +1,6 @@
 /*==========================
 jquery.soap.js - https://github.com/doedje/jquery.soap
-version: 1.6.9
+version: 1.6.10
 
 jQuery plugin for communicating with a web service using SOAP.
 
@@ -13,7 +13,7 @@ For information about how to use jQuery.soap, authors, changelog, the latest ver
 Visit: https://github.com/doedje/jquery.soap
 
 Documentation about THIS version is found here:
-https://github.com/doedje/jquery.soap/blob/1.6.9/README.md
+https://github.com/doedje/jquery.soap/blob/1.6.10/README.md
 
 ======================*/
 
@@ -170,14 +170,14 @@ https://github.com/doedje/jquery.soap/blob/1.6.9/README.md
 				}
 			}
 			// headers
-			header = soapObject.find(this.prefix + ':Header');
+			var header = soapObject.find(this.prefix + ':Header');
 			if (header && header.children) {
 				for (var j = 0; j < header.children.length; j++) {
 					this.addHeader(header.children[j]);
 				}
 			}
 			// body
-			body = soapObject.find(this.prefix + ':Body');
+			var body = soapObject.find(this.prefix + ':Body');
 			if (body && body.children) {
 				for (var k = 0; k < body.children.length; k++) {
 					this.addBody(body.children[k]);
@@ -259,7 +259,7 @@ https://github.com/doedje/jquery.soap/blob/1.6.9/README.md
 				dataType: "xml",
 				processData: false,
 				data: this.toString(),
-				contentType: contentType + "; charset=UTF-8",
+				contentType: contentType + "; charset=UTF-8" + (options.soap12 ? "; action=" + options.action : ""),
 				xhrFields: {
 					// Add xhrFields, and set xhrFields.withCredentials = true by default, otherwise,
 					// it can't send a cross-domain request successfully in Chrome without this settings.
