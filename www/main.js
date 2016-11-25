@@ -725,6 +725,7 @@ function loadAcct(data) {
     }
 
     innerCircle.css("font-size", fontSize + "px");
+    $("#outerCircle").flip();
 
     $("#avgText").text("Average across all courses");
 
