@@ -733,6 +733,11 @@ function loadAcct(data) {
         $("#descriptionContainer").flip("toggle");
     });
 
+    // For some reason, we need to add this handler every time we load the account
+    $("#GPAInfo").on("click", function () {
+        alertMsg("This is a standardized GPA calculation used by most colleges. It does not take into account the weight of your courses, and ranges from 0 to 4 points.", "Standardized Unweighted GPA");
+    });
+
     //noinspection MagicNumberJS (Longer than normal because it displays the screen)
     $(".fade").fadeIn(1000);
 }
