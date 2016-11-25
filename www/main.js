@@ -320,8 +320,31 @@ function displayErrorPage(selector, errorTitle, errorContent, errorIconType, ret
     });
 }
 
+//noinspection MagicNumberJS,OverlyComplexFunctionJS
 function convertToGPA(grade) {
-    return 4.0;
+    if (grade >= 93) {
+        return 4.0;
+    } else if (grade >= 90) {
+        return 3.7;
+    } else if (grade >= 87) {
+        return 3.3;
+    } else if (grade >= 83) {
+        return 3.0;
+    } else if (grade >= 80) {
+        return 2.7;
+    } else if (grade >= 77) {
+        return 2.3;
+    } else if (grade >= 73) {
+        return 2.0;
+    } else if (grade >= 70) {
+        return 1.7;
+    } else if (grade >= 67) {
+        return 1.3;
+    } else if (grade >= 65) {
+        return 1.0;
+    } else {
+        return 0.0;
+    }
 }
 
 function isNumber(number) {
