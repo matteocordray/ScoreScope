@@ -27,9 +27,10 @@ function getAndParseCourse(data, callback, doNotPushPage) {
         course.categories = [];
 
         var categories = page.find(".categories");
+        var element;
 
         if (categories.length > 0) {
-            var element = $(categories[0]);
+            element = $(categories[0]);
         } else {
             $("#assignmentList").empty();
 
@@ -84,6 +85,10 @@ function getAndParseCourse(data, callback, doNotPushPage) {
             }
             element = element.next();
         }
+
+        // Finally, get the grade of the 6 weeks, which lies in the last row of the table
+        course.grade = element.children().eq(2).text().trim();
+
         callback(course);
     }).fail(function (xhr) { // Failure of request for assignments
         if (xhr.readyState === 0) { // This means no internet (or timed out)
@@ -125,21 +130,13 @@ function loadGrades(course) {
         //loading.remove(); May be needed?
 
         // The following lines appends the course and instructor names. Asmt stands for assignment
-        if (cordova.platformId === "ios") {
-            asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
-                '<div id="asmtCourseName">' + course.name + '</div>' +
-                '<div id="asmtCourseTeacher">' + course.teacher + '</div>' + /*end asmtHeaderLeft*/'</div>' +
-                '<select id="GPSelector" class="iOS">' + '<option selected extType="' + course.extType + '" extTerm="' + course.extNum + '" termName="' + course.termName + '" value="0">' + course.termName + '</option>' +
-                '</select>' + /*end asmtHeader*/'</div>'
-            );
-        } else {
-            asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
-                '<div id="asmtCourseName">' + course.name + '</div>' +
-                '<div id="asmtCourseTeacher">' + course.teacher + '</div>' + /*end asmtHeaderLeft*/'</div>' +
-                '<select id="GPSelector">' + '<option selected extType="' + course.extType + '" extTerm="' + course.extNum + '" termName="' + course.termName + '" value="0">' + course.termName + '</option>' +
-                '</select>' + /*end asmtHeader*/'</div>'
-            );
-        }
+        asmtList.append('<div class="asmtHeader">' + '<div id="asmtHeaderLeft">' +
+            '<div id="asmtCourseName">' + course.name + '</div>' +
+            '<div id="asmtCourseTeacher">' + course.teacher + '</div>' +
+            '<div id="asmtGrade">Grade: ' + course.grade + '</div>' + /*end asmtHeaderLeft*/'</div>' +
+            '<select id="GPSelector" class="' + cordova.platformId + '">' + '<option selected extType="' + course.extType + '" extTerm="' + course.extNum + '" termName="' + course.termName + '" value="0">' + course.termName + '</option>' +
+            '</select>' + /*end asmtHeader*/'</div>'
+        );
 
         $("#GPSelector").on("change", function () {
             selectGradingPeriod(course);

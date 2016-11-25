@@ -32,18 +32,29 @@
     margin: 15px 10px 0;
 }
 
+#asmtHeaderLeft {
+    display: inline-block;
+    width: 65%;
+    margin: 5px;
+}
+
+#asmtHeaderLeft > * {
+    margin: 2.5px 0;
+}
+
 #asmtCourseName {
     font-weight: 700;
     font-size: 20px;
     color: #1f1f21;
-    margin: 5px;
 }
 
 #asmtCourseTeacher {
     font-size: 16px;
-    font-weight: 400;
+    color: rgba(50, 50, 50, 0.95);
+}
+
+#asmtGrade {
     color: rgba(108, 108, 108, 0.75);
-    margin: 5px 5px 15px;
 }
 
 .threeCols {
@@ -63,11 +74,6 @@
     margin-bottom: 10px;
 }
 
-#asmtHeaderLeft {
-    display: inline-block;
-    width: 65%;
-}
-
 #GPSelector {
     display: inline-block;
     float: right;
@@ -78,7 +84,7 @@
     border-radius: 15px;
 }
 
-#GPSelector.iOS {
+#GPSelector.ios {
     -webkit-appearance: none; /* Hide native Safari select; TODO: Consider switching to caret */
 }
 
