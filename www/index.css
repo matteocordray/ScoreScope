@@ -53,18 +53,36 @@
     text-overflow: ellipsis;
 }
 
+/* All the units on the circles are in vh (viewport height) because that's what the size of the circles is based off of */
 #outerCircle {
+    height: 35vh;
+    width: 35vh;
+    border-radius: 17.5vh;
     margin: 15px auto 5px auto;
 }
 
-#innerCircle {
+#innerCircleContainer {
+    display: none; /* Hidden in the beginning. Shown when .fade fades in */
     position: absolute;
-    vertical-align: middle;
-    background: #f9f9f9; /* Material Design Background. TODO: change for iOS */
+    height: 21vh;
+    width: 21vh;
+    margin: 7vh;
 }
 
-#circleText {
+.innerCircle {
+    border-radius: 50%;
+    background: #f9f9f9; /* Material Design Background. TODO: change for iOS */
     text-align: center;
+    vertical-align: middle;
+    line-height: 21vh;
+}
+
+.innerCircle.front {
+    font-size: 11vh;
+}
+
+.innerCircle.back {
+    font-size: 7.5vh;
 }
 
 #avgText {

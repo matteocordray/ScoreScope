@@ -666,6 +666,7 @@ function loadAcct(data) {
     $("#goal").off("click").one("click", promptForGoal);
 
     var total = 0; // Total grade across all courses
+    var totalGPA = 0; // Total GPA across all courses
     var count = 0; // Number of courses
 
     $("#mainLoading, #mainPageErrMsgDiv").fadeOut(FADE_TIME);
@@ -693,6 +694,7 @@ function loadAcct(data) {
         } else {
             if (isNumber(val.grade)) { // If it's a number, add it to the average
                 total += +val.grade; // We can safely cast to int now
+                totalGPA += convertToGPA(+val.grade);
                 count++;
             }
 
@@ -710,11 +712,15 @@ function loadAcct(data) {
         courseList.append(courseItem);
     });
 
-    var outerCircle = $("#outerCircle");
-    var outerDia = ($(window).height() * 0.35); // Height of avgCircleArea is always 40% of window height. 0.35 compensates for text
-    outerCircle.css("height", outerDia);
-    outerCircle.css("width", outerDia);
-    outerCircle.css("border-radius", outerDia / 2);
+    // Start showing the information on the circles
+    if (count > 0) {
+        $("#innerCircleContainer > .innerCircle.front").text(Math.round(total / count));
+        $("#innerCircleContainer > .innerCircle.back").text((totalGPA / count).toFixed(3));
+    } else {
+        $("#innerCircleContainer > .innerCircle").text("No Data");
+        $(".innerCircle").css("font-size", "5vh");
+    }
+    $("#innerCircleContainer").show();
 
     // Failing is represented as pure red, while Goal is pure green
     var goal = isNumber(data.goal) ? data.goal : 100;
@@ -722,29 +728,7 @@ function loadAcct(data) {
     // First, compute the average. Ensure colorAverage is between failing and goal.
     var colorAverage = ensureRange(Math.round(total / count), failing, goal);
     // Then, stretch the numbers from failing-goal to 0-100 by subtracting failing (new scale: 0-(goal-failing)) and multiplying by 100 / goal-failing (new scale: 0-100
-    outerCircle.css("background", colorFromGrade((colorAverage - failing) * (100 / (goal - failing))));
-
-    var innerCircle = $("#innerCircle");
-    innerCircle.empty();
-
-    var innerDia = outerDia * 0.6;
-    innerCircle.css("height", innerDia);
-    innerCircle.css("width", innerDia);
-    innerCircle.css("border-radius", innerDia / 2);
-    innerCircle.css("margin", (outerDia - innerDia) / 2 + "px");
-
-    var fontSize = innerDia / 1.75;
-
-    if (count > 0) {
-        innerCircle.append('<div id="circleText">' + Math.round(total / count) + '</div>');
-        $("#circleText").css("margin-top", (outerDia / 4) - (fontSize / 2.25)); // Divide by 2.25 to correct for actual font size being different
-    } else {
-        innerCircle.append('<div id="circleText">No Data</div>');
-        fontSize = innerDia / 3;
-        $("#circleText").css("margin-top", "10px");
-    }
-
-    innerCircle.css("font-size", fontSize + "px");
+    $("#outerCircle").css("background", colorFromGrade((colorAverage - failing) * (100 / (goal - failing))));
     $("#outerCircle").flip();
 
     $("#avgText").text("Average across all courses");
