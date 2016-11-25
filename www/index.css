@@ -85,7 +85,12 @@
     font-size: 7.5vh;
 }
 
-#avgText {
+#descriptionContainer {
+    display: none;
+    height: 1.5em;
+}
+
+#descriptionContainer > * {
     text-align: center;
 }
 
