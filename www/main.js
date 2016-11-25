@@ -55,8 +55,6 @@ $(document).ready(function () {
             });
         });
 
-        $("#innerCircle").on("click", flipCircle);
-
         // Initialize SecureStorage plugin and get metadata
         ss = new cordova.plugins.SecureStorage(function () { // Upon successful initialization of SS plugin
             console.info("Secure storage init complete!");
@@ -244,10 +242,6 @@ function goToAcctMgr() {
         });
     });
     $("#title").text("Accounts");
-}
-
-function flipCircle() {
-
 }
 
 /* Some helper methods and stuff that makes life easier */
@@ -709,11 +703,18 @@ function loadAcct(data) {
     var colorAverage = ensureRange(Math.round(total / count), failing, goal);
     // Then, stretch the numbers from failing-goal to 0-100 by subtracting failing (new scale: 0-(goal-failing)) and multiplying by 100 / goal-failing (new scale: 0-100
     $("#outerCircle").css("background", colorFromGrade((colorAverage - failing) * (100 / (goal - failing))));
+
+    // Set up flipping (hide elements and such)
     $("#outerCircle").flip();
+    $("#descriptionContainer").flip({trigger: "manual"});
 
-    $("#avgText").text("Average across all courses");
+    // Using click event as a workaround because the flip:changed event does not fire for some reason
+    $("#outerCircle").on("click", function () {
+        $("#descriptionContainer").flip("toggle");
+    });
 
-    $(".fade").fadeIn(1000); // Longer than normal because it displays the screen
+    //noinspection MagicNumberJS (Longer than normal because it displays the screen)
+    $(".fade").fadeIn(1000);
 }
 
 // function loadGrades() moved to course.js
