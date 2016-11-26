@@ -43,12 +43,12 @@ $(document).ready(function () {
 
         $("#settingsBtn").one("click", function () {
             $.getScript("settings/settings.js", function () {
-                $("#settingsBtn").on("click", goToSettings);
+                $("#settingsBtn").on("click.goToSettings", goToSettings);
                 goToSettings();
             });
         });
 
-        $("#acctBtn").on("click", openAcctPopover);
+        $("#acctBtn").on("click.openAcctPopover", openAcctPopover);
 
         // Initialize SecureStorage plugin and get metadata
         ss = new cordova.plugins.SecureStorage(function () { // Upon successful initialization of SS plugin
@@ -301,7 +301,7 @@ function displayErrorPage(selector, errorTitle, errorContent, errorIconType, ret
     erb.hide();
     if (typeof retryCallback === "function") {
         erb.show();
-        erb.unbind("click").on("click", retryCallback); // Prevent multiple retryCallbacks being added
+        erb.off("click.retry").on("click.retry", retryCallback); // Prevent multiple retryCallbacks being added
     }
 
     if (errorIconType) {
@@ -421,7 +421,7 @@ function loadAcctList(optionalAcctToLoad) {
 
         menuList.append(listItem);
 
-        listItem.on("click", function () {
+        listItem.on("click.loadAcct", function () {
             getAndParseAccount(key, loadAcct);
         });
     });
@@ -682,7 +682,7 @@ function loadAcct(data) {
                 '<div class="courseTeacher">' + val.teacher + '</div>' + // Teacher name
                 '</ons-col></ons-list-item>');
 
-            courseItem.on("click", function () {
+            courseItem.on("click.viewCourse", function () {
                 alertMsg("There are currently no assignments in this course.");
             });
         } else {
@@ -699,7 +699,7 @@ function loadAcct(data) {
                 '<div class="courseTeacher">' + val.teacher + '</div>' + // Teacher name
                 '</ons-col></ons-list-item>');
 
-            courseItem.on("click", function () {
+            courseItem.on("click.viewCourse", function () {
                 getAndParseCourse(val, loadGrades);
             });
         }
@@ -729,12 +729,12 @@ function loadAcct(data) {
     $("#descriptionContainer").flip({trigger: "manual"});
 
     // Using click event as a workaround because the flip:changed event does not fire for some reason
-    $("#outerCircle").on("click", function () {
+    $("#outerCircle").on("click.flipDescription", function () {
         $("#descriptionContainer").flip("toggle");
     });
 
     // For some reason, we need to add this handler every time we load the account
-    $("#GPAInfo").on("click", function () {
+    $("#GPAInfo").on("click.loadHelpInfo", function () {
         alertMsg("This is a standardized GPA calculation used by most colleges. It does not take into account the weight of your courses, and ranges from 0 to 4 points.", "Standardized Unweighted GPA");
     });
 

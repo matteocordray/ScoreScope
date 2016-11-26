@@ -138,7 +138,7 @@ function loadGrades(course) {
             '</select>' + /*end asmtHeader*/'</div>'
         );
 
-        $("#GPSelector").on("change", function () {
+        $("#GPSelector").on("change.selectGradingPeriod", function () {
             selectGradingPeriod(course);
         });
 

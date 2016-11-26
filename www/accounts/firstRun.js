@@ -71,7 +71,7 @@ function showFirstRunError(errorTitle, errorContent, errorIcon, retryCallback) {
     frERB.hide();
     if (typeof retryCallback === "function") {
         frERB.show();
-        frERB.unbind("click").on("click", retryCallback); // Prevent multiple retryCallbacks being added
+        frERB.off("click.retry").on("click.retry", retryCallback); // Prevent multiple retryCallbacks being added
     }
 
     if (errorIcon) {
@@ -196,7 +196,7 @@ function searchForDist() {
 
             $("#list").append(testDistrict);
 
-            testDistrict.on("click", function () {
+            testDistrict.on("click.selectDistrict", function () {
                 selectDistrict(data, 0);
             });
         });
@@ -338,11 +338,11 @@ function searchForDist() {
                 list.append(districtItem);
                 
                 if (val.allowStu === "true") {
-                    districtItem.on("click", function () {
+                    districtItem.on("click.selectDistrict", function () {
                         selectDistrict(val, key);
                     });
                 } else {
-                    districtItem.on("click", function () {
+                    districtItem.on("click.selectDistrict", function () {
                         confirmAllowStuOverride(val, key);
                     });
                 }
