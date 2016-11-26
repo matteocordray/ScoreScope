@@ -65,7 +65,7 @@
     <platform name="android">
         <!-- Android specific preferences -->
         <preference name="android-minSdkVersion" value="21"/>
-        <preference name="android-targetSdkVersion" value="23"/>
+        <preference name="android-targetSdkVersion" value="24"/>
         <preference name="android-InAppBrowserStorageEnabled" value="false"/>
 
         <!-- ICONS -->
