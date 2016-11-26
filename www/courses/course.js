@@ -71,8 +71,7 @@ function getAndParseCourse(data, callback, doNotPushPage) {
                 var weightText = $(element[0].firstElementChild.firstElementChild).text().trim();
                 currentCategory.weight = Math.round(+weightText.substr(weightText.indexOf("(") + 1, weightText.indexOf("%") - 1));
 
-                // TODO once skyward is up: fix this using CSS
-                currentCategory.average = element.children().eq(2).text().trim().length > 0 ? +element.children().eq(2).text().trim() : "&nbsp;&nbsp;";
+                currentCategory.average = +element.children().eq(2).text().trim() || NaN;
                 currentCategory.items = [];
             } else { // Must be item
                 //noinspection JSUnusedAssignment
