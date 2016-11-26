@@ -33,12 +33,12 @@ function loadEditor(id) {
     var leftBtn = $("#leftBtn");
 
     rightBtn.children().eq(0).attr("class", "ons-icon fa fa-save"); // Must use children[0] because onsen ui makes a child icon element
-    rightBtn.off("click").on("click", function () {
+    rightBtn.off("click.refresh click.save").on("click.save", function () {
         validateAndSave(id);
     });
 
     leftBtn.children().eq(0).attr("class", "ons-icon fa fa-arrow-left");
-    leftBtn.off("click").on("click", goBack);
+    leftBtn.off("click.toggleMenu click.goBack").on("click.goBack", goBack);
 
     document.addEventListener("backbutton", goBack, false);
     navi._backButtonHandler.disable();
@@ -155,10 +155,10 @@ function goBack() {
     var leftBtn = $("#leftBtn");
 
     rightBtn.children().eq(0).attr("class", "ons-icon fa fa-refresh"); // Must use children[0] because onsen ui makes a child icon element
-    rightBtn.off("click").on("click", onResume);
+    rightBtn.off("click.save click.refresh").on("click.refresh", onResume);
 
     leftBtn.children().eq(0).attr("class", "ons-icon fa fa-bars");
-    leftBtn.off("click").on("click", function () {
+    leftBtn.off("click.goBack click.toggleMenu").on("click.toggleMenu", function () {
         menu.toggle();
     });
 

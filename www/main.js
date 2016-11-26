@@ -36,21 +36,21 @@ $(document).ready(function () {
 
     ons.ready(function () {
         // Begin by adding some click handlers
-        $("#rightBtn").on("click", onResume); // Default behavior for rightBtn is refresh
-        $("#leftBtn").on("click", function () { // Default behavior for leftBtn is toggle hamburger
+        $("#rightBtn").on("click.refresh", onResume); // Default behavior for rightBtn is refresh
+        $("#leftBtn").on("click.toggleMenu", function () { // Default behavior for leftBtn is toggle hamburger
             menu.toggle();
         });
 
         $("#settingsBtn").one("click", function () {
             $.getScript("settings/settings.js", function () {
-                $("#settingsBtn").on("click", goToSettings);
+                $("#settingsBtn").on("click.goToSettings", goToSettings);
                 goToSettings();
             });
         });
 
         $("#acctMgr").one("click", function () {
             $.getScript("accounts/accountManager.js", function () {
-                $("#acctMgr").on("click", goToAcctMgr);
+                $("#acctMgr").on("click.goToAcctMgr", goToAcctMgr);
                 goToAcctMgr();
             });
         });
@@ -130,10 +130,10 @@ function onResume() { // Treat resuming like a fresh open
         var leftBtn = $("#leftBtn");
 
         rightBtn.children().eq(0).attr("class", "ons-icon fa fa-refresh"); // Must use children[0] because Onsen UI makes a child icon element
-        rightBtn.off("click").on("click", onResume); // Replace click listener
+        rightBtn.off("click.save click.refresh").on("click.refresh", onResume); // Replace click listener
 
         leftBtn.children().eq(0).attr("class", "ons-icon fa fa-bars");
-        leftBtn.off("click").on("click", function () {
+        leftBtn.off("click.goBack click.toggleMenu").on("click.toggleMenu", function () {
             menu.toggle();
         });
 
@@ -301,7 +301,7 @@ function displayErrorPage(selector, errorTitle, errorContent, errorIconType, ret
     erb.hide();
     if (typeof retryCallback === "function") {
         erb.show();
-        erb.unbind("click").on("click", retryCallback); // Prevent multiple retryCallbacks being added
+        erb.off("click.retry").on("click.retry", retryCallback); // Prevent multiple retryCallbacks being added
     }
 
     if (errorIconType) {
@@ -421,7 +421,7 @@ function loadAcctList(optionalAcctToLoad) {
 
         menuList.append(listItem);
 
-        listItem.on("click", function () {
+        listItem.on("click.loadAcct", function () {
             getAndParseAccount(key, loadAcct);
         });
     });
@@ -662,7 +662,7 @@ function loadAcct(data) {
                 '<div class="courseTeacher">' + val.teacher + '</div>' + // Teacher name
                 '</ons-col></ons-list-item>');
 
-            courseItem.on("click", function () {
+            courseItem.on("click.viewCourse", function () {
                 alertMsg("There are currently no assignments in this course.");
             });
         } else {
@@ -679,7 +679,7 @@ function loadAcct(data) {
                 '<div class="courseTeacher">' + val.teacher + '</div>' + // Teacher name
                 '</ons-col></ons-list-item>');
 
-            courseItem.on("click", function () {
+            courseItem.on("click.viewCourse", function () {
                 getAndParseCourse(val, loadGrades);
             });
         }
@@ -709,12 +709,12 @@ function loadAcct(data) {
     $("#descriptionContainer").flip({trigger: "manual"});
 
     // Using click event as a workaround because the flip:changed event does not fire for some reason
-    $("#outerCircle").on("click", function () {
+    $("#outerCircle").on("click.flipDescription", function () {
         $("#descriptionContainer").flip("toggle");
     });
 
     // For some reason, we need to add this handler every time we load the account
-    $("#GPAInfo").on("click", function () {
+    $("#GPAInfo").on("click.loadHelpInfo", function () {
         alertMsg("This is a standardized GPA calculation used by most colleges. It does not take into account the weight of your courses, and ranges from 0 to 4 points.", "Standardized Unweighted GPA");
     });
 
