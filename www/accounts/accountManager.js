@@ -152,7 +152,6 @@ function editorGoBack() {
     navi.popPage();
 }
 
-// TODO: Eventually, we might want a better transition
 function onFabClick() {
     window.location.replace("accounts/firstRun.html");
 }
