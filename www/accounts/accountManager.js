@@ -32,7 +32,7 @@ function loadEditor(id) {
     // iOS only: deal with toolbar buttons
     $("#acctBtn, #settingsBtn").hide();
     var saveBtn = $("#saveBtn");
-    saveBtn.click(function () {
+    saveBtn.off("click.save").on("click.save", function () {
         validateAndSave(id);
     });
     saveBtn.fadeIn(IOS_BTN_FADE_TIME);
