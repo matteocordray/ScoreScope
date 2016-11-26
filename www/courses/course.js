@@ -67,9 +67,9 @@ function getAndParseCourse(data, callback, doNotPushPage) {
                 course.categories.push($.extend(true, {}, categoryTemplate));
                 currentCategory = course.categories[currentCategoryIndex];
 
-                currentCategory.name = $(element[0].firstChild.firstChild).text().trim();
+                currentCategory.name = $(element[0].firstElementChild.firstChild).text().trim();
 
-                var weightText = $(element[0].firstChild).children().text().trim();
+                var weightText = $(element[0].firstElementChild.firstElementChild).text().trim();
                 currentCategory.weight = Math.round(+weightText.substr(weightText.indexOf("(") + 1, weightText.indexOf("%") - 1));
 
                 // TODO once skyward is up: fix this using CSS
@@ -250,10 +250,10 @@ function loadGradingPeriods(data) {
 
         // Go through each grading period
         var index = 0;
-        $.each(box.firstChild.children, function (key, val) {
+        $.each(box.firstElementChild.children, function (key, val) {
             // Grading period's second innermost div
-            var termDetails = val.firstChild.firstChild.firstChild.firstChild.firstChild; // td tag with termName 01
-            var possibleGP = termDetails.firstChild.firstChild.firstChild.firstChild; // keep going till a span tag with name of gp
+            var termDetails = val.firstElementChild.firstElementChild.firstElementChild.firstElementChild.firstElementChild; // td tag with termName 01
+            var possibleGP = termDetails.firstElementChild.firstElementChild.firstElementChild.firstElementChild; // keep going till a span tag with name of gp
 
             // This will be either "no grades posted" or "grade: xxx"
             if (possibleGP.children[2].innerHTML.toLowerCase().indexOf("no grades posted") === -1) {

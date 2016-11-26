@@ -483,7 +483,7 @@ function validateAndGo() {
                 }
 
                 account.overrides = {
-                    studentID: $(link.firstChild.firstChild.firstChild.firstChild).attr("onclick").split("\"")[3]
+                    studentID: $(link.firstElementChild.firstElementChild.firstElementChild.firstElementChild).attr("onclick").split("\"")[3]
                 };
 
                 // Technically this could be an issue if somebody names their account "X Child #)

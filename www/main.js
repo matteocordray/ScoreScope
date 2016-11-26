@@ -560,7 +560,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                 }
                 return;
             }
-            var rows = box.firstChild.children;
+            var rows = box.firstElementChild.children;
             var i = 1;
             while (i < 100) { // Safety against infinite loop
                 var list = page.find("#link" + i).find("#link" + i);
