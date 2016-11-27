@@ -461,7 +461,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
         });
     } else {
         finishedAnimation = true;
-        $(".fade").hide(); // Hide stuff that needs to fade in
+        $(".fade").hide();
     }
 
     var acct = accountMetadata[id];
@@ -643,7 +643,7 @@ function loadAcct(data) {
     var totalGPA = 0; // Total GPA across all courses
     var count = 0; // Number of courses
 
-    $("#mainLoading, #mainPageErrMsgDiv").fadeOut(FADE_TIME);
+    $("#mainLoading, #mainPageErrMsgDiv").fadeOut(FADE_TIME); // Note: If .fade is ready to fade in faster than #mainLoading fades out, #mainLoading is nuked
 
     var courseList = $("#list");
     courseList.empty(); //Empties the list so we can add stuff
@@ -718,6 +718,8 @@ function loadAcct(data) {
         alertMsg("This is a standardized GPA calculation used by most colleges. It does not take into account the weight of your courses, and ranges from 0 to 4 points.", "Standardized Unweighted GPA");
     });
 
+    // Before fading in .fade, #mainLoading and #mainPageErrMsgDiv has to go. No matter what.
+    $("#mainLoading, #mainPageErrMsgDiv").hide();
     //noinspection MagicNumberJS (Longer than normal because it displays the screen)
     $(".fade").fadeIn(1000);
 }
