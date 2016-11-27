@@ -41,14 +41,14 @@ $(document).ready(function () {
             menu.toggle();
         });
 
-        $("#settingsBtn").one("click", function () {
+        $("#settingsBtn").one("click.loadSettingsScript", function () {
             $.getScript("settings/settings.js", function () {
                 $("#settingsBtn").on("click.goToSettings", goToSettings);
                 goToSettings();
             });
         });
 
-        $("#acctMgr").one("click", function () {
+        $("#acctMgr").one("click.loadAcctMgrScript", function () {
             $.getScript("accounts/accountManager.js", function () {
                 $("#acctMgr").on("click.goToAcctMgr", goToAcctMgr);
                 goToAcctMgr();
@@ -259,12 +259,12 @@ function promptForGoal() {
     var goalInput = $("#goalInput")[0];
     var failingInput = $("#failingInput")[0];
 
-    $("#goalCancelBtn").one("click", function () {
-        $("#goal").off("click").one("click", promptForGoal);
+    $("#goalCancelBtn").one("click.cancelGoal", function () {
+        $("#goal").off("click.promptForGoal").one("click.promptForGoal", promptForGoal);
         goalDialog.hide();
     });
 
-    $("#goalOKBtn").one("click", function () {
+    $("#goalOKBtn").one("click.setGoal", function () {
         if (isNumber(goalInput.value) && isNumber(failingInput.value)) {
             // Protect against weird user input
             var goalVal = Math.ceil(goalInput.value);
@@ -637,7 +637,7 @@ function loadAcct(data) {
 
     var goalText = $("#goalText");
     goalText.text("Goal: " + (isNumber(data.goal) ? data.goal : "Not Set"));
-    $("#goal").off("click").one("click", promptForGoal);
+    $("#goal").off("click.promptForGoal").one("click.promptForGoal", promptForGoal);
 
     var total = 0; // Total grade across all courses
     var totalGPA = 0; // Total GPA across all courses
