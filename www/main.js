@@ -463,7 +463,7 @@ function getAndParseAccount(id, callback, doNotResetPage) {
 
     $(".fade").hide(); // Hide stuff that needs to fade in
 
-    if (navi.topPage.name !== "mainPage" && resetPage) { // If currently on course view, pop!
+    if (navi.topPage.name === "courses/course.html" && resetPage) { // If currently on course view, pop!
         navi.popPage({
             animation: "slide",
             animationOptions: {duration: TRANSITION_TIME}
@@ -475,9 +475,23 @@ function getAndParseAccount(id, callback, doNotResetPage) {
                 return;
             }
         });
+    } else if (resetPage) {
+        $("#title").text("Gradebook");
+        navi.resetToPage("mainPage", {
+            animation: "lift",
+            animationOptions: {duration: TRANSITION_TIME}
+        }).then(function () {
+            finishedAnimation = true;
+            $(".fade").hide(); // Hide stuff that needs to fade in
+            if (finishedRetrieving) { // If the app has retrieved the data before the page resets, load data after reset
+                currentAcctData = dataOut;
+                callback(dataOut);
+                return;
+            }
+        });
     } else {
         finishedAnimation = true;
-        $(".fade").hide(); // Hide stuff that needs to fade in
+        $(".fade").hide();
     }
     /* End iOS only code */
 
@@ -662,7 +676,7 @@ function loadAcct(data) {
     var totalGPA = 0; // Total GPA across all courses
     var count = 0; // Number of courses
 
-    $("#mainLoading, #mainPageErrMsgDiv").fadeOut(FADE_TIME);
+    $("#mainLoading, #mainPageErrMsgDiv").fadeOut(FADE_TIME); // Note: If .fade is ready to fade in faster than #mainLoading fades out, #mainLoading is nuked
 
     var courseList = $("#list");
     courseList.empty(); //Empties the list so we can add stuff
@@ -737,6 +751,8 @@ function loadAcct(data) {
         alertMsg("This is a standardized GPA calculation used by most colleges. It does not take into account the weight of your courses, and ranges from 0 to 4 points.", "Standardized Unweighted GPA");
     });
 
+    // Before fading in .fade, #mainLoading and #mainPageErrMsgDiv has to go. No matter what.
+    $("#mainLoading, #mainPageErrMsgDiv").hide();
     //noinspection MagicNumberJS (Longer than normal because it displays the screen)
     $(".fade").fadeIn(1000);
 }
