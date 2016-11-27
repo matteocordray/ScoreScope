@@ -151,13 +151,12 @@ function goBack() {
 function onResume() { // Treat resuming like a fresh open
     $("#title").text("Gradebook");
 
-    $("#saveBtn").hide();
+    // Reset everything back to normal
     var backBtn = $("#iOSBackBtn");
     backBtn.off("click.editorGoBack click.goBack").on("click.goBack", goBack); // Reset click listeners
-
     backBtn.hide();
-
-    $("#goalDialog").hide(); // hide without animation
+    $("#acctBtn, #settingsBtn").show();
+    $("#saveBtn, #goalDialog").hide();
 
     $("#title").text("Gradebook");
     navi.resetToPage("mainPage", {
