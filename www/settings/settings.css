@@ -62,9 +62,12 @@
 }
 
 .legalese {
+    margin: 10px 20px;
+}
+
+.legalese, .legalese * {
     font-size: small;
     font-family: monospace;
-    margin: 10px 20px;
 }
 
 ol.legalese {

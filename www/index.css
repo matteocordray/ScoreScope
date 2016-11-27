@@ -22,7 +22,7 @@
     top: 75px;
 }
 
-:not(.fa, .legalese) {
+:not(.fa) {
     font-family: 'Roboto', 'Noto', sans-serif;
 }
 
