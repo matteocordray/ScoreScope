@@ -144,7 +144,7 @@ function goBack() {
     }
     navi.popPage({
         animation: "slide",
-        animationOptions: {duration: TRANSITION_TIME} // Longer because stuff needs to load
+        animationOptions: {duration: TRANSITION_TIME}
     });
 }
 
