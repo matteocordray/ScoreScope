@@ -66,7 +66,6 @@
 }
 
 #innerCircleContainer {
-    display: none; /* Hidden in the beginning. Shown when .fade fades in */
     position: absolute;
     height: 21vh;
     width: 21vh;
@@ -90,7 +89,6 @@
 }
 
 #descriptionContainer {
-    display: none;
     height: 1.5em;
 }
 
