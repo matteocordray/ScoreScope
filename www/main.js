@@ -14,27 +14,26 @@ const DEFAULT_SETTINGS = {
     allowDiag: true,
     version: VERSION
 };
+const IOS_BTN_FADE_TIME = 200; // Time to fade iOS back button in milliseconds (iOS only)
 
-/* iOS Only */
-const IOS_BTN_FADE_TIME = 200; // Time to fade iOS back button in milliseconds
+// Begin with some setup.
+ons.forcePlatformStyling("ios"); // Forces iOS design, even on non-iOS platforms
+
+// Override onerror to avoid crash on console.error()
+if (cordova.platformId === "windows") {
+    window.onerror = function () {
+        return true;
+    }
+}
+
+// Nasty and unrecommended hack to set a timeout.
+// TODO: fix this shit
+$.ajaxSetup({
+    timeout: TIMEOUT
+});
 
 // The Main Thing
-ons.forcePlatformStyling("ios"); // Force iOS design, even on non-iOS platforms
 $(document).ready(function () {
-
-    // Override onerror to avoid crash on console.error()
-    if (cordova.platformId === "windows") {
-        window.onerror = function () {
-            return true;
-        }
-    }
-
-    // Nasty and unrecommended hack to set a timeout.
-    // TODO: fix this shit
-    $.ajaxSetup({
-        timeout: TIMEOUT
-    });
-
     ons.ready(function () {
         // Begin by adding some click handlers
         $("#iOSBackBtn").on("click.goBack", goBack);
