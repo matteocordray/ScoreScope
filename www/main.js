@@ -15,23 +15,24 @@ const DEFAULT_SETTINGS = {
     version: VERSION
 };
 
-// The Main Thing
+// Begin with some setup.
 ons.forcePlatformStyling("android"); // Forces material design, even on non-android platforms
-$(document).ready(function () {
 
-    // Override onerror to avoid crash on console.error()
-    if (cordova.platformId === "windows") {
-        window.onerror = function () {
-            return true;
-        }
+// Override onerror to avoid crash on console.error()
+if (cordova.platformId === "windows") {
+    window.onerror = function () {
+        return true;
     }
+}
 
-    // Nasty and unrecommended hack to set a timeout.
-    // TODO: fix this shit
-    $.ajaxSetup({
-        timeout: TIMEOUT
-    });
+// Nasty and unrecommended hack to set a timeout.
+// TODO: fix this shit
+$.ajaxSetup({
+    timeout: TIMEOUT
+});
 
+// The Main Thing
+$(document).ready(function () {
     ons.ready(function () {
         // Begin by adding some click handlers
         $("#rightBtn").on("click.refresh", onResume); // Default behavior for rightBtn is refresh
