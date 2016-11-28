@@ -98,7 +98,7 @@ $(document).ready(function () {
                 settings = JSON.parse(settingsJSON);
                 console.info("Successfully retrieved settings!");
 
-                if (typeof settings.version === "undefined" || settings.version < VERSION) { // On upgrade to newer version
+                if (typeof settings.version === "undefined" || compareVersions(settings.version, VERSION) !== 0) {
                     console.info("Settings are out of date! Upgrading to " + VERSION);
 
                     // Merge settings with default settings, with settings having priority
@@ -339,6 +339,22 @@ function convertToGPA(grade) {
     } else {
         return 0.0;
     }
+}
+
+function compareVersions(a, b) {
+    var i, diff;
+    var regExStripZeros = /(\.0+)+$/;
+    var segmentsA = a.replace(regExStripZeros, '').split('.');
+    var segmentsB = b.replace(regExStripZeros, '').split('.');
+    var l = Math.min(segmentsA.length, segmentsB.length);
+
+    for (i = 0; i < l; i++) {
+        diff = parseInt(segmentsA[i], 10) - parseInt(segmentsB[i], 10);
+        if (diff) {
+            return diff;
+        }
+    }
+    return segmentsA.length - segmentsB.length;
 }
 
 function isNumber(number) {
