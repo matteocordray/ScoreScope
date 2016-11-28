@@ -12,8 +12,6 @@ const ERR_FADE_TIME = 200; // Time to fade in/out the error messages in millisec
 const VERSION = "1.9.7";
 const DEFAULT_SETTINGS = {
     allowDiag: true,
-    allowPush: true,
-    pushInterval: 3600, // Default push interval is 1 hour
     version: VERSION
 };
 
