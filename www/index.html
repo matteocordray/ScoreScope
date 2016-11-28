@@ -64,7 +64,7 @@
             <ons-progress-circular indeterminate></ons-progress-circular>
             <div>&nbsp;&nbsp;Loading...</div>
         </div>
-        <div id="avgCircleArea" class="fade">
+        <div id="avgCircleArea" class="fade" style="display: none;">
             <ons-icon id="flipIcon" icon="fa-arrows-h" size="lg"></ons-icon>
             <div id="outerCircle">
                 <div id="innerCircleContainer">
@@ -72,13 +72,13 @@
                     <div class="innerCircle back"></div>
                 </div>
             </div>
-            <div id="descriptionContainer" class="fade">
+            <div id="descriptionContainer">
                 <div class="front">Average across all courses</div>
                 <div class="back">Standardized Unweighted GPA
                     <ons-icon id="GPAInfo" icon="fa-question-circle"></ons-icon>
                 </div>
             </div>
-            <div id="goal" style="display: none;" class="fade"> <!-- Initially hide, but fade in -->
+            <div id="goal">
                 <ons-icon class="goalIcon" icon="fa-trophy"></ons-icon>
                 <div id="goalText">Goal: Not Set</div>
                 <ons-icon class="goalIcon" icon="fa-pencil"></ons-icon>

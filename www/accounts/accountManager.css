@@ -52,10 +52,6 @@
 }
 
 /* Begin Account Editor Code */
-#editList {
-    display: none;
-}
-
 #listHeader {
     font-weight: 500;
     font-size: 20px;
